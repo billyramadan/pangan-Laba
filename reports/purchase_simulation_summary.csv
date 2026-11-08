@@ -1,0 +1,53 @@
+commodity,model,features,data_source,cycles,deferred_cycles,total_wait_days,baseline_cost_1kg_rp,strategy_cost_1kg_rp,savings_1kg_rp,savings_pct
+Bawang Merah,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,58,21,37,3129000.0,3119750.0,9250.0,0.2956216043464366
+Bawang Merah,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,58,3,4,3129000.0,3120750.0,8250.0,0.2636625119846596
+Bawang Merah,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,58,31,62,3129000.0,3120500.0,8500.0,0.27165228507510386
+Bawang Merah,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,58,5,8,3129000.0,3121583.3333333335,7416.666666666511,0.23702993501650724
+Bawang Putih,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,0,0,3106083.333333333,3106083.333333333,0.0,0.0
+Bawang Putih,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,69,0,0,3106083.333333333,3106083.333333333,0.0,0.0
+Bawang Putih,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,1,2,3106083.333333333,3106500.0,-416.6666666669771,-0.01341453599121006
+Bawang Putih,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,69,0,0,3106083.333333333,3106083.333333333,0.0,0.0
+Beras,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,1,1,1066200.0,1066200.0,0.0,0.0
+Beras,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,69,0,0,1066200.0,1066200.0,0.0,0.0
+Beras,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,19,32,1066200.0,1066266.6666666667,-66.66666666674428,-0.006252735571819948
+Beras,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,69,9,18,1066200.0,1066266.6666666667,-66.66666666674428,-0.006252735571819948
+Cabai Merah,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,12,20,3820333.3333333335,3831300.0000000005,-10966.666666666977,-0.2870604659279376
+Cabai Merah,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,69,4,8,3820333.3333333335,3841316.666666667,-20983.33333333349,-0.5492539917982765
+Cabai Merah,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,17,28,3820333.3333333335,3832983.3333333335,-12650.0,-0.33112293866154785
+Cabai Merah,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,69,8,16,3820333.3333333335,3850683.3333333335,-30350.0,-0.7944332955239507
+Cabai Rawit Hijau,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,15,30,3788083.333333333,3789124.9999999995,-1041.6666666665114,-0.027498515080181574
+Cabai Rawit Hijau,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,69,6,10,3788083.333333333,3789750.0,-1666.666666666977,-0.04399762412830527
+Cabai Rawit Hijau,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,32,59,3788083.333333333,3793166.6666666665,-5083.333333333489,-0.13419275359131017
+Cabai Rawit Hijau,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,69,23,44,3788083.333333333,3783500.0,4583.333333333023,0.12099346635280878
+Cabai Rawit Merah,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,15,27,4844500.0,4823875.0,20625.0,0.4257405304985034
+Cabai Rawit Merah,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,69,13,25,4844500.0,4834500.0,10000.0,0.20641965115078953
+Cabai Rawit Merah,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,24,46,4844500.0,4814500.0,30000.0,0.6192589534523687
+Cabai Rawit Merah,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,69,16,29,4844500.0,4863250.0,-18750.0,-0.3870368459077304
+Daging Ayam,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,0,0,2782233.333333333,2782233.333333333,0.0,0.0
+Daging Ayam,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,69,0,0,2782233.333333333,2782233.333333333,0.0,0.0
+Daging Ayam,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,5,9,2782233.333333333,2781566.6666666665,666.6666666665114,0.023961565648693908
+Daging Ayam,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,69,0,0,2782233.333333333,2782233.333333333,0.0,0.0
+Daging Sapi,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,0,0,10034966.666666666,10034966.666666666,0.0,0.0
+Daging Sapi,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,69,0,0,10034966.666666666,10034966.666666666,0.0,0.0
+Daging Sapi,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,7,13,10034966.666666666,10034966.666666666,0.0,0.0
+Daging Sapi,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,69,0,0,10034966.666666666,10034966.666666666,0.0,0.0
+Gula Pasir Kualitas Premium,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,1,2,1381850.0,1381850.0,0.0,0.0
+Gula Pasir Kualitas Premium,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,69,0,0,1381850.0,1381850.0,0.0,0.0
+Gula Pasir Kualitas Premium,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,7,13,1381850.0,1381850.0,0.0,0.0
+Gula Pasir Kualitas Premium,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,69,0,0,1381850.0,1381850.0,0.0,0.0
+Gula Pasir Lokal,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,48,0,0,887450.0,887450.0,0.0,0.0
+Gula Pasir Lokal,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,48,0,0,887450.0,887450.0,0.0,0.0
+Gula Pasir Lokal,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,48,0,0,887450.0,887450.0,0.0,0.0
+Gula Pasir Lokal,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,48,0,0,887450.0,887450.0,0.0,0.0
+Minyak Bermerk,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,0,0,1543500.0,1543500.0,0.0,0.0
+Minyak Bermerk,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,69,0,0,1543500.0,1543500.0,0.0,0.0
+Minyak Bermerk,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,15,25,1543500.0,1543750.0,-250.0,-0.016196954972465177
+Minyak Bermerk,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,69,0,0,1543500.0,1543500.0,0.0,0.0
+Minyak Curah,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,26,52,1414750.0,1415000.0,-250.0,-0.017670966601873124
+Minyak Curah,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,69,15,29,1414750.0,1414500.0,250.0,0.017670966601873124
+Minyak Curah,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,30,60,1414750.0,1415000.0,-250.0,-0.017670966601873124
+Minyak Curah,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,69,29,58,1414750.0,1414500.0,250.0,0.017670966601873124
+Telur Ayam,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,2,4,1981116.6666666667,1982116.6666666667,-1000.0,-0.050476583071836584
+Telur Ayam,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,69,0,0,1981116.6666666667,1981116.6666666667,0.0,0.0
+Telur Ayam,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,69,4,7,1981116.6666666667,1981116.6666666667,0.0,0.0
+Telur Ayam,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,69,0,0,1981116.6666666667,1981116.6666666667,0.0,0.0

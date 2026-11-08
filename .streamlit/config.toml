@@ -1,0 +1,26 @@
+[server]
+port = 8502
+address = "127.0.0.1"
+headless = true
+
+[client]
+showErrorDetails = true
+showToolbar = false
+
+[theme]
+base = "light"
+primaryColor = "#C64D2C"
+backgroundColor = "#FFF9F1"
+secondaryBackgroundColor = "#FFFDFA"
+textColor = "#2D2722"
+font = "sans serif"
+headingFont = "sans serif"
+borderColor = "#EADFD3"
+baseRadius = "large"
+buttonRadius = "medium"
+showWidgetBorder = true
+showSidebarBorder = true
+dataframeBorderColor = "#EADFD3"
+dataframeHeaderBackgroundColor = "#A33D22"
+dataframeHeaderTextColor = "#FFFFFF"
+chartCategoricalColors = ["#594236", "#E9A33B", "#C64D2C", "#8B6B4A"]

@@ -1,0 +1,5 @@
+model,features,jumlah_komoditas,median_MAE,median_RMSE,median_MAPE,mean_MAE,mean_RMSE,mean_MAPE
+GRU,harga + cuaca + kalender + siklus tanggal,13,939.0933,1217.5219,2.4596,1959.2152,2596.9481,3.8202
+GRU,harga saja,13,655.9975,881.2782,1.9754,1497.5434,2106.8221,2.8397
+LSTM,harga + cuaca + kalender + siklus tanggal,13,1243.5748,1563.2125,3.5439,2378.8610,3063.6555,4.8329
+LSTM,harga saja,13,989.3466,1209.7019,2.3649,1744.2082,2391.9843,3.4794

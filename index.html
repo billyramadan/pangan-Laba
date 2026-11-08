@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PanganLaba — Asisten usaha kuliner</title>
+<style>
+:root {
+  --ink:#2d2722; --muted:#746c64;
+  --primary:#c64d2c; --primary-dark:#a33d22; --spice:#e9a33b;
+  --line:#eadfd3; --surface:#fffdfa; --canvas:#fff9f1;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:-apple-system, "Segoe UI", Roboto, sans-serif;
+  background:var(--canvas); color:var(--ink); line-height:1.55;
+}
+a { text-decoration:none; color:inherit; }
+.wrap { max-width:1320px; margin:0 auto; padding:1.25rem 1.4rem 3.5rem; }
+.deco { height:4px; background:linear-gradient(90deg,#c64d2c 0 58%,#e9a33b 58% 82%,#594236 82%); }
+h1,h2,h3,h4 { color:var(--ink); letter-spacing:-.025em; }
+
+/* ===== Header (landing-brand / landing-nav) ===== */
+.topbar { display:flex; align-items:center; gap:1.25rem; flex-wrap:wrap; padding:.35rem 0 1.1rem; }
+.brand { font-size:1.32rem; font-weight:850; letter-spacing:-.02em; }
+.nav { display:flex; gap:1.4rem; justify-content:flex-end; margin-left:auto; }
+.nav a { color:var(--muted); font-size:.95rem; font-weight:650; white-space:nowrap;
+         transition:color .15s; }
+.nav a:hover { color:var(--primary); }
+.btn { display:inline-block; font-weight:750; border-radius:9px; padding:.68rem 1rem;
+       font-size:.91rem; border:1px solid transparent; cursor:pointer;
+       transition:transform .15s, box-shadow .15s; text-align:center; }
+.btn:hover { transform:translateY(-1px); }
+.btn-primary { background:var(--primary); border-color:var(--primary); color:#fff;
+               box-shadow:0 4px 10px rgba(163,61,34,.13); }
+.btn-primary:hover { background:var(--primary-dark); border-color:var(--primary-dark); color:#fff; }
+.btn-ghost { background:var(--surface); border-color:#d9cbbd; color:var(--ink); }
+
+/* ===== Hero ===== */
+.tag { display:inline-block; background:#f6e5d2; color:var(--primary-dark);
+       border-radius:999px; padding:.4rem .9rem; font-size:.8rem; font-weight:750;
+       letter-spacing:.02em; margin-bottom:.9rem; }
+h1 { font-size:clamp(2rem,4.2vw,3.1rem); line-height:1.1; letter-spacing:-.03em;
+     margin-bottom:1.1rem; }
+.lead { color:var(--muted); font-size:1.08rem; line-height:1.65; margin-bottom:1.6rem;
+        max-width:560px; }
+.hero { display:grid; grid-template-columns:1.25fr 1fr; gap:2.4rem; align-items:center; }
+.hero-actions { display:grid; grid-template-columns:1fr 1fr; gap:.9rem; margin-bottom:.7rem; }
+.caption { color:var(--muted); font-size:.85rem; }
+.visual { background:var(--surface); border:1px solid var(--line); border-radius:16px;
+          box-shadow:0 14px 36px rgba(94,58,34,.12); padding:1.15rem 1.2rem;
+          max-width:560px; margin-left:auto; }
+.visual img { width:100%; display:block; border-radius:14px; border:1px solid var(--line);
+              object-fit:cover; max-height:320px; margin-bottom:1rem; }
+.card-label { color:var(--muted); font-size:.82rem; font-weight:650; margin-bottom:.25rem; }
+.card-value { font-size:2.1rem; font-weight:850; letter-spacing:-.02em; margin-bottom:.3rem; }
+.card-sub { color:var(--muted); font-size:.82rem; line-height:1.45; }
+
+/* ===== Section umum ===== */
+.section-title { font-size:1.35rem; font-weight:800; letter-spacing:-.02em;
+                 margin:1.4rem 0 .9rem; }
+.grid3 { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+.card { background:var(--surface); border:1px solid var(--line); border-radius:14px;
+        padding:1.1rem 1.15rem; box-shadow:0 5px 16px rgba(32,53,47,.035); }
+.step { color:#b94b35; font-size:.7rem; font-weight:800; letter-spacing:.1em;
+        text-transform:uppercase; margin-bottom:.3rem; }
+.copy { color:var(--muted); font-size:.88rem; line-height:1.45; }
+.step-row { display:flex; align-items:center; gap:1rem; margin-bottom:.6rem; }
+.step-num { width:40px; height:40px; border-radius:50%; background:var(--primary);
+            color:#fff; font-weight:800; display:flex; align-items:center;
+            justify-content:center; font-size:1.05rem; flex:none; }
+.step-box { background:var(--surface); border:1px solid var(--line); border-radius:14px;
+            padding:.78rem 1rem; font-size:.95rem; color:var(--muted); flex:1;
+            min-height:42px; display:flex; align-items:center; }
+.step-box strong { color:var(--ink); margin-right:.35rem; }
+
+/* ===== Harga ===== */
+.price { font-size:1.9rem; font-weight:850; letter-spacing:-.02em; margin-bottom:.4rem; }
+.price span { font-size:.9rem; font-weight:600; color:var(--muted); }
+.pricing-note { color:var(--muted); font-size:.92rem; margin-top:1rem; max-width:720px; }
+
+/* ===== FAQ ===== */
+details { background:var(--surface); border:1px solid var(--line); border-radius:12px;
+         box-shadow:0 3px 12px rgba(32,53,47,.025); margin-bottom:.6rem; padding:.9rem 1rem;
+         cursor:pointer; }
+summary { font-weight:700; color:var(--ink); }
+details p { color:var(--muted); font-size:.92rem; margin-top:.5rem; }
+
+/* ===== Chips ===== */
+.chips { display:flex; flex-wrap:wrap; gap:.55rem; justify-content:center; margin-top:1rem; }
+.chip { background:var(--surface); border:1px solid var(--line); border-radius:999px;
+        padding:.42rem .95rem; font-size:.8rem; font-weight:650; color:var(--muted);
+        white-space:nowrap; }
+
+hr { border:none; border-top:1px solid var(--line); margin:1.6rem 0; }
+
+/* ===== Responsif (640px, sama app asli) ===== */
+@media (max-width:640px) {
+  .wrap { padding:1rem .85rem 2rem; }
+  .hero { grid-template-columns:1fr; gap:1.4rem; }
+  .grid3 { grid-template-columns:1fr; }
+  .brand { font-size:1.2rem; }
+  .nav { margin-left:0; width:100%; justify-content:flex-start; gap:.9rem; flex-wrap:wrap; }
+  .nav a { font-size:.85rem; }
+  h1 { font-size:1.9rem; }
+  .lead { font-size:1rem; margin-bottom:1.4rem; }
+  .hero-actions { grid-template-columns:1fr; }
+  .visual { padding:1rem; margin:1.2rem 0 0; }
+  .visual img { max-height:300px; }
+  .chips { gap:.45rem; }
+  .chip { font-size:.78rem; padding:.42rem .85rem; }
+  .btn { min-height:46px; font-size:1rem; }
+}
+</style>
+</head>
+<body>
+<div class="deco"></div>
+<div class="wrap">
+
+  <!-- ===== HEADER ===== -->
+  <header class="topbar">
+    <div class="brand">PanganLaba</div>
+    <nav class="nav">
+      <a href="#fitur">Fitur</a>
+      <a href="#cara-kerja">Cara kerja</a>
+      <a href="#harga">Harga</a>
+      <a href="#pertanyaan">Pertanyaan</a>
+    </nav>
+    <a href="#" class="btn btn-ghost">Masuk</a>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div>
+      <span class="tag">Aplikasi web untuk usaha makan &amp; minuman</span>
+      <h1>Jualan enak saja belum cukup.<br>Pastikan juga untung.</h1>
+      <p class="lead">PanganLaba menghitung modal tiap porsi, memperkirakan harga jual yang aman, dan merapikan pesanan Kakak — pakai bahasa sehari-hari, bukan bahasa akuntan.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-primary">Mulai gratis sekarang</a>
+        <a href="#cara-kerja" class="btn btn-ghost">Lihat cara kerjanya</a>
+      </div>
+      <p class="caption">Tanpa kartu kredit · Paket trial 7 hari · Siap dipakai dari HP</p>
+    </div>
+    <div class="visual">
+      <img src="assets/umkm_header.jpg" alt="Ilustrasi usaha kuliner">
+      <div class="card-label">Modal per porsi</div>
+      <div class="card-value">Rp8.400</div>
+      <div class="card-sub">Harga jual aman dari Rp14.000<br>Angka contoh, bukan data usaha sungguhan.</div>
+    </div>
+  </section>
+
+  <!-- ===== FITUR ===== -->
+  <div class="section-title" id="fitur">Fitur PanganLaba</div>
+  <section class="grid3">
+    <div class="card">
+      <div class="step">Prediksi harga</div>
+      <p class="copy">Perkiraan harga bahan baku ke depan memakai model LSTM/GRU, biar belanja tak kaget sama kenaikan harga.</p>
+    </div>
+    <div class="card">
+      <div class="step">Kalkulator modal</div>
+      <p class="copy">Hitung modal tiap porsi dan harga jual yang aman, langsung dari resep dan harga bahan.</p>
+    </div>
+    <div class="card">
+      <div class="step">Laba &amp; riwayat</div>
+      <p class="copy">Simulasikan untung tiap menu dan simpan riwayatnya, biar keputusan usaha lebih terukur.</p>
+    </div>
+  </section>
+
+  <!-- ===== CARA KERJA ===== -->
+  <div class="section-title" id="cara-kerja">Cara kerja</div>
+  <section>
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div class="step-box"><strong>Daftar dengan Google</strong>— Buat akun gratis 7 hari, tanpa kartu kredit.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div class="step-box"><strong>Isi resep &amp; bahan</strong>— Masukkan menu dan harga bahan yang biasa kamu beli.</div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div class="step-box"><strong>Lihat prediksi &amp; laba</strong>— Dapatkan perkiraan harga dan hitungan untung tiap menu.</div>
+    </div>
+  </section>
+
+  <!-- ===== HARGA ===== -->
+  <div class="section-title" id="harga">Paket &amp; harga</div>
+  <section class="grid3">
+    <div class="card">
+      <div class="step">Starter</div>
+      <div class="price">Rp150.000<span>/bulan</span></div>
+      <p class="copy">3 komoditas · Dashboard dasar</p>
+    </div>
+    <div class="card">
+      <div class="step">Pro</div>
+      <div class="price">Rp300.000<span>/bulan</span></div>
+      <p class="copy">10 komoditas · Support prioritas</p>
+    </div>
+    <div class="card">
+      <div class="step">Enterprise</div>
+      <div class="price">Rp750.000<span>/bulan</span></div>
+      <p class="copy">Komoditas tak terbatas · Support VIP</p>
+    </div>
+  </section>
+  <p class="pricing-note">Paket diaktifkan setelah pembayaran manual (transfer BCA) diverifikasi pengelola. Daftar gratis dulu — tidak ada biaya sebelum trial berakhir.</p>
+
+  <!-- ===== FAQ ===== -->
+  <div class="section-title" id="pertanyaan">Pertanyaan umum</div>
+  <section>
+    <details>
+      <summary>Berapa lama masa trial? Biayanya apa?</summary>
+      <p>Trial berlaku 7 hari sejak login pertama, gratis, tanpa kartu kredit. Setelah habis, kamu memilih paket untuk melanjutkan.</p>
+    </details>
+    <details>
+      <summary>Bagaimana cara membayar setelah trial habis?</summary>
+      <p>Transfer ke rekening BCA PanganLaba (nomor tampil di halaman paket setelah login), lalu kirim bukti transfer ke WhatsApp pengelola. Akses aktif setelah diverifikasi.</p>
+    </details>
+    <details>
+      <summary>Apakah data usaha saya aman dan terpisah?</summary>
+      <p>Data tiap akun tersimpan terpisah. Detail kebijakan privasi tersedia setelah login.</p>
+    </details>
+    <details>
+      <summary>Bisakah akun dan data saya dihapus?</summary>
+      <p>Ya. Setelah masuk, buka Paket saya → Hapus akun &amp; data.</p>
+    </details>
+  </section>
+
+  <hr>
+
+  <!-- ===== CHIPS ===== -->
+  <div class="chips">
+    <span class="chip">Bahasa Indonesia</span>
+    <span class="chip">Rupiah, tanpa koma</span>
+    <span class="chip">Cocok untuk pre-order</span>
+    <span class="chip">QRIS statis</span>
+    <span class="chip">Tanya PanganLaba</span>
+    <span class="chip">Data tiap bisnis terpisah</span>
+  </div>
+
+</div>
+</body>
+</html>

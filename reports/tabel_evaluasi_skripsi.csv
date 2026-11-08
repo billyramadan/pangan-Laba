@@ -1,0 +1,53 @@
+﻿komoditas,model,fitur,MAE_Rp_per_kg,RMSE_Rp_per_kg,MAPE_persen,akhir_target_latih,awal_target_uji,akhir_target_uji,jendela_hari,horizon_hari,epoch_aktual,jumlah_urutan_latih,jumlah_urutan_uji
+Bawang Merah,GRU,harga + cuaca + kalender + siklus tanggal,2946.9667,3651.7630,5.5277,2025-08-28,2025-08-29,2026-10-19,30,7,15,1632,411
+Bawang Merah,GRU,harga saja,2040.3472,2720.6844,3.7881,2025-08-28,2025-08-29,2026-10-19,30,7,15,1632,411
+Bawang Merah,LSTM,harga + cuaca + kalender + siklus tanggal,4163.0466,5057.3273,7.6010,2025-08-28,2025-08-29,2026-10-19,30,7,15,1632,411
+Bawang Merah,LSTM,harga saja,2228.7174,2906.9267,4.1699,2025-08-28,2025-08-29,2026-10-19,30,7,15,1632,411
+Bawang Putih,GRU,harga + cuaca + kalender + siklus tanggal,939.0933,1217.5219,2.0847,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Bawang Putih,GRU,harga saja,616.5249,836.2819,1.3695,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Bawang Putih,LSTM,harga + cuaca + kalender + siklus tanggal,1038.3647,1352.9432,2.2956,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Bawang Putih,LSTM,harga saja,1056.0459,1209.7019,2.3649,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Beras,GRU,harga + cuaca + kalender + siklus tanggal,371.1434,449.6797,2.3746,2025-06-13,2025-06-14,2026-10-16,30,7,15,1924,484
+Beras,GRU,harga saja,309.0383,354.1893,1.9754,2025-06-13,2025-06-14,2026-10-16,30,7,15,1924,484
+Beras,LSTM,harga + cuaca + kalender + siklus tanggal,634.7677,709.1962,4.0723,2025-06-13,2025-06-14,2026-10-16,30,7,15,1924,484
+Beras,LSTM,harga saja,484.6666,557.3321,3.0999,2025-06-13,2025-06-14,2026-10-16,30,7,15,1924,484
+Cabai Merah,GRU,harga + cuaca + kalender + siklus tanggal,4260.7988,5714.4801,7.4319,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Cabai Merah,GRU,harga saja,3386.6992,4997.3679,5.8513,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Cabai Merah,LSTM,harga + cuaca + kalender + siklus tanggal,4531.1368,6011.9964,7.9286,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Cabai Merah,LSTM,harga saja,3963.7518,5766.1640,6.7609,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Cabai Rawit Hijau,GRU,harga + cuaca + kalender + siklus tanggal,4170.1215,5621.0649,7.4020,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Cabai Rawit Hijau,GRU,harga saja,3348.6368,4766.9856,5.9695,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Cabai Rawit Hijau,LSTM,harga + cuaca + kalender + siklus tanggal,4985.0507,6358.6426,8.8347,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Cabai Rawit Hijau,LSTM,harga saja,3856.6372,5140.3074,6.8438,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Cabai Rawit Merah,GRU,harga + cuaca + kalender + siklus tanggal,6727.6284,9126.0254,9.1073,2025-06-16,2025-06-17,2026-10-20,30,7,15,1927,485
+Cabai Rawit Merah,GRU,harga saja,5617.8906,7919.9028,7.5341,2025-06-16,2025-06-17,2026-10-20,30,7,15,1927,485
+Cabai Rawit Merah,LSTM,harga + cuaca + kalender + siklus tanggal,7071.9721,9468.6090,9.6698,2025-06-16,2025-06-17,2026-10-20,30,7,15,1927,485
+Cabai Rawit Merah,LSTM,harga saja,6193.7236,8533.5341,8.2790,2025-06-16,2025-06-17,2026-10-20,30,7,15,1927,485
+Daging Ayam,GRU,harga + cuaca + kalender + siklus tanggal,1081.4395,1390.4293,2.6413,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Daging Ayam,GRU,harga saja,825.0338,1130.5746,2.0144,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Daging Ayam,LSTM,harga + cuaca + kalender + siklus tanggal,1272.4631,1606.1296,3.1078,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Daging Ayam,LSTM,harga saja,895.1448,1204.8265,2.1907,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Daging Sapi,GRU,harga + cuaca + kalender + siklus tanggal,2356.8981,3235.7112,1.5689,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Daging Sapi,GRU,harga saja,1643.2500,2480.8130,1.0872,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Daging Sapi,LSTM,harga + cuaca + kalender + siklus tanggal,3382.1573,4536.6166,2.2498,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Daging Sapi,LSTM,harga saja,1608.3455,2594.9365,1.0619,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Gula Pasir Kualitas Premium,GRU,harga + cuaca + kalender + siklus tanggal,450.1055,544.0960,2.2438,2025-06-17,2025-06-18,2026-10-21,30,7,15,1928,485
+Gula Pasir Kualitas Premium,GRU,harga saja,277.3476,296.9624,1.3825,2025-06-17,2025-06-18,2026-10-21,30,7,15,1928,485
+Gula Pasir Kualitas Premium,LSTM,harga + cuaca + kalender + siklus tanggal,690.9247,787.0883,3.4471,2025-06-17,2025-06-18,2026-10-21,30,7,15,1928,485
+Gula Pasir Kualitas Premium,LSTM,harga saja,407.3525,436.0040,2.0305,2025-06-17,2025-06-18,2026-10-21,30,7,15,1928,485
+Gula Pasir Lokal,GRU,harga + cuaca + kalender + siklus tanggal,226.1852,281.1744,1.2222,2025-11-10,2025-11-11,2026-10-21,30,7,15,1342,339
+Gula Pasir Lokal,GRU,harga saja,101.8770,126.2116,0.5512,2025-11-10,2025-11-11,2026-10-21,30,7,15,1342,339
+Gula Pasir Lokal,LSTM,harga + cuaca + kalender + siklus tanggal,271.9792,340.8336,1.4672,2025-11-10,2025-11-11,2026-10-21,30,7,15,1342,339
+Gula Pasir Lokal,LSTM,harga saja,79.8806,111.9434,0.4314,2025-11-10,2025-11-11,2026-10-21,30,7,15,1342,339
+Minyak Bermerk,GRU,harga + cuaca + kalender + siklus tanggal,390.0766,495.2936,1.7367,2025-06-17,2025-06-18,2026-10-21,30,7,15,1928,485
+Minyak Bermerk,GRU,harga saja,163.8314,204.6182,0.7296,2025-06-17,2025-06-18,2026-10-21,30,7,15,1928,485
+Minyak Bermerk,LSTM,harga + cuaca + kalender + siklus tanggal,801.5968,963.3426,3.5439,2025-06-17,2025-06-18,2026-10-21,30,7,15,1928,485
+Minyak Bermerk,LSTM,harga saja,394.9470,571.6723,1.7116,2025-06-17,2025-06-18,2026-10-21,30,7,13,1928,485
+Minyak Curah,GRU,harga + cuaca + kalender + siklus tanggal,837.9669,1096.7346,3.8616,2025-06-17,2025-06-18,2026-10-21,30,7,15,1928,485
+Minyak Curah,GRU,harga saja,655.9975,881.2782,2.9867,2025-06-17,2025-06-18,2026-10-21,30,7,15,1928,485
+Minyak Curah,LSTM,harga + cuaca + kalender + siklus tanggal,1243.5748,1563.2125,5.7297,2025-06-17,2025-06-18,2026-10-21,30,7,15,1928,485
+Minyak Curah,LSTM,harga saja,989.3466,1362.0189,4.4891,2025-06-17,2025-06-18,2026-10-21,30,7,15,1928,485
+Telur Ayam,GRU,harga + cuaca + kalender + siklus tanggal,711.3743,936.3508,2.4596,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Telur Ayam,GRU,harga saja,481.5897,672.8178,1.6768,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Telur Ayam,LSTM,harga + cuaca + kalender + siklus tanggal,838.1582,1071.5837,2.8796,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485
+Telur Ayam,LSTM,harga saja,516.1479,700.4286,1.7987,2025-06-15,2025-06-16,2026-10-19,30,7,15,1926,485

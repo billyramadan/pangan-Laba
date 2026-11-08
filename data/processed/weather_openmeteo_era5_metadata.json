@@ -1,0 +1,41 @@
+{
+  "provider": "Open-Meteo Historical Weather API",
+  "model": "ERA5",
+  "retrieved_at_utc": "2026-11-03T19:31:53+00:00",
+  "url": "https://archive-api.open-meteo.com/v1/archive?latitude=-6.3917&longitude=106.8167&start_date=2020-01-01&end_date=2026-10-26&daily=temperature_2m_mean%2Ctemperature_2m_max%2Ctemperature_2m_min%2Cprecipitation_sum%2Cwind_speed_10m_max%2Cshortwave_radiation_sum&timezone=Asia%2FJakarta&models=era5",
+  "requested_coordinates": {
+    "latitude": -6.3917,
+    "longitude": 106.8167
+  },
+  "returned_coordinates": {
+    "latitude": -6.5,
+    "longitude": 106.75
+  },
+  "elevation_m": 84.0,
+  "timezone": "Asia/Jakarta",
+  "requested_period": {
+    "start": "2020-01-01",
+    "end": "2026-10-26"
+  },
+  "returned_period": {
+    "start": "2020-01-01",
+    "end": "2026-10-26"
+  },
+  "daily_fields": [
+    "temperature_2m_mean",
+    "temperature_2m_max",
+    "temperature_2m_min",
+    "precipitation_sum",
+    "wind_speed_10m_max",
+    "shortwave_radiation_sum"
+  ],
+  "units": {
+    "time": "iso8601",
+    "temperature_2m_mean": "°C",
+    "temperature_2m_max": "°C",
+    "temperature_2m_min": "°C",
+    "precipitation_sum": "mm",
+    "wind_speed_10m_max": "km/h",
+    "shortwave_radiation_sum": "MJ/m²"
+  }
+}

@@ -1,0 +1,53 @@
+MAE,RMSE,MAPE,commodity,model,features,data_source,train_target_end,test_target_start,test_target_end,window_days,forecast_horizon_days,configured_epochs,epochs_trained,n_train_sequences,n_test_sequences
+2228.71743614949,2906.926721576965,4.169930437091166,Bawang Merah,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,2025-08-28,2025-08-29,2026-10-19,30,7,15,15,1632,411
+4163.046564074992,5057.327340670662,7.601001745070242,Bawang Merah,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-08-28,2025-08-29,2026-10-19,30,7,15,15,1632,411
+2040.3472145283,2720.684401155236,3.7880728518580735,Bawang Merah,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,2025-08-28,2025-08-29,2026-10-19,30,7,15,15,1632,411
+2946.9666640416817,3651.7629583295857,5.52769381761585,Bawang Merah,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-08-28,2025-08-29,2026-10-19,30,7,15,15,1632,411
+1056.0458728368926,1209.701907498883,2.36490450524074,Bawang Putih,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+1038.3647267734414,1352.9432109999009,2.2955567310021663,Bawang Putih,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+616.5248569434218,836.2819187054515,1.369460843872589,Bawang Putih,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+939.0932959008346,1217.521860632962,2.084666732409731,Bawang Putih,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+484.6665589603933,557.3321118921207,3.0999265402225427,Beras,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-13,2025-06-14,2026-10-16,30,7,15,15,1924,484
+634.7676709387913,709.1961841041992,4.072295171736741,Beras,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-13,2025-06-14,2026-10-16,30,7,15,15,1924,484
+309.0382502352051,354.18934373699665,1.975404218636741,Beras,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-13,2025-06-14,2026-10-16,30,7,15,15,1924,484
+371.1433951938213,449.679677808374,2.37457638776117,Beras,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-13,2025-06-14,2026-10-16,30,7,15,15,1924,484
+3963.751811027246,5766.164022922103,6.760907300166162,Cabai Merah,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+4531.136776662985,6011.996382063447,7.92855477161158,Cabai Merah,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+3386.699241761782,4997.367936646052,5.851280225689585,Cabai Merah,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+4260.798775006137,5714.480104648076,7.431910042071498,Cabai Merah,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+3856.637243418631,5140.307428344374,6.843773590570964,Cabai Rawit Hijau,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+4985.05066772521,6358.642551695746,8.83467363617404,Cabai Rawit Hijau,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+3348.6368065783017,4766.985580999669,5.969512539567275,Cabai Rawit Hijau,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+4170.121467691458,5621.064921196829,7.401962100915653,Cabai Rawit Hijau,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+6193.723588994231,8533.534084389054,8.279025065834118,Cabai Rawit Merah,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-16,2025-06-17,2026-10-20,30,7,15,15,1927,485
+7071.972138101374,9468.60895915232,9.669849707497605,Cabai Rawit Merah,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-16,2025-06-17,2026-10-20,30,7,15,15,1927,485
+5617.890635738831,7919.902823455487,7.534076624251671,Cabai Rawit Merah,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-16,2025-06-17,2026-10-20,30,7,15,15,1927,485
+6727.628441412003,9126.025369416691,9.107327885813,Cabai Rawit Merah,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-16,2025-06-17,2026-10-20,30,7,15,15,1927,485
+895.1447832290132,1204.8265461089068,2.190710675521536,Daging Ayam,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+1272.463143562837,1606.129618109146,3.1077786762002355,Daging Ayam,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+825.03378589838,1130.574582535639,2.014353470005437,Daging Ayam,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+1081.4394970391506,1390.4292748731534,2.641336755798412,Daging Ayam,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+1608.3454544059891,2594.9364875237397,1.0619010932599844,Daging Sapi,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+3382.1573346219934,4536.616621645793,2.2498140556320414,Daging Sapi,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+1643.250046023564,2480.8130494718444,1.0871645276989816,Daging Sapi,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+2356.898108431517,3235.711202516063,1.568942485927681,Daging Sapi,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+407.35246398656113,436.0040201120235,2.030472402679752,Gula Pasir Kualitas Premium,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-17,2025-06-18,2026-10-21,30,7,15,15,1928,485
+690.9247094762518,787.0882974941204,3.44713717934288,Gula Pasir Kualitas Premium,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-17,2025-06-18,2026-10-21,30,7,15,15,1928,485
+277.3476412923417,296.9623627232645,1.3824948374378694,Gula Pasir Kualitas Premium,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-17,2025-06-18,2026-10-21,30,7,15,15,1928,485
+450.1054652982327,544.0959885730867,2.243834497203525,Gula Pasir Kualitas Premium,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-17,2025-06-18,2026-10-21,30,7,15,15,1928,485
+79.88062041280378,111.94335447245736,0.4313650334090173,Gula Pasir Lokal,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,2025-11-10,2025-11-11,2026-10-21,30,7,15,15,1342,339
+271.9791894380355,340.8335730855476,1.4672340912036053,Gula Pasir Lokal,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-11-10,2025-11-11,2026-10-21,30,7,15,15,1342,339
+101.8769640991537,126.2116151938006,0.5511784415477701,Gula Pasir Lokal,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,2025-11-10,2025-11-11,2026-10-21,30,7,15,15,1342,339
+226.1852267040666,281.174446164816,1.2221556396500106,Gula Pasir Lokal,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-11-10,2025-11-11,2026-10-21,30,7,15,15,1342,339
+394.9469691565415,571.672331432396,1.711573671241225,Minyak Bermerk,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-17,2025-06-18,2026-10-21,30,7,15,13,1928,485
+801.5967810352234,963.3425586713644,3.543927780178295,Minyak Bermerk,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-17,2025-06-18,2026-10-21,30,7,15,15,1928,485
+163.83143160131317,204.6182076520965,0.7295777524433976,Minyak Bermerk,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-17,2025-06-18,2026-10-21,30,7,15,15,1928,485
+390.0765803341311,495.2936209938503,1.7366624966380018,Minyak Bermerk,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-17,2025-06-18,2026-10-21,30,7,15,15,1928,485
+989.3465641491777,1362.018901417216,4.489122079259402,Minyak Curah,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-17,2025-06-18,2026-10-21,30,7,15,15,1928,485
+1243.5747612527614,1563.2125118234922,5.729684452077645,Minyak Curah,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-17,2025-06-18,2026-10-21,30,7,15,15,1928,485
+655.9974646769145,881.2782493428176,2.986733977628198,Minyak Curah,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-17,2025-06-18,2026-10-21,30,7,15,15,1928,485
+837.9668852785959,1096.7346193695614,3.861557312366832,Minyak Curah,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-17,2025-06-18,2026-10-21,30,7,15,15,1928,485
+516.1478618219195,700.4285889771841,1.798653833233289,Telur Ayam,LSTM,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+838.1581923861684,1071.583661163363,2.8795654449420645,Telur Ayam,LSTM,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+481.5897056793078,672.8177877176494,1.676791598779074,Telur Ayam,GRU,harga saja,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485
+711.3742824159302,936.3507725273212,2.4595699595899267,Telur Ayam,GRU,harga + cuaca + kalender + siklus tanggal,depok_pihps_era5_daily_weather_calendar,2025-06-15,2025-06-16,2026-10-19,30,7,15,15,1926,485

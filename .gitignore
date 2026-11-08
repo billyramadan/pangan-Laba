@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Secret & config lokal
+.streamlit/secrets.toml
+
+# Log
+*.log
+
+# Data pengguna (SQLite lokal) — diganti PostgreSQL saat produksi
+data/app_users.sqlite3
+data/app_users.sqlite3-journal
+
+# IDE/OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+# Never upload machine-local or user-specific state.
+.streamlit/secrets.toml
+data/app_users.sqlite3*
+data/uploads/
+data/umkm_user_tests/
+backups/
+training_staging/
+install-log.txt
+*.log
+models/*.keras
+# Never upload machine-local or user-specific state.
+.streamlit/secrets.toml
+data/app_users.sqlite3*
+data/uploads/
+data/umkm_user_tests/
+backups/
+training_staging/
+install-log.txt
+*.log
+models/*.keras
+.agents/
+.claude/
