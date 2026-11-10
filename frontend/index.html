@@ -206,9 +206,9 @@ tbody tr:hover{background:#f2e3d2}
         <button data-action="showPlans"><span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg></span> Paket</button>
         <div class="side-note">Harga PIHPS Depok · model 7 hari</div>
         <div class="side-label" style="margin-top:20px">Belanja</div>
-        <div class="field" style="margin:6px 10px"><label>Komoditas bahan baku</label><select id="commodity"></select></div>
+        <div class="field" style="margin:6px 10px"><label>Bahan baku</label><select id="commodity"></select></div>
         <div class="field" style="margin:6px 10px"><label>Model prediksi</label><select id="variant"></select></div>
-        <div class="field" style="margin:6px 10px"><label>Jadwal belanja stok</label><select id="restock"><option value="2">Setiap 2 hari</option><option value="7" selected>Seminggu sekali</option></select></div>
+        <div class="field" style="margin:6px 10px"><label>Jadwal belanja</label><select id="restock"><option value="2">Setiap 2 hari</option><option value="7" selected>Seminggu sekali</option></select></div>
       </aside>
       <div class="main">
     <div id="plansCard" class="hidden" style="margin-bottom:16px"></div>
@@ -217,7 +217,7 @@ tbody tr:hover{background:#f2e3d2}
       <div class="mobile-filters-title">Atur prediksi harga</div>
       <div class="mobile-filter-grid">
         <div class="field"><label for="commodityMobile">Komoditas</label><select id="commodityMobile"></select></div>
-        <div class="field"><label for="variantMobile">Model dan fitur</label><select id="variantMobile"></select></div>
+        <div class="field"><label for="variantMobile">Model prediksi</label><select id="variantMobile"></select></div>
         <div class="field"><label for="restockMobile">Jadwal belanja stok</label><select id="restockMobile"><option value="2">Setiap 2 hari</option><option value="7" selected>Seminggu sekali</option></select></div>
       </div>
     </section>
@@ -313,12 +313,12 @@ tbody tr:hover{background:#f2e3d2}
           <div class="row" style="justify-content:space-between;gap:10px"><strong>Geser margin jual</strong><span id="marginSuggest" style="font-weight:800;color:var(--primary-dark)"></span></div>
           <input type="range" id="marginSlider" min="0" max="70" value="30" step="1" style="width:100%;margin-top:8px">
           <div class="row" style="align-items:center;gap:10px;margin-top:6px">
-            <span style="color:var(--muted);font-size:.82rem;flex:1">Saran harga jual = modal bahan per porsi ÷ (1 − margin). Berubah otomatis saat resep atau margin digeser.</span>
+            <span style="color:var(--muted);font-size:.82rem;flex:1">Saran harga jual = modal per porsi ÷ (1 − margin). Ikut berubah sendiri kalau resep atau margin digeser.</span>
             <button class="btn small" data-action="applyMargin">Pakai sebagai harga jual</button>
           </div>
         </div>
         <div style="margin-top:14px"><div style="font-weight:800;color:#2d2722"><span style="background:#f4e2cf;color:var(--primary-dark);border-radius:999px;padding:.22rem .55rem;font-size:.67rem;letter-spacing:.08em;font-weight:850">RESEP</span> Takaran bahan untuk satu porsi</div>
-        <div style="color:var(--muted);font-size:.88rem;margin:4px 0">Tambah satu bahan per baris. Gunakan gram; isi harga beli sendiri jika harga bahan tidak tersedia di PIHPS.</div>
+        <div style="color:var(--muted);font-size:.88rem;margin:4px 0">Tambah satu bahan per baris. Pakai satuan gram. Kalau harga bahanmu nggak ada di data PIHPS, isi sendiri harga belinya.</div>
         <div id="recipeRows"></div>
         <button class="btn small" style="margin-top:8px" data-action="addRecipeRow">＋ Tambah bahan</button></div>
         <div class="grid2">
