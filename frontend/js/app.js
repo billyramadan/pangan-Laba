@@ -434,7 +434,7 @@ function askPanganLaba(){
   if((q.includes('laba')||q.includes('untung')||q.includes('omzet'))&&state.lastProfit){
     const p=state.lastProfit;
     body=`Menu <b>${esc(p.menu)}</b>: omzet ${money(p.revenue)} dari ${p.portions.toLocaleString('id-ID')} porsi (${esc(p.period).toLowerCase()}), laba bersih estimasi <b>${money(p.net)}</b>, margin ${p.margin.toFixed(1)}%.`;
-    src='Sumber: hitungan terakhir pada kalkulator menu, berdasarkan masukan pengguna.';
+    src='Sumber: hitungan terakhir dari kalkulator menu, sesuai isian kamu.';
   }else if(comm){
     const quote=state.currentQuotes[comm];
     const issue=quoteUnavailableMessage(comm,quote);
