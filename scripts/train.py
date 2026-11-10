@@ -3,8 +3,8 @@ import argparse
 import sys
 import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
-from pangan_forecast.models import run_experiments
+sys.path.insert(0, str(ROOT / "backend" / "src"))
+from pangan_forecast.models import run_experiments, refit_full_history_models
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--epochs", type=int, default=30)
@@ -21,4 +21,8 @@ source_label = "synthetic_demo" if is_demo else "depok_pihps_era5_daily_weather_
 metrics, _ = run_experiments(clean, ROOT,
                             args.window, args.horizon, args.epochs,
                             data_source=source_label)
+final_models = refit_full_history_models(
+    clean, ROOT, window=args.window, horizon=args.horizon, epochs=args.epochs,
+)
+print(f"Model final dilatih ulang dengan histori penuh: {len(final_models)} varian.")
 print(metrics.to_string(index=False) if not metrics.empty else "Tidak ada model yang dapat dilatih.")

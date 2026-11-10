@@ -1,4 +1,4 @@
-"""Generate ringkasan-grafik hasil model untuk slide bimbingan.
+r"""Generate ringkasan-grafik hasil model untuk slide bimbingan.
 
 Input : reports/tabel_evaluasi_skripsi.csv (detail per komoditas)
 Output : reports/grafik/*.png

@@ -5,9 +5,9 @@
 - Sumber: 91 workbook Excel PIHPS yang diberikan pengguna, diolah dari baris wilayah `Kota Depok`.
 - Wilayah aktif: Kota Depok. Dataset Jawa Barat yang pernah dipakai sebelumnya bukan sumber untuk laporan/model saat ini.
 - Nama komoditas diambil dari nama file. Tanggal mengikuti isi workbook untuk mengatasi nama file yang tahunnya tidak sesuai.
-- `data/raw/prices.csv`: 20.631 observasi harga, 13 komoditas, rentang keseluruhan 2020-01-02–2026-10-21. Cakupan berbeda antar komoditas; Bawang Merah mulai 2021-01-04 dan Gula Pasir Lokal mulai 2022-01-03.
+- `data/raw/prices.csv` setelah pembaruan: 20.824 observasi harga, 16 nama komoditas, rentang keseluruhan 2020-01-02–2026-11-10. Cakupan berbeda antar komoditas; Bawang Merah mulai 2021-01-04 dan Gula Pasir Lokal mulai 2022-01-03. Tiga seri baru masih memiliki 15 observasi per komoditas.
 - Satuan harga dataset aktif: rupiah per kilogram (Rp/kg), sesuai konfirmasi pengguna.
-- `data/processed/combined_daily.csv` adalah data harga harian yang sudah dibersihkan dan digabung dengan fitur eksternal.
+- `data/processed/combined_daily.csv` adalah data harga harian yang sudah dibersihkan dan digabung dengan fitur eksternal; setelah pembaruan berisi 31.466 baris sampai 2026-11-10.
 
 ## Cuaca historis aktif
 
@@ -29,3 +29,11 @@
 - Fitur: `is_libur_nasional` (114 hari), `is_cuti_bersama` (50 hari), dan `is_weekend` (730 hari), dipetakan dari kolom sumber `is_libur_nasional`, `is_cuti_bersama`, dan `is_akhir_pekan`.
 - Kolom `keterangan` pada CSV sumber memuat tanggal libur/cuti terkait Idulfitri. Pipeline membentuk `is_idul_fitri` dari keterangan yang menyebut Idulfitri/Lebaran dan memasukkannya sebagai fitur eksternal tersendiri. CSV tidak menandai periode Ramadan atau rentang hari menjelang Idulfitri.
 - Jika data harga, cuaca, atau kalender berubah, jalankan `scripts/prepare_data.py`, latih ulang semua model, perbarui simulasi, dan regenerasi tabel/grafik.
+
+## Pembaruan harga PIHPS 2026-11-10
+
+- Pengguna memeriksa ulang 13 workbook; yang diproses adalah observasi berlabel `Kota Depok`. Salinan sumber disimpan pada `data/source_pihps/updates/2026-11-10/`.
+- Header tanggal workbook berakhir 2026-11-30, tetapi nilai harga terisi hanya 2026-10-21–2026-11-10 (15 hari observasi per workbook); tanggal 11–30 November tidak dimasukkan karena belum memiliki nilai aktual.
+- Minyak goreng kemasan bermerk dan curah diselaraskan dengan seri terdahulu `Minyak Bermerk` dan `Minyak Curah`. `Gula Pasir`, `Cabai Merah Besar`, dan `Cabai Merah Keriting` disimpan sebagai seri tersendiri, tidak dicampur dengan gula premium/lokal atau seri `Cabai Merah` lama.
+- Nilai baru menggantikan nilai lama hanya pada kunci tanggal-komoditas-lokasi yang sama. Salinan sebelum pembaruan: `backups/prices_before_pihps_update_20261110.csv`. Ringkasan sumber: `data/processed/pihps_update_audit_20261110.csv`.
+- Evaluasi holdout tetap tersimpan terpisah; 52 model operasional (13 komoditas × empat varian) kemudian di-fit ulang dengan seluruh histori yang tersedia sampai tanggal terakhir per seri. Manifest: `reports/final_models_manifest.csv`. Tiga seri baru belum cukup panjang untuk menghasilkan model.

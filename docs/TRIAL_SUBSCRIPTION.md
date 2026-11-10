@@ -1,45 +1,40 @@
-# Pendaftaran, trial, dan langganan
+# Login Google, trial, dan pembayaran
 
-## Yang sudah tersedia
+## Alur akun
 
-- Pendaftaran dan login menggunakan Google OpenID Connect melalui `st.login`. Login Google membuat akun aplikasi saat pertama masuk; aplikasi tidak menyimpan password pengguna.
-- Akun baru mendapat trial 7 hari, satu kali per alamat email terverifikasi.
-- Setelah trial berakhir, dashboard terkunci sampai pengelola mengaktifkan langganan.
-- Paket berbayar ditampilkan dari konfigurasi dan dapat memakai hosted payment link atau instruksi transfer manual.
-- Setelah pembayaran diterima dan diverifikasi, pengelola mengaktifkan akses untuk periode yang tercantum.
+- Halaman HTML memakai login Google OpenID Connect lewat `GET /auth/login`; aplikasi tidak menyimpan password Google.
+- Login Google pertama membuat akun dan trial 7 hari untuk email Google yang terverifikasi.
+- Setelah login berhasil, server mengarahkan pengguna kembali ke dashboard. Tombol **Coba demo** tetap tersedia tanpa akun, tetapi demo tidak boleh membuat transaksi atau langganan pelanggan.
 
-## Konfigurasi paket dan metode pembayaran
+## Callback Google lokal
 
-Salin `.streamlit/secrets.example.toml` menjadi `.streamlit/secrets.toml`, lalu isi bagian `[billing]` dengan harga dan metode pembayaran usaha. File `secrets.toml` diabaikan Git; jangan dibagikan atau diunggah.
+1. Di `.streamlit/secrets.toml`, isi kredensial Google OAuth pada bagian `[auth.google]` dan gunakan callback `http://127.0.0.1:8000/auth/callback`.
+2. Tambahkan URI yang sama persis di Google Cloud Console → OAuth Client → Authorized redirect URIs. Untuk domain produksi, pakai URL HTTPS domain tersebut dan samakan dengan `auth.redirect_uri`.
+3. Jalankan `python -m backend.server` dari folder `C:\pangan`, lalu buka `http://127.0.0.1:8000`. Jangan memakai `localhost` kalau OAuth Client hanya mendaftarkan `127.0.0.1` (dan sebaliknya). Host dan port harus sama dengan callback.
 
-- `plan_name`: nama paket yang ditampilkan.
-- `price_idr`: harga paket dalam rupiah. Nilai `0` berarti harga belum ditetapkan dan tombol pembayaran belum ditampilkan.
-- `duration_days`: masa akses setelah pembayaran diverifikasi (default 30 hari).
-- `checkout_url`: hosted payment link dari penyedia yang dipilih. Pengelola tetap memverifikasi pembayaran sebelum aktivasi.
-- `payment_instructions`: instruksi transfer manual jika belum memakai checkout.
-- `support_url`: tautan kontak pengelola, misalnya tautan WhatsApp bisnis.
+## Konfigurasi hosting
 
-Pilih penyedia pembayaran, biaya layanan, aturan pembatalan/refund, dan harga setelah memvalidasi ke UMKM. Jangan mengisi nominal contoh sebagai harga final tanpa keputusan pengelola.
+Jangan commit `.streamlit/secrets.toml`. Di dashboard hosting, masukkan variabel lingkungan berikut; variabel lingkungan mengesampingkan nilai lokal pada file TOML:
 
-## Aktifkan langganan secara manual
+- `PANGAN_HOST=0.0.0.0` agar aplikasi menerima koneksi dari reverse proxy hosting.
+- `PANGAN_PORT` atau variabel standar hosting `PORT` untuk port server.
+- `PANGAN_DB_PATH` ke file database pada persistent disk/volume, misalnya `/var/data/pangan-app.sqlite3`.
+- `PANGAN_OAUTH_REDIRECT_URI=https://domain-aplikasi/auth/callback`.
+- `PANGAN_GOOGLE_CLIENT_ID`, `PANGAN_GOOGLE_CLIENT_SECRET`, dan `PANGAN_COOKIE_SECRET` (acak, minimal 32 karakter).
+- `PANGAN_ADMIN_EMAILS` berisi email admin yang dipisahkan koma.
 
-Sesudah pembayaran benar-benar diterima dan diverifikasi di dashboard penyedia/bank, jalankan dari PowerShell pada folder `C:\pangan`:
+Callback OAuth produksi harus HTTPS. Jika rahasia OAuth belum lengkap atau callback publik memakai HTTP, server menolak sesi login; sesi development fallback tidak diterima sebagai akun admin. Setelah mengubah variabel lingkungan, restart aplikasi. Tambahkan callback HTTPS yang sama persis di Google Cloud Console.
 
-```powershell
-.\.venv\Scripts\python.exe .\scripts\activate_subscription.py email-pengguna@gmail.com --days 30
-```
+## Pembayaran paket
 
-Perintah memperpanjang akses akun yang pernah login. Jangan menjalankannya hanya karena pengguna mengirim bukti yang belum diverifikasi. Prototipe ini belum memproses webhook pembayaran, aktivasi otomatis, pengembalian dana, atau perpanjangan otomatis.
+Tombol **Pilih paket ini** mengirim permintaan ke `POST /api/subscription/request`. Permintaan dan transaksi dicatat pada database aplikasi. Untuk uji transfer manual, isi `[billing]` dengan `provider = "manual"`, detail rekening yang benar, dan instruksi pembayaran. Admin dapat membuka **Pembayaran & langganan** di dashboard, mencocokkan transfer dengan mutasi rekening, lalu menekan **Konfirmasi**. Tombol hanya menerima transaksi manual yang masih pending; konfirmasi memperbarui status transaksi dan masa akses akun.
 
-## Jalankan preview lokal
+Untuk menagih dengan transfer manual, isi variabel hosting `PANGAN_BILLING_PROVIDER=manual`, `PANGAN_BANK_NAME`, `PANGAN_BANK_NUMBER`, `PANGAN_BANK_ACCOUNT_NAME`, dan `PANGAN_PAYMENT_INSTRUCTIONS` dengan informasi usaha yang benar. Jika rekening dan instruksi kosong, permintaan paket berbayar dinonaktifkan. Akses trial gratis dapat dipakai untuk pilot UMKM tanpa mengaktifkan pembayaran.
 
-```powershell
-cd C:\pangan
-.\scripts\run_local.ps1
-```
+Untuk Xendit, isi `provider = "xendit"`, `xendit_api_key`, dan `xendit_webhook_token` dengan nilai akun pengelola. Atur URL webhook invoice menjadi `https://domain-aplikasi/api/webhook/xendit` di dashboard Xendit, lalu gunakan token callback yang sama pada konfigurasi. Token wajib; webhook tanpa token atau dengan token salah ditolak. Pemberitahuan `PAID` dicocokkan ke referensi dan nominal invoice tersimpan sebelum transaksi ditandai berhasil dan paket diaktifkan. Status pembayaran dan riwayatnya dapat dilihat admin pada bagian **Pembayaran & langganan**.
 
-Buka `http://localhost:8502`. Mode preview hanya untuk pengembangan lokal; preview tidak menjalankan pendaftaran/trial pelanggan atau pembayaran.
+Jangan menaruh API key atau token callback di GitHub. Saat deploy, pastikan `data/app_users.sqlite3` berada di penyimpanan persisten/volume yang dibackup. Hosting dengan filesystem sementara dapat menghapus akun dan transaksi saat redeploy. Pembayaran nyata belum diverifikasi sampai kredensial milik pengelola dipasang dan alur sandbox diuji dari pembuatan invoice sampai aktivasi.
 
-## Batas sebelum dipakai pelanggan sungguhan
+## Batas purwarupa
 
-Aplikasi memakai SQLite lokal untuk purwarupa satu server. Sebelum dibuka untuk pelanggan melalui internet, siapkan hosting HTTPS, penyimpanan akun persisten, backup, kebijakan privasi, prosedur dukungan dan refund, serta integrasi pembayaran yang diverifikasi server-side. Login email/password mandiri belum dibuat; untuk purwarupa ini autentikasi ditangani Google agar aplikasi tidak menyimpan password.
+Dashboard admin mencatat pembayaran sukses dan pending, tetapi pengembalian dana harus dikelola melalui penyedia pembayaran. Integrasi Xendit yang tersedia adalah invoice per transaksi; pembayaran satu paket tidak otomatis memperpanjang langganan bulan berikutnya. Google login hanya memverifikasi identitas, bukan pembayaran. Sebelum menerima pengguna berbayar, siapkan hosting HTTPS, penyimpanan persisten dan backup, kebijakan privasi, layanan bantuan, serta uji sandbox gateway.

@@ -1,0 +1,53 @@
+commodity,model,features,training_start,training_end,training_sequences,epochs,window_days,forecast_horizon_days
+Bawang Merah,LSTM,harga saja,2021-03-05,2026-11-10,2071,15,30,7
+Bawang Merah,LSTM,harga + cuaca + kalender + siklus tanggal,2021-03-05,2026-11-10,2071,15,30,7
+Bawang Merah,GRU,harga saja,2021-03-05,2026-11-10,2071,15,30,7
+Bawang Merah,GRU,harga + cuaca + kalender + siklus tanggal,2021-03-05,2026-11-10,2071,15,30,7
+Bawang Putih,LSTM,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Bawang Putih,LSTM,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Bawang Putih,GRU,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Bawang Putih,GRU,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Beras,LSTM,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Beras,LSTM,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Beras,GRU,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Beras,GRU,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Cabai Merah,LSTM,harga saja,2020-03-02,2026-10-19,2417,15,30,7
+Cabai Merah,LSTM,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-10-19,2417,15,30,7
+Cabai Merah,GRU,harga saja,2020-03-02,2026-10-19,2417,15,30,7
+Cabai Merah,GRU,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-10-19,2417,15,30,7
+Cabai Rawit Hijau,LSTM,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Cabai Rawit Hijau,LSTM,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Cabai Rawit Hijau,GRU,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Cabai Rawit Hijau,GRU,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Cabai Rawit Merah,LSTM,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Cabai Rawit Merah,LSTM,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Cabai Rawit Merah,GRU,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Cabai Rawit Merah,GRU,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Daging Ayam,LSTM,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Daging Ayam,LSTM,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Daging Ayam,GRU,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Daging Ayam,GRU,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Daging Sapi,LSTM,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Daging Sapi,LSTM,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Daging Sapi,GRU,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Daging Sapi,GRU,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Gula Pasir Kualitas Premium,LSTM,harga saja,2020-03-02,2026-10-21,2419,15,30,7
+Gula Pasir Kualitas Premium,LSTM,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-10-21,2419,15,30,7
+Gula Pasir Kualitas Premium,GRU,harga saja,2020-03-02,2026-10-21,2419,15,30,7
+Gula Pasir Kualitas Premium,GRU,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-10-21,2419,15,30,7
+Gula Pasir Lokal,LSTM,harga saja,2022-03-04,2026-10-21,1687,15,30,7
+Gula Pasir Lokal,LSTM,harga + cuaca + kalender + siklus tanggal,2022-03-04,2026-10-21,1687,15,30,7
+Gula Pasir Lokal,GRU,harga saja,2022-03-04,2026-10-21,1687,15,30,7
+Gula Pasir Lokal,GRU,harga + cuaca + kalender + siklus tanggal,2022-03-04,2026-10-21,1687,15,30,7
+Minyak Bermerk,LSTM,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Minyak Bermerk,LSTM,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Minyak Bermerk,GRU,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Minyak Bermerk,GRU,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Minyak Curah,LSTM,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Minyak Curah,LSTM,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Minyak Curah,GRU,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Minyak Curah,GRU,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Telur Ayam,LSTM,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Telur Ayam,LSTM,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7
+Telur Ayam,GRU,harga saja,2020-03-02,2026-11-10,2439,15,30,7
+Telur Ayam,GRU,harga + cuaca + kalender + siklus tanggal,2020-03-02,2026-11-10,2439,15,30,7

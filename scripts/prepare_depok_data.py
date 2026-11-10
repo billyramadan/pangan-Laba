@@ -10,7 +10,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data" / "source_pihps"
 OUT = ROOT / "data" / "processed" / "prices_depok_candidate.csv"
-sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "backend" / "src"))
 from pangan_forecast.pihps_excel import inspect_pihps_excel, extract_pihps_series
 
 candidates: dict[tuple[str, int], list[tuple[Path, pd.DataFrame, bool]]] = defaultdict(list)

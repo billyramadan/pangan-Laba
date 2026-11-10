@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#E4572E"><title>PanganLaba | Asisten usaha kuliner</title>
+<style>
+/* Mirror app.py Streamlit: warm canvas, tomato primary, spice gold */
+:root{--ink:#2A211C;--muted:#5E5149;--primary:#E4572E;--primary-dark:#C13E1D;--spice:#E9A33B;--line:#E6DBCC;--surface:#FFFDFA;--canvas:#FAF5EE;--green:#355F4E}
+*{box-sizing:border-box}
+body{margin:0;background:var(--canvas);color:var(--ink);font:15px/1.55 Inter,"Segoe UI",Arial,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:var(--primary-dark)}
+.page{max-width:1200px;margin:0 auto;padding:22px 24px 60px}
+.brand-row{display:flex;align-items:center;gap:12px;padding:10px 0 4px}
+.brandmark{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--primary);color:#fff;font-size:21px;font-weight:850}
+.brand-name{font-size:21px;font-weight:850;letter-spacing:-.02em}
+.landing-nav{display:flex;gap:1.2rem;justify-content:flex-end;flex-wrap:wrap}
+.landing-nav a{color:var(--muted);font-weight:650;text-decoration:none;font-size:.95rem}
+.landing-nav a:hover{color:var(--primary)}
+.section-label{color:var(--primary-dark);font-size:.73rem;font-weight:850;letter-spacing:.13em;text-transform:uppercase;margin:1.6rem 0 .6rem}
+.page-intro{color:#655b52;max-width:940px;font-size:1.08rem;line-height:1.7;margin:.35rem 0 .8rem}
+.hero{display:grid;grid-template-columns:1.2fr .85fr;gap:24px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:26px 28px;box-shadow:0 9px 28px rgba(94,58,34,.06);margin-bottom:18px}
+.hero-label{color:var(--primary-dark);font-size:.7rem;font-weight:850;letter-spacing:.11em;text-transform:uppercase}
+.hero h1{font-size:clamp(26px,3.1vw,34px);line-height:1.06;letter-spacing:-.03em;margin:.4rem 0}
+.hero-img{width:100%;max-height:300px;object-fit:contain;background:#e8f5f6;border:1px solid #dce9e8;border-radius:16px;padding:8px}
+.hero-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.8rem}
+.btn{border:1px solid #d9cbbd;background:var(--surface);color:var(--ink);padding:9px 14px;border-radius:9px;font-weight:700;text-decoration:none;display:inline-block;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(94,58,34,.1)}
+.btn.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+.btn.primary:hover{background:var(--primary-dark)}
+.btn.small{padding:6px 10px;font-size:13px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 5px 18px rgba(94,58,34,.055);margin-bottom:16px}
+.card h3{font-size:17px;margin:0 0 8px;letter-spacing:-.01em}
+.metric{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:15px 18px;box-shadow:0 5px 18px rgba(94,58,34,.055)}
+.metric .l{font-size:.8rem;color:var(--muted);font-weight:650}
+.metric .v{font-size:1.42rem;font-weight:700;letter-spacing:-.02em;line-height:1.25;margin-top:2px}
+.metric .d{color:var(--primary-dark);font-size:.9rem}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.formgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field label{font-size:12px;font-weight:750;color:#5a554d}
+.field input,.field select,.field textarea{width:100%;padding:9px 10px;border:1px solid #d9cbbd;border-radius:9px;background:#fff;color:var(--ink);min-height:41px}
+.field textarea{min-height:80px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid #dfa46a66;border-color:#bd754f}
+.expander{border:1px solid var(--line);border-radius:12px;background:var(--surface);margin-bottom:12px;box-shadow:0 3px 12px rgba(32,53,47,.025)}
+.expander summary{padding:14px 16px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.expander[open] summary{border-bottom:1px solid var(--line)}
+.expander-in{padding:14px 16px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.notice{padding:11px 13px;border-radius:10px;background:#f8f0e5;color:#72552f;border:1px solid #eedbc4;border-left:4px solid var(--primary);font-size:13px;margin:10px 0;line-height:1.6}
+.notice.green{background:#eaf3ed;color:#35684e;border-color:#d2e6d7}
+.notice.red{background:#fbeee6;color:#9d3d2b;border-color:#edc8bb}
+.status{font-size:13px;min-height:20px;color:var(--green);margin-top:8px}
+.status:empty{display:none}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:11px;margin-top:10px;background:#fff}
+table{border-collapse:collapse;width:100%;min-width:620px;background:#fff}
+th{background:var(--primary-dark);color:#fff;font-weight:700;font-size:12px;text-align:left;position:sticky;top:0;padding:12px 13px;border-bottom:3px solid var(--spice)}
+td,th{padding:11px 13px;border-bottom:1px solid #E6DBCC;white-space:nowrap}
+tbody tr:nth-child(odd){background:#f7efe4}
+tbody tr:nth-child(even){background:#fffdfa}
+tbody tr:hover{background:#f2e3d2}
+.recipe-row{display:grid;grid-template-columns:1.3fr .7fr .9fr 36px;gap:8px;margin:7px 0}
+.recipe-row input,.recipe-row select{padding:8px;border:1px solid var(--line);border-radius:7px;min-width:0}
+.remove{border:0;background:#f6e5d2;border-radius:7px;color:var(--primary-dark);font-weight:800}
+.chartbox{height:255px;position:relative}
+.chartbox canvas{width:100%;height:100%}
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin:0 0 18px;overflow:auto}
+.tabs button{border:0;background:none;padding:12px 16px;color:var(--muted);font-weight:700;white-space:nowrap;border-radius:10px 10px 0 0;border-bottom:3px solid transparent}
+.tabs button.active{background:var(--primary);color:#fff;border-color:var(--spice)}
+.sidebar{background:#f7efe4;border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+.sidebar h4{margin:12px 0 6px;font-size:14px}
+.sidebar .field{margin-bottom:10px}
+.empty{padding:24px;text-align:center;color:var(--muted)}
+.landing-chips{display:flex;flex-wrap:wrap;gap:.55rem;justify-content:center;margin-top:18px}
+.landing-chip{display:inline-block;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:.42rem .95rem;font-size:.8rem;font-weight:650;color:var(--muted);white-space:nowrap}
+.hidden{display:none!important}
+.toast{position:fixed;right:20px;bottom:20px;background:#2c302b;color:#fff;padding:12px 17px;border-radius:9px;box-shadow:0 5px 18px rgba(0,0,0,.2);z-index:20;max-width:350px}
+@media(max-width:900px){.hero,.grid3,.grid4,.grid2,.formgrid{grid-template-columns:1fr}.landing-nav{justify-content:flex-start}}
+</style>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="page">
+  <div class="brand-row">
+    <span class="brandmark">P</span><span class="brand-name">PanganLaba</span>
+    <button id="mobileMenuToggle" class="btn small mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="landingNav">Menu</button>
+    <div class="landing-nav" id="landingNav">
+      <a href="#fitur">Fitur</a><a href="#cara-kerja">Cara kerja</a><a href="#harga">Harga</a><a href="#pertanyaan">Pertanyaan</a>
+    </div>
+    <div class="head-actions"><button class="btn small" data-action="startSignup">Masuk</button><button class="btn primary small" data-action="startSignup">Mulai gratis</button></div>
+  </div>
+
+  <!-- ===== LANDING PUBLIK (mirip app.py saat belum masuk) ===== -->
+  <section id="landing">
+    <div id="accountNotice" class="notice red hidden" role="status" aria-live="polite"></div>
+    <div class="hero">
+      <div class="hero-copy">
+        <div class="hero-label" id="greet">Selamat datang</div>
+        <h1>Lihat keuangan usaha secara jelas.</h1>
+        <p class="hero-sub">Hitung modal, prediksi harga, dan saran belanja dari data harga PIHPS Kota Depok.</p>
+        <div class="hero-actions">
+          <button class="btn primary" data-action="startSignup">Mulai gratis dengan Google</button>
+          <a class="btn" href="#cara-kerja">Lihat cara kerjanya</a>
+        </div>
+        <div class="hero-trust"><span class="chip">✓ Tanpa kartu kredit</span><span class="chip">✓ Trial 7 hari</span><span class="chip">✓ Siap dipakai dari HP</span></div>
+      </div>
+      <div class="hero-visual">
+        <img class="hero-img" src="assets/umkm_header.jpg" alt="Ilustrasi gerai UMKM kuliner">
+        <div class="hero-panel">
+          <div class="hp-head"><span class="brandmark">P</span><span class="brand-name">PanganLaba</span><span class="hp-eyebrow">Contoh hitungan</span></div>
+          <div class="hp-stats">
+            <div><label>Modal per porsi</label><b>Rp8.400</b></div>
+            <div><label>Saran harga jual</label><b>≥ Rp14.000</b></div>
+            <div><label>Prediksi bahan</label><b><span class="trend-pill up">+12% naik</span></b></div>
+          </div>
+          <div class="hp-spark">
+            <svg viewBox="0 0 260 56" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M6 46 L40 40 L74 44 L108 30 L142 34 L176 22 L210 26 L244 12" fill="none" stroke="#E4572E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 52 L40 47 L74 50 L108 41 L142 44 L176 35 L210 38 L244 28" fill="none" stroke="#d5c5b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 3"/>
+            </svg>
+            <span class="hp-spark-legend">Harga aktual&nbsp;·&nbsp;prediksi</span>
+          </div>
+          <div class="hp-note">Angka contoh, bukan data usaha sungguhan.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fitur" class="section-label">Fitur</div>
+    <div class="grid3 reveal">
+      <div class="card feature-link" data-action="goFeature" data-args='["business","profitCard"]'><span class="f-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16V7"/><path d="M18 12h.01"/></svg></span><h3>Modal &amp; harga jual</h3><span class="arrow">Buka →</span></div>
+      <div class="card feature-link" data-action="goFeature" data-args='["research","researchChart"]'><span class="f-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 7l-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg></span><h3>Prediksi harga bahan</h3><span class="arrow">Buka →</span></div>
+      <div class="card feature-link" data-action="goFeature" data-args='["business","tanyaCard"]'><span class="f-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><h3>Tanya PanganLaba</h3><span class="arrow">Buka →</span></div>
+    </div>
+
+    <div id="sudah-bisa" class="section-label">Juga sudah bisa</div>
+    <div class="grid2 reveal">
+      <div class="card feature-link" data-action="goFeature" data-args='["business","simulationCard"]'><span class="f-icon sm"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span><h3>Simulasi belanja</h3></div>
+      <div class="card feature-link" data-action="goFeature" data-args='["business","historyTable"]'><span class="f-icon sm"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><h3>Riwayat laba-rugi</h3></div>
+      <div class="card feature-link" data-action="goFeature" data-args='["business","summaryMetrics"]'><span class="f-icon sm"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><h3>Data per akun terpisah</h3></div>
+      <div class="card feature-link" data-action="goFeature" data-args='["business","menuAnalysis"]'><span class="f-icon sm"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg></span><h3>Laporan bisa diunduh</h3></div>
+    </div>
+
+    <div id="untuk-siapa" class="section-label">Dibuat untuk usaha kuliner</div>
+    <div class="chips-grid reveal">
+      <span class="chip">Warung makan</span><span class="chip">Pecel lele</span><span class="chip">Gado-gado</span>
+      <span class="chip">Katering rumahan</span><span class="chip">Jajanan pasar</span><span class="chip">Bakso &amp; soto</span>
+      <span class="chip">Otak-otak &amp; frozen food</span><span class="chip">Dessert &amp; kue</span>
+    </div>
+
+    <div id="cara-kerja" class="section-label">Cara kerja</div>
+    <div class="steps reveal">
+      <div class="step"><span class="step-n">1</span><div><strong>Daftar dengan Google</strong><p>Akun trial gratis, tanpa kartu kredit.</p></div></div>
+      <div class="step"><span class="step-n">2</span><div><strong>Pilih komoditas &amp; periode</strong><p>Data harga PIHPS Kota Depok siap.</p></div></div>
+      <div class="step"><span class="step-n">3</span><div><strong>Isi resep &amp; bahan</strong><p>Takaran per porsi + harga beli.</p></div></div>
+      <div class="step"><span class="step-n">4</span><div><strong>Lihat prediksi &amp; laba</strong><p>Saran harga jual dan estimasi untung.</p></div></div>
+      <div class="step"><span class="step-n">5</span><div><strong>Belanja sesuai saran</strong><p>Simulasi beli sekarang vs tunda.</p></div></div>
+    </div>
+
+    <div id="harga" class="section-label">Paket &amp; harga</div>
+    <div class="grid3 reveal" id="landingPlans"></div>
+
+    <div id="pertanyaan" class="section-label">Pertanyaan umum</div>
+    <details class="expander"><summary>Berapa lama masa trial?<span>▾</span></summary><div class="expander-in">7 hari gratis sejak login pertama, tanpa kartu kredit.</div></details>
+    <details class="expander"><summary>Bagaimana membayar setelah trial habis?<span>▾</span></summary><div class="expander-in">Pilih paket setelah masuk; akses aktif setelah pembayaran diverifikasi.</div></details>
+    <details class="expander"><summary>Apakah data usaha saya terpisah?<span>▾</span></summary><div class="expander-in">Ya, data tiap akun tersimpan terpisah.</div></details>
+    <details class="expander"><summary>Bisa dipakai dari HP?<span>▾</span></summary><div class="expander-in">Ya, tampilan menyesuaikan layar HP.</div></details>
+    <details class="expander"><summary>Apakah ini aplikasi kasir?<span>▾</span></summary><div class="expander-in">Bukan kasir. PanganLaba fokus menghitung modal per porsi, memprediksi harga bahan, dan memberi saran belanja.</div></details>
+    <details class="expander"><summary>Apakah saya perlu bisa pembukuan?<span>▾</span></summary><div class="expander-in">Tidak. Isi resep dan harga jual; laba dihitung otomatis.</div></details>
+    <details class="expander"><summary>Bagaimana keamanan data usaha saya?<span>▾</span></summary><div class="expander-in">Data tiap akun tersimpan terpisah dan hanya bisa diakses akun itu.</div></details>
+
+    <div class="landing-cta reveal">
+      <h2>Siap mulai? Buat akun gratis.</h2>
+      <button class="btn primary" style="font-size:1rem;padding:12px 22px" data-action="startSignup">Mulai gratis sekarang</button>
+    </div>
+
+    <footer class="landing-footer">
+      <div><h4>PanganLaba</h4><span>Asisten usaha kuliner · Kota Depok</span></div>
+      <div><h4>Produk</h4><a href="#fitur">Fitur</a><a href="#cara-kerja">Cara kerja</a><a href="#harga">Harga</a><a href="#pertanyaan">Pertanyaan</a></div>
+      <div><h4>Bantuan</h4><span>Pertanyaan umum</span><span>Hubungi pengelola</span><span>Kebijakan privasi · Syarat &amp; ketentuan</span></div>
+    </footer>
+  </section>
+
+  <!-- ===== DASHBOARD (setelah "masuk" preview) ===== -->
+  <section id="app" class="hidden">
+    <div class="layout">
+      <aside class="side">
+        <div class="brand-row" style="padding:0 2px 12px">
+          <span class="brandmark" style="width:34px;height:34px;font-size:17px">P</span><span class="brand-name" style="font-size:18px">PanganLaba</span>
+        </div>
+        <div class="side-user" id="sideUser">
+          <div class="avatar" id="avatarLetter">?</div>
+          <div class="su-meta">
+            <div class="su-name" id="suName">Tamu</div>
+            <div class="su-plan" id="suPlan">Memeriksa status…</div>
+          </div>
+        </div>
+        <div class="side-label">Menu</div>
+        <button class="active" data-nav="summaryMetrics" data-action="navGo" data-args='["business","summaryMetrics"]'><span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg></span> Beranda</button>
+        <button data-nav="profitCard" data-action="navGo" data-args='["business","profitCard"]'><span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2V3z"/><path d="M9 8h6M9 12h6"/></svg></span> Modal &amp; Laba</button>
+        <button data-nav="simulationCard" data-action="navGo" data-args='["business","simulationCard"]'><span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16l-1.5 13h-13L4 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg></span> Simulasi Belanja</button>
+        <button data-nav="historyTable" data-action="navGo" data-args='["business","historyTable"]'><span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span> Riwayat</button>
+        <button data-nav="menuAnalysis" data-action="navGo" data-args='["business","menuAnalysis"]'><span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16"/><path d="M7 20v-6M12 20V8M17 20v-9"/></svg></span> Analisis menu</button>
+        <button data-nav="tanyaCard" data-action="navGo" data-args='["business","tanyaCard"]'><span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-8 8H4v-9a8 8 0 0 1 16 0z"/><path d="M8 10h8M8 14h5"/></svg></span> Tanya</button>
+        <button id="researchSide" data-nav="research" data-action="navGo" data-args='["research"]'><span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v5L4.5 18 5.8 21h11.4l1.8-3L14 8V3"/><path d="M7 3h10"/><path d="M8.5 15h7"/></svg></span> Penelitian</button>
+        <button data-action="showPlans"><span class="ico"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg></span> Paket</button>
+        <div class="side-note">Harga PIHPS Depok · model 7 hari</div>
+        <div class="side-label" style="margin-top:20px">Belanja</div>
+        <div class="field" style="margin:6px 10px"><label>Komoditas bahan baku</label><select id="commodity"></select></div>
+        <div class="field" style="margin:6px 10px"><label>Model prediksi</label><select id="variant"></select></div>
+        <div class="field" style="margin:6px 10px"><label>Jadwal belanja stok</label><select id="restock"><option value="2">Setiap 2 hari</option><option value="7" selected>Seminggu sekali</option></select></div>
+      </aside>
+      <div class="main">
+    <div id="plansCard" class="hidden" style="margin-bottom:16px"></div>
+
+    <section class="mobile-filters" aria-label="Pilihan prediksi dan belanja">
+      <div class="mobile-filters-title">Atur prediksi harga</div>
+      <div class="mobile-filter-grid">
+        <div class="field"><label for="commodityMobile">Komoditas</label><select id="commodityMobile"></select></div>
+        <div class="field"><label for="variantMobile">Model dan fitur</label><select id="variantMobile"></select></div>
+        <div class="field"><label for="restockMobile">Jadwal belanja stok</label><select id="restockMobile"><option value="2">Setiap 2 hari</option><option value="7" selected>Seminggu sekali</option></select></div>
+      </div>
+    </section>
+
+    <div class="tabs"><button class="active" data-tab="business" data-action="showTab" data-args='["business"]'>Beranda usaha</button><button id="researchTab" class="hidden" data-tab="research" data-action="showTab" data-args='["research"]'>Hasil penelitian</button></div>
+
+    <!-- HEADER DASHBOARD -->
+    <div class="dash-head">
+      <div>
+        <div class="eyebrow" id="greetDash">Selamat datang</div>
+        <h1>Ringkasan usaha</h1>
+      </div>
+      <div class="dash-actions">
+        <button class="btn primary" data-action="goTab" data-args='["business","profitCard"]'>Hitung modal menu</button>
+        <button class="btn" data-action="goTab" data-args='["business","summaryMetrics"]'>Lihat saran belanja</button>
+        <button class="btn" data-action="backToLanding">Keluar</button>
+      </div>
+    </div>
+
+    <!-- KPI USAHA (data nyata) -->
+    <div class="grid4" id="healthStrip" style="margin-bottom:18px"></div>
+
+    <!-- STATUS SUMBER DATA (mirip data_summary) -->
+    <div class="card data-status">
+      <div class="row" style="justify-content:space-between;gap:16px;align-items:flex-start">
+        <div style="min-width:0;flex:1">
+          <div class="eyebrow" style="margin:0 0 5px">Sumber data</div>
+          <div style="font-weight:800;color:var(--primary-dark);font-size:16px" id="readyLabel">Memeriksa…</div>
+          <div style="color:var(--muted);font-size:.9rem;line-height:1.6;margin-top:4px" id="readyDetail"></div>
+          <div style="color:var(--muted);font-size:.85rem;margin-top:5px" id="ovSource"></div>
+        </div>
+        <div class="stats-mini">
+          <div class="mini"><span id="ovComm">—</span><label>Komoditas</label></div>
+          <div class="mini"><span id="ovObs">—</span><label>Observasi harga</label></div>
+          <div class="mini"><span id="ovPeriod">—</span><label>Periode</label></div>
+        </div>
+      </div>
+    </div>
+
+    <details class="expander"><summary>Rancangan judul tugas akhir<span>▾</span></summary><div class="expander-in"><p style="color:var(--muted);line-height:1.7">Prediksi Harga Komoditas Pangan Strategis dan Analisis Laba Menu untuk Mendukung Keputusan Belanja UMKM Kuliner Menggunakan LSTM dan GRU dengan Fitur Eksternal.</p><div style="color:var(--muted);font-size:.85rem"></div></div></details>
+
+    <!-- LATIH MODEL DARI DATA PROYEK (mirip expander py) -->
+    <div id="adminTools" class="hidden">
+    <details class="expander" id="paymentAdmin" open><summary>Pembayaran &amp; langganan<span>▾</span></summary><div class="expander-in">
+      <p style="color:var(--muted);margin-top:0">Pantau pembayaran pengguna. Transfer manual perlu dicocokkan dengan mutasi rekening sebelum dikonfirmasi. Pembayaran gateway berubah otomatis setelah notifikasi terverifikasi.</p>
+      <div class="grid3" id="paymentSummary" aria-live="polite"></div>
+      <div class="row" style="margin-top:12px"><button class="btn" type="button" data-action="loadAdminPayments">Muat ulang transaksi</button><span id="paymentAdminStatus" class="status" role="status" aria-live="polite"></span></div>
+      <div id="paymentAdminTable"></div>
+    </div></details>
+
+    <details class="expander" id="trainExpander"><summary>Latih model dari data proyek<span>▾</span></summary><div class="expander-in">
+      <p style="color:var(--muted)">Dataset PIHPS yang tersimpan di proyek dapat langsung dipakai untuk melatih model.</p>
+      <div class="notice green">Data cuaca historis Depok berbasis ERA5 (Open-Meteo; 1 Jan 2020–26 Okt 2026) tersedia dan dipakai sebagai fitur eksternal.</div>
+      <div class="notice green">Data kalender Indonesia (libur nasional, cuti bersama, akhir pekan, dan keterangan Idulfitri) tersedia dan dipakai pada paket fitur eksternal.</div>
+      <div class="row" style="margin-top:10px"><div class="field" style="flex:1"><label>Jumlah epoch</label><input id="epochs" type="number" min="1" max="100" value="15"></div></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" data-action="startTraining">Latih model dari data proyek</button><span id="trainStatus" class="status"></span></div>
+    </div></details>
+
+    <!-- IMPOR DATA PIHPS DARI EXCEL (mirip expander py) -->
+    <details class="expander"><summary>Impor data PIHPS dari Excel (opsional)<span>▾</span></summary><div class="expander-in">
+      <div style="color:var(--muted);font-size:.88rem;line-height:1.6">Gunakan untuk menambah atau mengganti harga PIHPS dan memasukkan data historis cuaca Depok. Data cuaca yang diunggah menjadi fitur eksternal model. Pembacaan file .xlsx memerlukan paket openpyxl pada environment Python Streamlit.</div>
+      <div class="field" style="margin-top:10px"><label>File Excel PIHPS (.xlsx/.xlsm)</label><input id="excelFiles" type="file" accept=".xlsx,.xlsm" multiple></div>
+      <div id="excelMappings" style="margin-top:8px"></div>
+      <div class="field" style="margin-top:10px"><label>CSV cuaca (disarankan untuk fitur eksternal): date,rain_mm,temp_c</label><input id="weatherFile" type="file" accept=".csv"></div>
+      <div class="field" style="margin-top:10px"><label>CSV kalender Indonesia: date/tanggal, penanda libur/cuti/weekend; keterangan Idulfitri opsional</label><input id="calendarFile" type="file" accept=".csv"></div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" data-action="processUploads">Proses Excel dan latih model</button><span id="uploadStatus" class="status"></span></div>
+    </div></details></div>
+
+    <!-- TAB BERANDA USAHA -->
+    <div id="tab-business">
+      <div class="section-label">Ringkasan untuk usaha</div>
+      <div class="caption" style="color:var(--muted);font-size:.85rem;margin-bottom:8px" id="evalCaption"></div>
+      <div class="grid3" id="summaryMetrics"></div>
+
+      <!-- DIAGRAM PREDIKSI -->
+      <div class="card" style="margin-top:14px">
+        <div class="row" style="justify-content:space-between"><h3 style="margin:0">Ringkasan data</h3><span style="font-size:.85rem;color:var(--muted)" id="homeChartCaption"></span></div>
+        <div class="chartbox" style="height:250px"><canvas id="homeChart"></canvas></div>
+        <div style="color:var(--muted);font-size:.85rem;margin-top:6px">Grafik ringkasan data PIHPS Depok.</div>
+      </div>
+
+      <div class="section-label">Modal dan laba menu</div>
+      <div class="notice">Laba bersih di bawah ini dihitung dari resep, harga, penjualan, dan biaya yang Anda masukkan. Gunakan sebagai gambaran untuk merencanakan usaha; hasil aktual mengikuti kondisi penjualan dan biaya di lapangan.</div>
+
+      <div class="card" id="profitCard">
+        <h3>Kalkulator laba menu</h3>
+        <div class="formgrid">
+          <div class="field"><label>Nama menu</label><input id="menuName" placeholder="Contoh: Gado-gado"></div>
+          <div class="field"><label>Harga jual per porsi (Rp)</label><input id="sellingPrice" type="number" min="0" value="15000"></div>
+          <div class="field"><label>Porsi terjual pada periode ini</label><input id="portions" type="number" min="0" value="20"></div>
+        </div>
+        <div style="margin-top:14px;padding:12px 14px;background:#f8f0e5;border:1px solid #eedbc4;border-radius:10px">
+          <div class="row" style="justify-content:space-between;gap:10px"><strong>Geser margin jual</strong><span id="marginSuggest" style="font-weight:800;color:var(--primary-dark)"></span></div>
+          <input type="range" id="marginSlider" min="0" max="70" value="30" step="1" style="width:100%;margin-top:8px">
+          <div class="row" style="align-items:center;gap:10px;margin-top:6px">
+            <span style="color:var(--muted);font-size:.82rem;flex:1">Saran harga jual = modal bahan per porsi ÷ (1 − margin). Berubah otomatis saat resep atau margin digeser.</span>
+            <button class="btn small" data-action="applyMargin">Pakai sebagai harga jual</button>
+          </div>
+        </div>
+        <div style="margin-top:14px"><div style="font-weight:800;color:#2d2722"><span style="background:#f4e2cf;color:var(--primary-dark);border-radius:999px;padding:.22rem .55rem;font-size:.67rem;letter-spacing:.08em;font-weight:850">RESEP</span> Takaran bahan untuk satu porsi</div>
+        <div style="color:var(--muted);font-size:.88rem;margin:4px 0">Tambah satu bahan per baris. Gunakan gram; isi harga beli sendiri jika harga bahan tidak tersedia di PIHPS.</div>
+        <div id="recipeRows"></div>
+        <button class="btn small" style="margin-top:8px" data-action="addRecipeRow">＋ Tambah bahan</button></div>
+        <div class="grid2">
+          <div class="field"><label>Biaya lain per porsi (Rp)</label><input id="otherCost" type="number" min="0" value="0"></div>
+          <div class="field"><label>Biaya tetap periode ini (Rp)</label><input id="fixedCost" type="number" min="0" value="0"></div>
+          <div class="field"><label>Periode penjualan</label><select id="salesPeriod"><option>Harian</option><option>Mingguan</option><option>Bulanan</option></select></div>
+          <div class="field" style="justify-content:flex-end"><label class="row" style="gap:6px"><input type="checkbox" id="saveHistory" checked> Simpan ke riwayat akun</label></div>
+        </div>
+        <div class="row" style="margin-top:14px"><button class="btn primary" data-action="calculateProfit">Hitung laba menu</button><span id="profitStatus" class="status"></span></div>
+        <div id="profitResult" style="margin-top:8px"></div>
+      </div>
+
+      <div class="card">
+        <div class="row" style="justify-content:space-between"><h3 style="margin:0">Riwayat laba-rugi menu</h3><button class="btn small" data-action="downloadHistory">Unduh riwayat CSV</button></div>
+        <div id="historyTable" class="empty">Belum ada catatan. Hitung dan simpan penjualan menu untuk mulai membuat riwayat.</div>
+      </div>
+
+      <div class="card">
+        <h3>Analisis menu</h3>
+        <p style="color:var(--muted);font-size:.9rem">Rekap dari catatan laba menu: total omzet, laba bersih, dan menu paling menguntungkan.</p>
+        <div id="menuAnalysis" class="empty">Belum ada data untuk dianalisis. Hitung laba menu dulu.</div>
+      </div>
+
+      <div class="card" id="simulationCard">
+        <h3>Simulasi pembelian bahan baku</h3>
+        <p style="color:var(--muted);font-size:.9rem" id="simCaption"></p>
+        <div class="formgrid">
+          <div class="field"><label>Jumlah kg per transaksi</label><input id="simQty" type="number" min="0.1" step="0.1" value="1"></div>
+          <div class="field"><label>Maksimal tunda (hari)</label><select id="simWait"><option value="0">0 hari</option><option value="1">1 hari</option><option value="2" selected>2 hari</option><option value="3">3 hari</option></select></div>
+        </div>
+        <div class="row" style="margin-top:12px"><button class="btn primary" data-action="runSimulation">Jalankan simulasi</button><span id="simStatus" class="status"></span></div>
+        <div id="simResult" style="margin-top:10px"></div>
+        <div class="notice" style="margin-top:12px">Hasil ini simulasi retrospektif pada data uji, bukan bukti penghematan nyata. Belum memasukkan stok, biaya simpan, perubahan kebutuhan, kedaluwarsa, dan biaya transaksi; volume dihitung dalam kg dan harga dalam Rp/kg.</div>
+      </div>
+
+      <div class="card" id="tanyaCard">
+        <h3>Tanya PanganLaba</h3>
+        <p style="color:var(--muted);font-size:.9rem">Tanya pakai bahasa sehari-hari, dijawab dari data di aplikasi ini. Contoh: "Berapa laba menu saya?", "Prediksi harga beras?", "Saran belanja?".</p>
+        <div class="row"><input id="tanyaInput" placeholder="Ketik pertanyaan…" style="flex:1;min-height:41px;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);min-width:0"><button class="btn primary" data-action="askPanganLaba">Tanya</button></div>
+        <div id="tanyaResult" style="margin-top:10px"></div>
+      </div>
+
+      <details class="expander"><summary>Catat umpan balik uji coba UMKM<span>▾</span></summary><div class="expander-in">
+        <div class="notice">Gunakan setelah pemilik atau pekerja UMKM mencoba sendiri. Catatan hanya menyimpan kode sesi dan masukan, bukan nama, kontak, resep, atau harga pemasok. Minta persetujuan sebelum mencatat.</div>
+        <form id="feedbackForm">
+          <div class="formgrid">
+            <div class="field"><label>Kode sesi anonim</label><input name="session_code" placeholder="UMKM-01"></div>
+            <div class="field"><label>Jenis usaha</label><select name="business_type"><option>Warung makan</option><option>Pecel lele</option><option>Gado-gado</option><option>Katering</option><option>Jajanan</option><option>Lainnya</option></select></div>
+            <div class="field"><label>Peran peserta</label><select name="participant_role"><option>Pemilik</option><option>Pengelola</option><option>Pekerja</option></select></div>
+            <div class="field"><label>Tugas: hitung modal &amp; laba</label><select name="calculator_task"><option>Berhasil sendiri</option><option>Berhasil setelah dibantu</option><option>Belum berhasil</option></select></div>
+            <div class="field"><label>Tugas: cari harga/prediksi</label><select name="dashboard_task"><option>Berhasil sendiri</option><option>Berhasil setelah dibantu</option><option>Belum berhasil</option></select></div>
+            <div class="field"><label>Waktu kalkulator (menit)</label><input name="calculator_minutes" type="number" min="0" value="0"></div>
+            <div class="field"><label>Waktu dashboard (menit)</label><input name="dashboard_minutes" type="number" min="0" value="0"></div>
+            <div class="field"><label>Kemudahan (1–5)</label><select name="ease_rating_1_5"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="field"><label>Kejelasan hasil (1–5)</label><select name="clarity_rating_1_5"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="field"><label>Manfaat (1–5)</label><select name="usefulness_rating_1_5"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div class="field"><label>Dibanding hitungan manual</label><select name="manual_calculation_match"><option>Belum dibandingkan</option><option>Sesuai</option><option>Ada selisih kecil</option><option>Ada selisih besar</option></select></div>
+            <div class="field"><label>Ingin memakai lagi?</label><select name="would_use_again"><option>Ya</option><option>Mungkin</option><option>Tidak</option></select></div>
+            <div class="field"><label>Bagian membingungkan</label><input name="confusing_or_blocking"></div>
+            <div class="field" style="grid-column:1/-1"><label>Perubahan yang diminta</label><textarea name="requested_change"></textarea></div>
+          </div>
+          <label class="row" style="gap:6px;margin-top:10px"><input type="checkbox" name="consent_anonymous_feedback" required> Peserta setuju umpan balik anonim ini dicatat untuk evaluasi skripsi.</label>
+          <div class="row" style="margin-top:12px"><button class="btn primary">Simpan umpan balik sesi</button><span id="feedbackStatus" class="status"></span></div>
+        </form>
+      </div></details>
+    </div>
+
+    <!-- TAB HASIL PENELITIAN -->
+    <div id="tab-research" class="hidden">
+      <div class="section-label">Hasil evaluasi pada data uji</div>
+      <div class="grid4" id="evalMetrics"></div>
+      <div class="notice" id="evalInfo"></div>
+
+      <div class="section-label">Harga aktual dan hasil model</div>
+      <div class="card"><div class="chartbox"><canvas id="researchChart"></canvas></div><div style="color:var(--muted);font-size:.85rem;margin-top:6px" id="researchChartCaption"></div></div>
+
+      <div class="section-label">Perbandingan model</div>
+      <div class="card"><div class="chartbox" style="height:230px"><canvas id="maeChart"></canvas></div><div style="color:var(--muted);font-size:.85rem;margin-top:6px">Batang gelap menunjukkan model dengan harga saja; batang jingga menunjukkan model dengan tambahan cuaca dan kalender. Yang lebih rendah memiliki MAE lebih kecil.</div></div>
+
+      <div class="card"><h3>Metrik per komoditas</h3><div id="metricsTable"></div></div>
+      <div class="card"><h3>Ringkasan lintas komoditas</h3><div id="summaryTable"></div><div style="color:var(--muted);font-size:.85rem;margin-top:8px">Saran beli/tunda memakai ambang ±5%. Pertimbangkan stok, kebutuhan, mutu, cuaca, pasokan, dan biaya simpan sebelum mengambil keputusan.</div></div>
+
+      <div class="card"><h3>Catatan hasil</h3><div style="color:var(--muted)"><p>• Data dibagi berdasarkan waktu: 80% bagian awal untuk pelatihan dan 20% bagian akhir untuk pengujian.</p><p>• Fitur cuaca dan kalender diuji sebagai satu paket, jadi pengaruh masing-masing fitur belum dipisahkan.</p><p>• Simulasi memakai data historis dan belum memperhitungkan stok atau biaya penyimpanan.</p></div></div>
+
+      <details class="expander"><summary>Tentang sumber data dan metode<span>▾</span></summary><div class="expander-in">
+        <p style="color:var(--muted)">Data harga berasal dari workbook PIHPS. Wilayah yang dipakai saat ini adalah <b>Kota Depok</b>; nama komoditas diambil dari nama file dan tanggal mengikuti isi workbook.</p>
+        <p style="color:var(--muted)">Eksperimen membandingkan LSTM dan GRU, masing-masing dengan fitur harga saja dan paket fitur eksternal: cuaca harian, kalender libur/cuti/akhir pekan serta keterangan tanggal Idulfitri, dan siklus hari/bulan. Data dibagi kronologis (80% pelatihan, 20% pengujian), lalu dinilai menggunakan MAE, RMSE, dan MAPE.</p>
+      </div></details>
+
+      <details class="expander"><summary>Data yang dibutuhkan untuk penelitian<span>▾</span></summary><div class="expander-in">
+        <p style="color:var(--muted)"><b>Data utama — wajib</b><br>Harga harian PIHPS untuk tiap komoditas, dengan tanggal, nama komoditas, harga, wilayah/pasar yang konsisten, dan satuan yang jelas. Format CSV: <code>date,commodity,price,location</code>.</p>
+        <p style="color:var(--muted)"><b>Data eksternal — diperlukan untuk menguji judul penelitian</b><br>Cuaca historis ERA5 (Open-Meteo) dan kalender Indonesia (libur nasional, cuti bersama, akhir pekan, dan penanda tanggal Idulfitri).</p>
+      </div></details>
+    </div>
+    </div>
+    </div>
+  </section>
+</div>
+<div id="toast" class="toast hidden"></div>
+<script src="js/app.js" defer></script>
+</body>
+</html>

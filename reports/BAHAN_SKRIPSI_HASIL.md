@@ -4,16 +4,18 @@
 
 ## Ringkasan data
 
-- Harga PIHPS Kota Depok: 20,631 observasi, 13 komoditas, 2020-01-02–2026-10-21.
+- Harga PIHPS Kota Depok: 20,824 observasi, 16 komoditas, 2020-01-02–2026-11-10.
 - Cuaca harian aktif: 2,491 tanggal, 2020-01-01–2026-10-26; grid ERA5 lat -6.5, lon 106.75, elevasi 84.0 m.
-- Evaluasi: 52 kombinasi (13 komoditas × 2 model × 2 set fitur). Rentang target-uji antar-komoditas: 2025-06-14–2026-10-21.
+- Evaluasi: 52 kombinasi (13 komoditas × 2 model × 2 set fitur). Rentang target-uji antar-komoditas: 2025-06-16–2026-11-10.
 - Harga PIHPS Kota Depok bersatuan rupiah per kilogram (Rp/kg), sesuai konfirmasi pengguna. Cuaca aktif diunduh langsung dari Open-Meteo Historical Weather API dengan model ERA5 eksplisit dan timezone Asia/Jakarta; pengambilan terakhir 2026-11-03T19:31:53+00:00 UTC. Satuan cuaca: suhu °C, presipitasi mm, angin km/h, dan radiasi MJ/m².
 
 ## Metode evaluasi
 
 Data setiap komoditas diurutkan berdasarkan tanggal dan dibagi kronologis 80% pelatihan / 20% pengujian. Semua varian model pada komoditas yang sama menggunakan batas waktu dan urutan uji yang sama. Model menerima jendela 30 hari untuk memprediksi tujuh hari berikutnya. LSTM dan GRU masing-masing diuji memakai fitur harga (harga, lag 1, lag 7, rerata 7 dan 30 hari) serta paket eksternal yang menambahkan enam variabel cuaca ERA5, indikator libur nasional/cuti bersama/akhir pekan, penanda tanggal dengan keterangan Idulfitri, dan empat fitur siklus hari/bulan. Indikator kalender yang masuk ke model berasal dari jendela historis 30 hari; kalender masa depan tidak diberikan sebagai input decoder terpisah. CSV tidak menandai periode Ramadan atau rentang hari menjelang Idulfitri.
 
-Pelatihan memakai maksimum 15 epoch, validasi 10% dari bagian pelatihan yang paling akhir, dan early stopping dengan patience 5. Jumlah epoch aktual pada run ini: 13–15 (median 15.0). Scaler dipasang pada data latih saja.
+Pelatihan memakai maksimum 30 epoch, validasi 10% dari bagian pelatihan yang paling akhir, dan early stopping dengan patience 5. Jumlah epoch aktual pada run ini: 13–15 (median 15.0). Scaler dipasang pada data latih saja.
+
+Setelah evaluasi, 52 model operasional di-fit ulang memakai seluruh urutan historis yang tersedia per komoditas. Model final ini untuk prediksi dashboard dan tidak digunakan untuk menghitung metrik holdout. Rincian rentang fit ada di `final_models_manifest.csv`.
 
 MAE dan RMSE dilaporkan dalam rupiah per kilogram (Rp/kg); MAPE dalam persen. Tabel laporan menggabungkan error dari tujuh horizon dan semua origin harian pada bagian uji. Origin/horizon tumpang tindih sehingga error antarbaris berkorelasi. Grafik H+1 di bawah mengambil prediksi satu hari ke depan pada setiap origin uji agar seri aktual/prediksi bisa dibaca tanpa mencampur horizon.
 
@@ -23,10 +25,10 @@ Median antarkomoditas lebih layak untuk ringkasan karena nominal harga dan skala
 
 | Model | Fitur | Median MAE (Rp/kg) | Median RMSE (Rp/kg) | Median MAPE (%) |
 |---|---|---:|---:|---:|
-| GRU | harga + cuaca + kalender + siklus tanggal | 939.093 | 1,217.522 | 2.460 |
-| GRU | harga saja | 655.997 | 881.278 | 1.975 |
-| LSTM | harga + cuaca + kalender + siklus tanggal | 1,243.575 | 1,563.213 | 3.544 |
-| LSTM | harga saja | 989.347 | 1,209.702 | 2.365 |
+| GRU | harga + cuaca + kalender + siklus tanggal | 1,278.353 | 2,510.157 | 4.315 |
+| GRU | harga saja | 976.588 | 2,318.425 | 3.475 |
+| LSTM | harga + cuaca + kalender + siklus tanggal | 1,461.901 | 2,883.281 | 6.574 |
+| LSTM | harga saja | 1,421.302 | 2,632.625 | 4.760 |
 
 Paket eksternal (cuaca, kalender, dan siklus tanggal) menghasilkan MAE lebih rendah dibanding fitur harga saja pada 1 dari 13 komoditas untuk LSTM dan 0 dari 13 untuk GRU. Karena paket menggabungkan tiga kelompok fitur sekaligus, hasil ini tidak mengisolasi pengaruh cuaca atau kalender secara terpisah.
 
@@ -63,7 +65,7 @@ Parameter standar: siklus 7 hari, volume 1 kg per transaksi, harga Rp/kg, ambang
 
 | Model | Fitur | Median selisih (%) | Rerata selisih (%) |
 |---|---|---:|---:|
-| GRU | harga + cuaca + kalender + siklus tanggal | 0.00 | 0.03 |
-| GRU | harga saja | 0.00 | -0.01 |
-| LSTM | harga + cuaca + kalender + siklus tanggal | 0.00 | 0.03 |
-| LSTM | harga saja | 0.00 | -0.06 |
+| GRU | harga + cuaca + kalender + siklus tanggal | 0.00 | -0.07 |
+| GRU | harga saja | 0.00 | -0.06 |
+| LSTM | harga + cuaca + kalender + siklus tanggal | 0.00 | -0.01 |
+| LSTM | harga saja | 0.00 | -0.12 |

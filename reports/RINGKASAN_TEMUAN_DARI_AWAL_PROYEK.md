@@ -1,48 +1,52 @@
-# Ringkasan temuan proyek dari awal
+# Ringkasan temuan proyek PanganLaba
 
-Dokumen ini menyatukan temuan data, evaluasi LSTM/GRU, dan simulasi rekomendasi beli/tunda. Angka di bawah mengacu pada keluaran model terbaru yang tersimpan di folder `reports/`.
+Angka evaluasi dan simulasi di bawah mengikuti data serta artefak terbaru bertanggal **10 November 2026**.
 
-## 1. Data dan ruang lingkup penelitian
+## 1. Data dan ruang lingkup
 
-Penelitian menggunakan harga PIHPS Kota Depok untuk 13 komoditas, dengan 20.631 observasi pada rentang 2 Januari 2020 sampai 21 Oktober 2026. Satuan harga yang dipakai adalah rupiah per kilogram (Rp/kg). Fitur cuaca historis berasal dari ERA5 melalui Open-Meteo, sedangkan kalender berasal dari CSV yang diberikan pengguna. Kalender memuat libur nasional, cuti bersama, akhir pekan, dan 36 tanggal dengan keterangan terkait Idulfitri. Penanda Idulfitri sudah diproses sebagai fitur model.
+Data harga proyek berisi **20,824 observasi dari 16 nama komoditas**, dengan tanggal 2020-01-02 sampai 2026-11-10; semua baris yang ditambahkan berasal dari workbook PIHPS untuk Kota Depok dan memakai Rp/kg. Pembaruan 13 workbook menambahkan 195 observasi pada 21 Oktober–10 November 2026. Header workbook berlanjut sampai 30 November, tetapi kolom setelah 10 November belum berisi harga dan tidak dianggap sebagai data aktual.
 
-Data dibersihkan dan disejajarkan per tanggal sebelum pelatihan. Setelah tanggal harian dilengkapi, hasil gabungan berisi 31.185 baris. Model membandingkan LSTM dan GRU dengan dua jenis masukan: fitur harga saja, serta fitur harga bersama cuaca, kalender, dan siklus tanggal.
+Tiga seri baru (Gula Pasir, Cabai Merah Besar, Cabai Merah Keriting) disimpan terpisah dari seri lama yang memiliki jenis berbeda. Masing-masing baru memiliki 15 observasi, jadi belum cukup untuk pelatihan jendela 30 hari dan belum muncul pada evaluasi model. Evaluasi saat ini mencakup 13 seri historis yang memadai, menghasilkan 52 kombinasi model/fitur. Data harian setelah pembersihan berisi 31,466 baris.
 
-## 2. Arti selisih harga dan aturan rekomendasi
+Cuaca historis berasal dari ERA5 melalui Open-Meteo; kalender berasal dari CSV yang diberikan pengguna. Kalender mencakup libur nasional, cuti bersama, akhir pekan, dan penanda Idulfitri.
 
-Pada dashboard, perubahan prediksi dihitung dengan membandingkan rata-rata harga prediksi tujuh hari dengan harga acuan saat ini:
+## 2. Evaluasi model terbaru
 
-```text
-perubahan prediksi (%) = (rata-rata prediksi 7 hari / harga acuan - 1) × 100%
-```
-
-Jika kenaikan mencapai 5% atau lebih, sistem memberi saran “Beli sekarang”. Jika penurunan mencapai 5% atau lebih, sistem memberi saran “Tunda dulu”. Di antara kedua batas itu, saran yang tampil adalah “Beli sesuai kebutuhan”. Ambang ini merupakan aturan prototipe dan masih perlu disetujui dosen pembimbing.
-
-Simulasi retrospektif memakai siklus pembelian tujuh hari dan volume satu kilogram per transaksi. Baseline membeli pada hari pertama siklus. Strategi boleh menunda pembelian ketika prediksi menunjukkan penurunan sekurangnya 5%, dengan batas penundaan dua hari. Biaya strategi kemudian dibandingkan dengan harga aktual pada hari pembelian. Simulasi terbaru mencakup 3.460 siklus, dengan 322 siklus mengalami penundaan. Median selisih biaya per komoditas adalah 0% untuk semua kombinasi model/fitur; rata-ratanya sekitar 0,01–0,03%. Hasil ini belum menunjukkan penghematan yang konsisten dan bukan bukti penghematan nyata.
-
-## 3. Temuan evaluasi model
-
-Data dibagi kronologis: 80% bagian awal untuk pelatihan dan 20% bagian akhir untuk pengujian. Setiap model memakai riwayat 30 hari untuk memprediksi tujuh hari. Metrik yang dihitung adalah MAE dan RMSE dalam Rp/kg serta MAPE dalam persen. Ringkasan lintas komoditas memakai median agar komoditas dengan harga tinggi tidak mendominasi.
+Data evaluasi dipisahkan secara kronologis 80:20. Model memakai 30 hari riwayat untuk memprediksi tujuh hari ke depan. MAE dan RMSE menggunakan Rp/kg, sedangkan MAPE menggunakan persen. Tabel merangkum median antar komoditas. Sesudah evaluasi, 52 model operasional dilatih ulang dengan seluruh histori yang tersedia; model final dashboard tidak dipakai untuk menghitung skor holdout. Rinciannya tercatat di `reports/final_models_manifest.csv`.
 
 | Model | Fitur | Median MAE (Rp/kg) | Median RMSE (Rp/kg) | Median MAPE (%) |
 |---|---|---:|---:|---:|
-| GRU | Harga saja | 697,77 | 951,43 | 1,59 |
-| GRU | Harga + cuaca + kalender + siklus tanggal | 789,82 | 1.046,29 | 1,87 |
-| LSTM | Harga saja | 779,91 | 1.037,65 | 1,84 |
-| LSTM | Harga + cuaca + kalender + siklus tanggal | 1.032,17 | 1.341,02 | 3,74 |
+| GRU | harga + cuaca + kalender + siklus tanggal | 1,278.35 | 2,510.16 | 4.31 |
+| GRU | harga saja | 976.59 | 2,318.43 | 3.48 |
+| LSTM | harga + cuaca + kalender + siklus tanggal | 1,461.90 | 2,883.28 | 6.57 |
+| LSTM | harga saja | 1,421.30 | 2,632.62 | 4.76 |
 
-Pada hasil ini, fitur eksternal menghasilkan MAE yang lebih rendah daripada fitur harga saja pada 1 dari 13 komoditas untuk LSTM dan 2 dari 13 komoditas untuk GRU. Secara median, fitur harga saja lebih baik untuk kedua model. Karena paket eksternal menggabungkan cuaca, kalender, dan siklus tanggal, hasil ini tidak menunjukkan pengaruh masing-masing fitur secara terpisah.
+GRU dengan harga saja memiliki median error terendah pada run ini. Paket eksternal menggabungkan cuaca, kalender, dan siklus tanggal, sehingga perbedaan hasil tidak menunjukkan dampak terpisah setiap kelompok fitur. Rentang target uji antar-komoditas adalah 2025-06-16 sampai 2026-11-10.
 
-## 4. Batas interpretasi dan langkah selanjutnya
+## 3. Simulasi rekomendasi beli/tunda
 
-- Fitur kalender Idulfitri sudah digunakan. CSV belum memberi penanda periode Ramadan atau rentang hari menjelang Idulfitri.
-- Model memakai fitur cuaca dan kalender dari riwayat 30 hari. Nilai cuaca/kalender untuk tujuh hari yang diprediksi belum diberikan sebagai masukan masa depan tersendiri.
-- Simulasi memakai volume tetap 1 kg, ambang 5%, dan batas tunda dua hari; belum memasukkan stok, kebutuhan usaha, biaya simpan, transportasi, atau mutu bahan.
-- Minta persetujuan dosen pembimbing untuk aturan rekomendasi dan skenario simulasi sebelum menjadikan hasilnya sebagai kesimpulan penelitian.
-- Hasil evaluasi tersedia di `model_comparison.csv`, rincian prediksi di `forecasts.csv`, dan simulasi di `purchase_simulation_summary.csv` serta `purchase_simulation_detail.csv`.
+Simulasi terbaru berisi 3,464 siklus pada 13 komoditas yang dapat dievaluasi, dengan asumsi 1 kg per transaksi, ambang tunda 5%, dan batas tunda dua hari. Median selisih biaya adalah 0% untuk seluruh varian, sedangkan rerata per varian berada dekat nol dan sedikit negatif:
 
-## Sumber data
+| Model | Fitur | Median selisih biaya (%) | Rerata selisih biaya (%) |
+|---|---|---:|---:|
+| GRU | harga + cuaca + kalender + siklus tanggal | 0.00 | -0.07 |
+| GRU | harga saja | 0.00 | -0.06 |
+| LSTM | harga + cuaca + kalender + siklus tanggal | 0.00 | -0.01 |
+| LSTM | harga saja | 0.00 | -0.12 |
 
-- Harga: workbook PIHPS untuk wilayah Kota Depok yang diberikan pengguna.
-- Cuaca historis: Open-Meteo Historical Weather API dengan model ERA5; data reanalisis grid, bukan observasi stasiun BMKG.
-- Kalender: `data/raw/kalender_indonesia_2020_2026_source.csv`, CSV yang diberikan pengguna.
+Angka ini tidak menunjukkan penghematan yang konsisten. Ini simulasi retrospektif dari data uji, bukan bukti penghematan atau laba aktual; belum memasukkan stok, kebutuhan, biaya simpan, transportasi, dan mutu bahan.
+
+## 4. Batas dan langkah lanjutan
+
+- Tiga komoditas baru belum dapat dievaluasi sebagai LSTM/GRU karena riwayatnya baru 15 observasi; kumpulkan histori lebih panjang sebelum menampilkan prediksi model untuk seri tersebut.
+- Fitur eksternal diuji sebagai satu paket, jadi kontribusi cuaca dan kalender belum terpisah.
+- Minta arahan pembimbing untuk ambang rekomendasi dan desain simulasi sebelum memakai hasil sebagai kesimpulan penelitian.
+- Uji dashboard dan kalkulator ke UMKM dengan data resep serta biaya aktual; angka laba tetap estimasi berdasarkan masukan pengguna.
+
+## 5. Berkas sumber dan hasil
+
+- Sumber 13 workbook baru: `data/source_pihps/updates/2026-11-10/`.
+- Audit tanggal dan jumlah observasi: `data/processed/pihps_update_audit_20261110.csv`.
+- Harga hasil gabungan: `data/raw/prices.csv`; salinan sebelumnya ada di `backups/prices_before_pihps_update_20261110.csv`.
+- Hasil evaluasi terperinci: `reports/model_comparison.csv`, `reports/forecasts.csv`, dan `reports/tabel_evaluasi_skripsi.csv`.
+- Narasi dan grafik: `reports/BAHAN_SKRIPSI_HASIL.md` dan `reports/FIGURES_INDEX.md`.

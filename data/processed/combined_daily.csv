@@ -2114,6 +2114,28 @@ date,commodity,location,price,temp_c,temp_max_c,temp_min_c,rain_mm,wind_max_kmh,
 2026-10-17,Bawang Merah,Kota Depok,37500.0,28.8,34.5,22.8,0.0,8.4,25.53,0,0,1,0
 2026-10-18,Bawang Merah,Kota Depok,37500.0,29.0,34.0,23.7,1.1,10.6,24.83,0,0,1,0
 2026-10-19,Bawang Merah,Kota Depok,37500.0,29.0,33.9,24.0,0.3,9.5,23.59,0,0,0,0
+2026-10-20,Bawang Merah,Kota Depok,31625.0,28.8,33.5,23.5,0.3,8.6,24.03,0,0,0,0
+2026-10-21,Bawang Merah,Kota Depok,25750.0,28.8,33.3,24.6,1.3,8.3,23.41,0,0,0,0
+2026-10-22,Bawang Merah,Kota Depok,25750.0,28.7,34.3,24.2,8.8,9.2,23.41,0,0,0,0
+2026-10-23,Bawang Merah,Kota Depok,25750.0,29.0,33.3,25.0,2.3,6.7,23.48,0,0,0,0
+2026-10-24,Bawang Merah,Kota Depok,25750.0,28.6,33.1,25.4,4.3,8.4,21.91,0,0,1,0
+2026-10-25,Bawang Merah,Kota Depok,25750.0,28.8,32.5,25.4,1.1,6.6,16.97,0,0,1,0
+2026-10-26,Bawang Merah,Kota Depok,25750.0,28.4,33.2,24.9,13.3,6.9,17.77,0,0,0,0
+2026-10-27,Bawang Merah,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-28,Bawang Merah,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-29,Bawang Merah,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-10-30,Bawang Merah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-10-31,Bawang Merah,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-01,Bawang Merah,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-02,Bawang Merah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-03,Bawang Merah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-04,Bawang Merah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-05,Bawang Merah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-06,Bawang Merah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-07,Bawang Merah,Kota Depok,25083.333333333332,,,,,,,0,0,1,0
+2026-11-08,Bawang Merah,Kota Depok,25166.666666666668,,,,,,,0,0,1,0
+2026-11-09,Bawang Merah,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-11-10,Bawang Merah,Kota Depok,25250.0,,,,,,,0,0,0,0
 2020-01-02,Bawang Putih,Kota Depok,31250.0,26.4,30.2,23.9,11.5,11.1,14.33,0,0,0,0
 2020-01-03,Bawang Putih,Kota Depok,31250.0,27.1,30.2,24.6,7.5,10.9,15.54,0,0,0,0
 2020-01-04,Bawang Putih,Kota Depok,31250.0,27.1,30.1,25.2,10.0,10.8,13.81,0,0,1,0
@@ -4597,6 +4619,28 @@ date,commodity,location,price,temp_c,temp_max_c,temp_min_c,rain_mm,wind_max_kmh,
 2026-10-17,Bawang Putih,Kota Depok,43250.0,28.8,34.5,22.8,0.0,8.4,25.53,0,0,1,0
 2026-10-18,Bawang Putih,Kota Depok,43250.0,29.0,34.0,23.7,1.1,10.6,24.83,0,0,1,0
 2026-10-19,Bawang Putih,Kota Depok,43250.0,29.0,33.9,24.0,0.3,9.5,23.59,0,0,0,0
+2026-10-20,Bawang Putih,Kota Depok,34500.0,28.8,33.5,23.5,0.3,8.6,24.03,0,0,0,0
+2026-10-21,Bawang Putih,Kota Depok,25750.0,28.8,33.3,24.6,1.3,8.3,23.41,0,0,0,0
+2026-10-22,Bawang Putih,Kota Depok,25750.0,28.7,34.3,24.2,8.8,9.2,23.41,0,0,0,0
+2026-10-23,Bawang Putih,Kota Depok,25750.0,29.0,33.3,25.0,2.3,6.7,23.48,0,0,0,0
+2026-10-24,Bawang Putih,Kota Depok,25750.0,28.6,33.1,25.4,4.3,8.4,21.91,0,0,1,0
+2026-10-25,Bawang Putih,Kota Depok,25750.0,28.8,32.5,25.4,1.1,6.6,16.97,0,0,1,0
+2026-10-26,Bawang Putih,Kota Depok,25750.0,28.4,33.2,24.9,13.3,6.9,17.77,0,0,0,0
+2026-10-27,Bawang Putih,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-28,Bawang Putih,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-29,Bawang Putih,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-10-30,Bawang Putih,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-10-31,Bawang Putih,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-01,Bawang Putih,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-02,Bawang Putih,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-03,Bawang Putih,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-04,Bawang Putih,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-05,Bawang Putih,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-06,Bawang Putih,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-07,Bawang Putih,Kota Depok,25083.333333333332,,,,,,,0,0,1,0
+2026-11-08,Bawang Putih,Kota Depok,25166.666666666668,,,,,,,0,0,1,0
+2026-11-09,Bawang Putih,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-11-10,Bawang Putih,Kota Depok,25250.0,,,,,,,0,0,0,0
 2020-01-02,Beras,Kota Depok,11050.0,26.4,30.2,23.9,11.5,11.1,14.33,0,0,0,0
 2020-01-03,Beras,Kota Depok,11050.0,27.1,30.2,24.6,7.5,10.9,15.54,0,0,0,0
 2020-01-04,Beras,Kota Depok,11066.666666666666,27.1,30.1,25.2,10.0,10.8,13.81,0,0,1,0
@@ -7077,6 +7121,31 @@ date,commodity,location,price,temp_c,temp_max_c,temp_min_c,rain_mm,wind_max_kmh,
 2026-10-14,Beras,Kota Depok,16100.0,29.0,34.3,23.7,0.0,12.6,26.88,0,0,0,0
 2026-10-15,Beras,Kota Depok,16100.0,28.6,33.0,24.6,0.1,10.5,23.39,0,0,0,0
 2026-10-16,Beras,Kota Depok,16100.0,28.4,34.3,22.5,0.0,13.4,27.09,0,0,0,0
+2026-10-17,Beras,Kota Depok,16100.0,28.8,34.5,22.8,0.0,8.4,25.53,0,0,1,0
+2026-10-18,Beras,Kota Depok,16100.0,29.0,34.0,23.7,1.1,10.6,24.83,0,0,1,0
+2026-10-19,Beras,Kota Depok,16100.0,29.0,33.9,24.0,0.3,9.5,23.59,0,0,0,0
+2026-10-20,Beras,Kota Depok,16100.0,28.8,33.5,23.5,0.3,8.6,24.03,0,0,0,0
+2026-10-21,Beras,Kota Depok,16100.0,28.8,33.3,24.6,1.3,8.3,23.41,0,0,0,0
+2026-10-22,Beras,Kota Depok,16100.0,28.7,34.3,24.2,8.8,9.2,23.41,0,0,0,0
+2026-10-23,Beras,Kota Depok,16100.0,29.0,33.3,25.0,2.3,6.7,23.48,0,0,0,0
+2026-10-24,Beras,Kota Depok,16100.0,28.6,33.1,25.4,4.3,8.4,21.91,0,0,1,0
+2026-10-25,Beras,Kota Depok,16100.0,28.8,32.5,25.4,1.1,6.6,16.97,0,0,1,0
+2026-10-26,Beras,Kota Depok,16100.0,28.4,33.2,24.9,13.3,6.9,17.77,0,0,0,0
+2026-10-27,Beras,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-10-28,Beras,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-10-29,Beras,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-10-30,Beras,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-10-31,Beras,Kota Depok,16100.0,,,,,,,0,0,1,0
+2026-11-01,Beras,Kota Depok,16100.0,,,,,,,0,0,1,0
+2026-11-02,Beras,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-03,Beras,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-04,Beras,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-05,Beras,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-06,Beras,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-07,Beras,Kota Depok,16100.0,,,,,,,0,0,1,0
+2026-11-08,Beras,Kota Depok,16100.0,,,,,,,0,0,1,0
+2026-11-09,Beras,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-10,Beras,Kota Depok,16100.0,,,,,,,0,0,0,0
 2020-01-02,Cabai Merah,Kota Depok,47900.0,26.4,30.2,23.9,11.5,11.1,14.33,0,0,0,0
 2020-01-03,Cabai Merah,Kota Depok,53150.0,27.1,30.2,24.6,7.5,10.9,15.54,0,0,0,0
 2020-01-04,Cabai Merah,Kota Depok,53566.666666666664,27.1,30.1,25.2,10.0,10.8,13.81,0,0,1,0
@@ -9560,6 +9629,48 @@ date,commodity,location,price,temp_c,temp_max_c,temp_min_c,rain_mm,wind_max_kmh,
 2026-10-17,Cabai Merah,Kota Depok,73150.0,28.8,34.5,22.8,0.0,8.4,25.53,0,0,1,0
 2026-10-18,Cabai Merah,Kota Depok,73150.0,29.0,34.0,23.7,1.1,10.6,24.83,0,0,1,0
 2026-10-19,Cabai Merah,Kota Depok,73150.0,29.0,33.9,24.0,0.3,9.5,23.59,0,0,0,0
+2026-10-21,Cabai Merah Besar,Kota Depok,25750.0,28.8,33.3,24.6,1.3,8.3,23.41,0,0,0,0
+2026-10-22,Cabai Merah Besar,Kota Depok,25750.0,28.7,34.3,24.2,8.8,9.2,23.41,0,0,0,0
+2026-10-23,Cabai Merah Besar,Kota Depok,25750.0,29.0,33.3,25.0,2.3,6.7,23.48,0,0,0,0
+2026-10-24,Cabai Merah Besar,Kota Depok,25750.0,28.6,33.1,25.4,4.3,8.4,21.91,0,0,1,0
+2026-10-25,Cabai Merah Besar,Kota Depok,25750.0,28.8,32.5,25.4,1.1,6.6,16.97,0,0,1,0
+2026-10-26,Cabai Merah Besar,Kota Depok,25750.0,28.4,33.2,24.9,13.3,6.9,17.77,0,0,0,0
+2026-10-27,Cabai Merah Besar,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-28,Cabai Merah Besar,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-29,Cabai Merah Besar,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-10-30,Cabai Merah Besar,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-10-31,Cabai Merah Besar,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-01,Cabai Merah Besar,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-02,Cabai Merah Besar,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-03,Cabai Merah Besar,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-04,Cabai Merah Besar,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-05,Cabai Merah Besar,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-06,Cabai Merah Besar,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-07,Cabai Merah Besar,Kota Depok,25083.333333333332,,,,,,,0,0,1,0
+2026-11-08,Cabai Merah Besar,Kota Depok,25166.666666666668,,,,,,,0,0,1,0
+2026-11-09,Cabai Merah Besar,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-11-10,Cabai Merah Besar,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-10-21,Cabai Merah Keriting,Kota Depok,25750.0,28.8,33.3,24.6,1.3,8.3,23.41,0,0,0,0
+2026-10-22,Cabai Merah Keriting,Kota Depok,25750.0,28.7,34.3,24.2,8.8,9.2,23.41,0,0,0,0
+2026-10-23,Cabai Merah Keriting,Kota Depok,25750.0,29.0,33.3,25.0,2.3,6.7,23.48,0,0,0,0
+2026-10-24,Cabai Merah Keriting,Kota Depok,25750.0,28.6,33.1,25.4,4.3,8.4,21.91,0,0,1,0
+2026-10-25,Cabai Merah Keriting,Kota Depok,25750.0,28.8,32.5,25.4,1.1,6.6,16.97,0,0,1,0
+2026-10-26,Cabai Merah Keriting,Kota Depok,25750.0,28.4,33.2,24.9,13.3,6.9,17.77,0,0,0,0
+2026-10-27,Cabai Merah Keriting,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-28,Cabai Merah Keriting,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-29,Cabai Merah Keriting,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-10-30,Cabai Merah Keriting,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-10-31,Cabai Merah Keriting,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-01,Cabai Merah Keriting,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-02,Cabai Merah Keriting,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-03,Cabai Merah Keriting,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-04,Cabai Merah Keriting,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-05,Cabai Merah Keriting,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-06,Cabai Merah Keriting,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-07,Cabai Merah Keriting,Kota Depok,25083.333333333332,,,,,,,0,0,1,0
+2026-11-08,Cabai Merah Keriting,Kota Depok,25166.666666666668,,,,,,,0,0,1,0
+2026-11-09,Cabai Merah Keriting,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-11-10,Cabai Merah Keriting,Kota Depok,25250.0,,,,,,,0,0,0,0
 2020-01-02,Cabai Rawit Hijau,Kota Depok,30000.0,26.4,30.2,23.9,11.5,11.1,14.33,0,0,0,0
 2020-01-03,Cabai Rawit Hijau,Kota Depok,30000.0,27.1,30.2,24.6,7.5,10.9,15.54,0,0,0,0
 2020-01-04,Cabai Rawit Hijau,Kota Depok,30000.0,27.1,30.1,25.2,10.0,10.8,13.81,0,0,1,0
@@ -12043,6 +12154,28 @@ date,commodity,location,price,temp_c,temp_max_c,temp_min_c,rain_mm,wind_max_kmh,
 2026-10-17,Cabai Rawit Hijau,Kota Depok,64166.666666666664,28.8,34.5,22.8,0.0,8.4,25.53,0,0,1,0
 2026-10-18,Cabai Rawit Hijau,Kota Depok,64583.333333333336,29.0,34.0,23.7,1.1,10.6,24.83,0,0,1,0
 2026-10-19,Cabai Rawit Hijau,Kota Depok,65000.0,29.0,33.9,24.0,0.3,9.5,23.59,0,0,0,0
+2026-10-20,Cabai Rawit Hijau,Kota Depok,45375.0,28.8,33.5,23.5,0.3,8.6,24.03,0,0,0,0
+2026-10-21,Cabai Rawit Hijau,Kota Depok,25750.0,28.8,33.3,24.6,1.3,8.3,23.41,0,0,0,0
+2026-10-22,Cabai Rawit Hijau,Kota Depok,25750.0,28.7,34.3,24.2,8.8,9.2,23.41,0,0,0,0
+2026-10-23,Cabai Rawit Hijau,Kota Depok,25750.0,29.0,33.3,25.0,2.3,6.7,23.48,0,0,0,0
+2026-10-24,Cabai Rawit Hijau,Kota Depok,25750.0,28.6,33.1,25.4,4.3,8.4,21.91,0,0,1,0
+2026-10-25,Cabai Rawit Hijau,Kota Depok,25750.0,28.8,32.5,25.4,1.1,6.6,16.97,0,0,1,0
+2026-10-26,Cabai Rawit Hijau,Kota Depok,25750.0,28.4,33.2,24.9,13.3,6.9,17.77,0,0,0,0
+2026-10-27,Cabai Rawit Hijau,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-28,Cabai Rawit Hijau,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-29,Cabai Rawit Hijau,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-10-30,Cabai Rawit Hijau,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-10-31,Cabai Rawit Hijau,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-01,Cabai Rawit Hijau,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-02,Cabai Rawit Hijau,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-03,Cabai Rawit Hijau,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-04,Cabai Rawit Hijau,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-05,Cabai Rawit Hijau,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-06,Cabai Rawit Hijau,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-07,Cabai Rawit Hijau,Kota Depok,25083.333333333332,,,,,,,0,0,1,0
+2026-11-08,Cabai Rawit Hijau,Kota Depok,25166.666666666668,,,,,,,0,0,1,0
+2026-11-09,Cabai Rawit Hijau,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-11-10,Cabai Rawit Hijau,Kota Depok,25250.0,,,,,,,0,0,0,0
 2020-01-02,Cabai Rawit Merah,Kota Depok,47500.0,26.4,30.2,23.9,11.5,11.1,14.33,0,0,0,0
 2020-01-03,Cabai Rawit Merah,Kota Depok,51250.0,27.1,30.2,24.6,7.5,10.9,15.54,0,0,0,0
 2020-01-04,Cabai Rawit Merah,Kota Depok,57083.333333333336,27.1,30.1,25.2,10.0,10.8,13.81,0,0,1,0
@@ -14527,6 +14660,27 @@ date,commodity,location,price,temp_c,temp_max_c,temp_min_c,rain_mm,wind_max_kmh,
 2026-10-18,Cabai Rawit Merah,Kota Depok,79250.0,29.0,34.0,23.7,1.1,10.6,24.83,0,0,1,0
 2026-10-19,Cabai Rawit Merah,Kota Depok,79250.0,29.0,33.9,24.0,0.3,9.5,23.59,0,0,0,0
 2026-10-20,Cabai Rawit Merah,Kota Depok,77500.0,28.8,33.5,23.5,0.3,8.6,24.03,0,0,0,0
+2026-10-21,Cabai Rawit Merah,Kota Depok,25750.0,28.8,33.3,24.6,1.3,8.3,23.41,0,0,0,0
+2026-10-22,Cabai Rawit Merah,Kota Depok,25750.0,28.7,34.3,24.2,8.8,9.2,23.41,0,0,0,0
+2026-10-23,Cabai Rawit Merah,Kota Depok,25750.0,29.0,33.3,25.0,2.3,6.7,23.48,0,0,0,0
+2026-10-24,Cabai Rawit Merah,Kota Depok,25750.0,28.6,33.1,25.4,4.3,8.4,21.91,0,0,1,0
+2026-10-25,Cabai Rawit Merah,Kota Depok,25750.0,28.8,32.5,25.4,1.1,6.6,16.97,0,0,1,0
+2026-10-26,Cabai Rawit Merah,Kota Depok,25750.0,28.4,33.2,24.9,13.3,6.9,17.77,0,0,0,0
+2026-10-27,Cabai Rawit Merah,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-28,Cabai Rawit Merah,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-29,Cabai Rawit Merah,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-10-30,Cabai Rawit Merah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-10-31,Cabai Rawit Merah,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-01,Cabai Rawit Merah,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-02,Cabai Rawit Merah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-03,Cabai Rawit Merah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-04,Cabai Rawit Merah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-05,Cabai Rawit Merah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-06,Cabai Rawit Merah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-07,Cabai Rawit Merah,Kota Depok,25083.333333333332,,,,,,,0,0,1,0
+2026-11-08,Cabai Rawit Merah,Kota Depok,25166.666666666668,,,,,,,0,0,1,0
+2026-11-09,Cabai Rawit Merah,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-11-10,Cabai Rawit Merah,Kota Depok,25250.0,,,,,,,0,0,0,0
 2020-01-02,Daging Ayam,Kota Depok,35500.0,26.4,30.2,23.9,11.5,11.1,14.33,0,0,0,0
 2020-01-03,Daging Ayam,Kota Depok,34250.0,27.1,30.2,24.6,7.5,10.9,15.54,0,0,0,0
 2020-01-04,Daging Ayam,Kota Depok,34000.0,27.1,30.1,25.2,10.0,10.8,13.81,0,0,1,0
@@ -17010,6 +17164,28 @@ date,commodity,location,price,temp_c,temp_max_c,temp_min_c,rain_mm,wind_max_kmh,
 2026-10-17,Daging Ayam,Kota Depok,41000.0,28.8,34.5,22.8,0.0,8.4,25.53,0,0,1,0
 2026-10-18,Daging Ayam,Kota Depok,41000.0,29.0,34.0,23.7,1.1,10.6,24.83,0,0,1,0
 2026-10-19,Daging Ayam,Kota Depok,41000.0,29.0,33.9,24.0,0.3,9.5,23.59,0,0,0,0
+2026-10-20,Daging Ayam,Kota Depok,28550.0,28.8,33.5,23.5,0.3,8.6,24.03,0,0,0,0
+2026-10-21,Daging Ayam,Kota Depok,16100.0,28.8,33.3,24.6,1.3,8.3,23.41,0,0,0,0
+2026-10-22,Daging Ayam,Kota Depok,16100.0,28.7,34.3,24.2,8.8,9.2,23.41,0,0,0,0
+2026-10-23,Daging Ayam,Kota Depok,16100.0,29.0,33.3,25.0,2.3,6.7,23.48,0,0,0,0
+2026-10-24,Daging Ayam,Kota Depok,16100.0,28.6,33.1,25.4,4.3,8.4,21.91,0,0,1,0
+2026-10-25,Daging Ayam,Kota Depok,16100.0,28.8,32.5,25.4,1.1,6.6,16.97,0,0,1,0
+2026-10-26,Daging Ayam,Kota Depok,16100.0,28.4,33.2,24.9,13.3,6.9,17.77,0,0,0,0
+2026-10-27,Daging Ayam,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-10-28,Daging Ayam,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-10-29,Daging Ayam,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-10-30,Daging Ayam,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-10-31,Daging Ayam,Kota Depok,16100.0,,,,,,,0,0,1,0
+2026-11-01,Daging Ayam,Kota Depok,16100.0,,,,,,,0,0,1,0
+2026-11-02,Daging Ayam,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-03,Daging Ayam,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-04,Daging Ayam,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-05,Daging Ayam,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-06,Daging Ayam,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-07,Daging Ayam,Kota Depok,16100.0,,,,,,,0,0,1,0
+2026-11-08,Daging Ayam,Kota Depok,16100.0,,,,,,,0,0,1,0
+2026-11-09,Daging Ayam,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-10,Daging Ayam,Kota Depok,16100.0,,,,,,,0,0,0,0
 2020-01-02,Daging Sapi,Kota Depok,120000.0,26.4,30.2,23.9,11.5,11.1,14.33,0,0,0,0
 2020-01-03,Daging Sapi,Kota Depok,120000.0,27.1,30.2,24.6,7.5,10.9,15.54,0,0,0,0
 2020-01-04,Daging Sapi,Kota Depok,120000.0,27.1,30.1,25.2,10.0,10.8,13.81,0,0,1,0
@@ -19493,6 +19669,49 @@ date,commodity,location,price,temp_c,temp_max_c,temp_min_c,rain_mm,wind_max_kmh,
 2026-10-17,Daging Sapi,Kota Depok,151900.0,28.8,34.5,22.8,0.0,8.4,25.53,0,0,1,0
 2026-10-18,Daging Sapi,Kota Depok,151900.0,29.0,34.0,23.7,1.1,10.6,24.83,0,0,1,0
 2026-10-19,Daging Sapi,Kota Depok,151900.0,29.0,33.9,24.0,0.3,9.5,23.59,0,0,0,0
+2026-10-20,Daging Sapi,Kota Depok,84000.0,28.8,33.5,23.5,0.3,8.6,24.03,0,0,0,0
+2026-10-21,Daging Sapi,Kota Depok,16100.0,28.8,33.3,24.6,1.3,8.3,23.41,0,0,0,0
+2026-10-22,Daging Sapi,Kota Depok,16100.0,28.7,34.3,24.2,8.8,9.2,23.41,0,0,0,0
+2026-10-23,Daging Sapi,Kota Depok,16100.0,29.0,33.3,25.0,2.3,6.7,23.48,0,0,0,0
+2026-10-24,Daging Sapi,Kota Depok,16100.0,28.6,33.1,25.4,4.3,8.4,21.91,0,0,1,0
+2026-10-25,Daging Sapi,Kota Depok,16100.0,28.8,32.5,25.4,1.1,6.6,16.97,0,0,1,0
+2026-10-26,Daging Sapi,Kota Depok,16100.0,28.4,33.2,24.9,13.3,6.9,17.77,0,0,0,0
+2026-10-27,Daging Sapi,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-10-28,Daging Sapi,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-10-29,Daging Sapi,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-10-30,Daging Sapi,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-10-31,Daging Sapi,Kota Depok,16100.0,,,,,,,0,0,1,0
+2026-11-01,Daging Sapi,Kota Depok,16100.0,,,,,,,0,0,1,0
+2026-11-02,Daging Sapi,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-03,Daging Sapi,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-04,Daging Sapi,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-05,Daging Sapi,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-06,Daging Sapi,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-07,Daging Sapi,Kota Depok,16100.0,,,,,,,0,0,1,0
+2026-11-08,Daging Sapi,Kota Depok,16100.0,,,,,,,0,0,1,0
+2026-11-09,Daging Sapi,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-11-10,Daging Sapi,Kota Depok,16100.0,,,,,,,0,0,0,0
+2026-10-21,Gula Pasir,Kota Depok,25750.0,28.8,33.3,24.6,1.3,8.3,23.41,0,0,0,0
+2026-10-22,Gula Pasir,Kota Depok,25750.0,28.7,34.3,24.2,8.8,9.2,23.41,0,0,0,0
+2026-10-23,Gula Pasir,Kota Depok,25750.0,29.0,33.3,25.0,2.3,6.7,23.48,0,0,0,0
+2026-10-24,Gula Pasir,Kota Depok,25750.0,28.6,33.1,25.4,4.3,8.4,21.91,0,0,1,0
+2026-10-25,Gula Pasir,Kota Depok,25750.0,28.8,32.5,25.4,1.1,6.6,16.97,0,0,1,0
+2026-10-26,Gula Pasir,Kota Depok,25750.0,28.4,33.2,24.9,13.3,6.9,17.77,0,0,0,0
+2026-10-27,Gula Pasir,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-28,Gula Pasir,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-29,Gula Pasir,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-10-30,Gula Pasir,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-10-31,Gula Pasir,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-01,Gula Pasir,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-02,Gula Pasir,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-03,Gula Pasir,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-04,Gula Pasir,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-05,Gula Pasir,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-06,Gula Pasir,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-07,Gula Pasir,Kota Depok,25083.333333333332,,,,,,,0,0,1,0
+2026-11-08,Gula Pasir,Kota Depok,25166.666666666668,,,,,,,0,0,1,0
+2026-11-09,Gula Pasir,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-11-10,Gula Pasir,Kota Depok,25250.0,,,,,,,0,0,0,0
 2020-01-02,Gula Pasir Kualitas Premium,Kota Depok,14250.0,26.4,30.2,23.9,11.5,11.1,14.33,0,0,0,0
 2020-01-03,Gula Pasir Kualitas Premium,Kota Depok,14250.0,27.1,30.2,24.6,7.5,10.9,15.54,0,0,0,0
 2020-01-04,Gula Pasir Kualitas Premium,Kota Depok,14250.0,27.1,30.1,25.2,10.0,10.8,13.81,0,0,1,0
@@ -26215,7 +26434,27 @@ date,commodity,location,price,temp_c,temp_max_c,temp_min_c,rain_mm,wind_max_kmh,
 2026-10-18,Minyak Bermerk,Kota Depok,23750.0,29.0,34.0,23.7,1.1,10.6,24.83,0,0,1,0
 2026-10-19,Minyak Bermerk,Kota Depok,23750.0,29.0,33.9,24.0,0.3,9.5,23.59,0,0,0,0
 2026-10-20,Minyak Bermerk,Kota Depok,23750.0,28.8,33.5,23.5,0.3,8.6,24.03,0,0,0,0
-2026-10-21,Minyak Bermerk,Kota Depok,23750.0,28.8,33.3,24.6,1.3,8.3,23.41,0,0,0,0
+2026-10-21,Minyak Bermerk,Kota Depok,25750.0,28.8,33.3,24.6,1.3,8.3,23.41,0,0,0,0
+2026-10-22,Minyak Bermerk,Kota Depok,25750.0,28.7,34.3,24.2,8.8,9.2,23.41,0,0,0,0
+2026-10-23,Minyak Bermerk,Kota Depok,25750.0,29.0,33.3,25.0,2.3,6.7,23.48,0,0,0,0
+2026-10-24,Minyak Bermerk,Kota Depok,25750.0,28.6,33.1,25.4,4.3,8.4,21.91,0,0,1,0
+2026-10-25,Minyak Bermerk,Kota Depok,25750.0,28.8,32.5,25.4,1.1,6.6,16.97,0,0,1,0
+2026-10-26,Minyak Bermerk,Kota Depok,25750.0,28.4,33.2,24.9,13.3,6.9,17.77,0,0,0,0
+2026-10-27,Minyak Bermerk,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-28,Minyak Bermerk,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-29,Minyak Bermerk,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-10-30,Minyak Bermerk,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-10-31,Minyak Bermerk,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-01,Minyak Bermerk,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-02,Minyak Bermerk,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-03,Minyak Bermerk,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-04,Minyak Bermerk,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-05,Minyak Bermerk,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-06,Minyak Bermerk,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-07,Minyak Bermerk,Kota Depok,25083.333333333332,,,,,,,0,0,1,0
+2026-11-08,Minyak Bermerk,Kota Depok,25166.666666666668,,,,,,,0,0,1,0
+2026-11-09,Minyak Bermerk,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-11-10,Minyak Bermerk,Kota Depok,25250.0,,,,,,,0,0,0,0
 2020-01-02,Minyak Curah,Kota Depok,12400.0,26.4,30.2,23.9,11.5,11.1,14.33,0,0,0,0
 2020-01-03,Minyak Curah,Kota Depok,12400.0,27.1,30.2,24.6,7.5,10.9,15.54,0,0,0,0
 2020-01-04,Minyak Curah,Kota Depok,12600.0,27.1,30.1,25.2,10.0,10.8,13.81,0,0,1,0
@@ -28700,7 +28939,27 @@ date,commodity,location,price,temp_c,temp_max_c,temp_min_c,rain_mm,wind_max_kmh,
 2026-10-18,Minyak Curah,Kota Depok,22250.0,29.0,34.0,23.7,1.1,10.6,24.83,0,0,1,0
 2026-10-19,Minyak Curah,Kota Depok,22250.0,29.0,33.9,24.0,0.3,9.5,23.59,0,0,0,0
 2026-10-20,Minyak Curah,Kota Depok,22250.0,28.8,33.5,23.5,0.3,8.6,24.03,0,0,0,0
-2026-10-21,Minyak Curah,Kota Depok,22250.0,28.8,33.3,24.6,1.3,8.3,23.41,0,0,0,0
+2026-10-21,Minyak Curah,Kota Depok,25750.0,28.8,33.3,24.6,1.3,8.3,23.41,0,0,0,0
+2026-10-22,Minyak Curah,Kota Depok,25750.0,28.7,34.3,24.2,8.8,9.2,23.41,0,0,0,0
+2026-10-23,Minyak Curah,Kota Depok,25750.0,29.0,33.3,25.0,2.3,6.7,23.48,0,0,0,0
+2026-10-24,Minyak Curah,Kota Depok,25750.0,28.6,33.1,25.4,4.3,8.4,21.91,0,0,1,0
+2026-10-25,Minyak Curah,Kota Depok,25750.0,28.8,32.5,25.4,1.1,6.6,16.97,0,0,1,0
+2026-10-26,Minyak Curah,Kota Depok,25750.0,28.4,33.2,24.9,13.3,6.9,17.77,0,0,0,0
+2026-10-27,Minyak Curah,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-28,Minyak Curah,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-29,Minyak Curah,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-10-30,Minyak Curah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-10-31,Minyak Curah,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-01,Minyak Curah,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-02,Minyak Curah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-03,Minyak Curah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-04,Minyak Curah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-05,Minyak Curah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-06,Minyak Curah,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-07,Minyak Curah,Kota Depok,25083.333333333332,,,,,,,0,0,1,0
+2026-11-08,Minyak Curah,Kota Depok,25166.666666666668,,,,,,,0,0,1,0
+2026-11-09,Minyak Curah,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-11-10,Minyak Curah,Kota Depok,25250.0,,,,,,,0,0,0,0
 2020-01-02,Telur Ayam,Kota Depok,25250.0,26.4,30.2,23.9,11.5,11.1,14.33,0,0,0,0
 2020-01-03,Telur Ayam,Kota Depok,25000.0,27.1,30.2,24.6,7.5,10.9,15.54,0,0,0,0
 2020-01-04,Telur Ayam,Kota Depok,25000.0,27.1,30.1,25.2,10.0,10.8,13.81,0,0,1,0
@@ -31184,3 +31443,25 @@ date,commodity,location,price,temp_c,temp_max_c,temp_min_c,rain_mm,wind_max_kmh,
 2026-10-17,Telur Ayam,Kota Depok,25750.0,28.8,34.5,22.8,0.0,8.4,25.53,0,0,1,0
 2026-10-18,Telur Ayam,Kota Depok,25750.0,29.0,34.0,23.7,1.1,10.6,24.83,0,0,1,0
 2026-10-19,Telur Ayam,Kota Depok,25750.0,29.0,33.9,24.0,0.3,9.5,23.59,0,0,0,0
+2026-10-20,Telur Ayam,Kota Depok,25750.0,28.8,33.5,23.5,0.3,8.6,24.03,0,0,0,0
+2026-10-21,Telur Ayam,Kota Depok,25750.0,28.8,33.3,24.6,1.3,8.3,23.41,0,0,0,0
+2026-10-22,Telur Ayam,Kota Depok,25750.0,28.7,34.3,24.2,8.8,9.2,23.41,0,0,0,0
+2026-10-23,Telur Ayam,Kota Depok,25750.0,29.0,33.3,25.0,2.3,6.7,23.48,0,0,0,0
+2026-10-24,Telur Ayam,Kota Depok,25750.0,28.6,33.1,25.4,4.3,8.4,21.91,0,0,1,0
+2026-10-25,Telur Ayam,Kota Depok,25750.0,28.8,32.5,25.4,1.1,6.6,16.97,0,0,1,0
+2026-10-26,Telur Ayam,Kota Depok,25750.0,28.4,33.2,24.9,13.3,6.9,17.77,0,0,0,0
+2026-10-27,Telur Ayam,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-28,Telur Ayam,Kota Depok,25750.0,,,,,,,0,0,0,0
+2026-10-29,Telur Ayam,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-10-30,Telur Ayam,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-10-31,Telur Ayam,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-01,Telur Ayam,Kota Depok,25000.0,,,,,,,0,0,1,0
+2026-11-02,Telur Ayam,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-03,Telur Ayam,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-04,Telur Ayam,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-05,Telur Ayam,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-06,Telur Ayam,Kota Depok,25000.0,,,,,,,0,0,0,0
+2026-11-07,Telur Ayam,Kota Depok,25083.333333333332,,,,,,,0,0,1,0
+2026-11-08,Telur Ayam,Kota Depok,25166.666666666668,,,,,,,0,0,1,0
+2026-11-09,Telur Ayam,Kota Depok,25250.0,,,,,,,0,0,0,0
+2026-11-10,Telur Ayam,Kota Depok,25250.0,,,,,,,0,0,0,0

@@ -20,6 +20,8 @@ metadata_path = ROOT / "data/processed/weather_openmeteo_era5_metadata.json"
 weather_metadata = json.loads(metadata_path.read_text(encoding="utf-8")) if metadata_path.exists() else {}
 simulation_path = REPORTS / "purchase_simulation_summary.csv"
 simulations = pd.read_csv(simulation_path) if simulation_path.exists() else pd.DataFrame()
+final_manifest_path = REPORTS / "final_models_manifest.csv"
+final_manifest = pd.read_csv(final_manifest_path) if final_manifest_path.exists() else pd.DataFrame()
 
 if metrics.empty or forecasts.empty:
     raise SystemExit("Laporan evaluasi/prediksi kosong. Latih model terlebih dahulu.")
@@ -140,6 +142,7 @@ report_lines = [
     "Data setiap komoditas diurutkan berdasarkan tanggal dan dibagi kronologis 80% pelatihan / 20% pengujian. Semua varian model pada komoditas yang sama menggunakan batas waktu dan urutan uji yang sama. Model menerima jendela 30 hari untuk memprediksi tujuh hari berikutnya. LSTM dan GRU masing-masing diuji memakai fitur harga (harga, lag 1, lag 7, rerata 7 dan 30 hari) serta paket eksternal yang menambahkan enam variabel cuaca ERA5, indikator libur nasional/cuti bersama/akhir pekan, penanda tanggal dengan keterangan Idulfitri, dan empat fitur siklus hari/bulan. Indikator kalender yang masuk ke model berasal dari jendela historis 30 hari; kalender masa depan tidak diberikan sebagai input decoder terpisah. CSV tidak menandai periode Ramadan atau rentang hari menjelang Idulfitri.",
     "", "Pelatihan memakai maksimum 30 epoch, validasi 10% dari bagian pelatihan yang paling akhir, dan early stopping dengan patience 5. Jumlah epoch aktual pada run ini: "
     f"{metrics['epochs_trained'].min()}–{metrics['epochs_trained'].max()} (median {metrics['epochs_trained'].median():.1f}). Scaler dipasang pada data latih saja.",
+    "", (f"Setelah evaluasi, {len(final_manifest)} model operasional di-fit ulang memakai seluruh urutan historis yang tersedia per komoditas. Model final ini untuk prediksi dashboard dan tidak digunakan untuk menghitung metrik holdout. Rincian rentang fit ada di `final_models_manifest.csv`." if not final_manifest.empty else "Model yang disimpan saat evaluasi masih memakai bagian latih kronologis; jalankan refit model penuh untuk menghasilkan model operasional dashboard."),
     "", "MAE dan RMSE dilaporkan dalam rupiah per kilogram (Rp/kg); MAPE dalam persen. Tabel laporan menggabungkan error dari tujuh horizon dan semua origin harian pada bagian uji. Origin/horizon tumpang tindih sehingga error antarbaris berkorelasi. Grafik H+1 di bawah mengambil prediksi satu hari ke depan pada setiap origin uji agar seri aktual/prediksi bisa dibaca tanpa mencampur horizon.",
     "", "## Ringkasan metrik lintas komoditas", "",
     "Median antarkomoditas lebih layak untuk ringkasan karena nominal harga dan skala error berbeda antar-komoditas. Nilai mean tetap tersedia dalam file ringkasan.", "",

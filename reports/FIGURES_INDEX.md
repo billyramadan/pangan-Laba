@@ -8,19 +8,19 @@ Semua grafik membandingkan aktual dengan empat varian model untuk prediksi satu 
 
 ## Bawang Merah
 
-Titik uji H+1: 411.
+Titik uji H+1: 416.
 
 ![Bawang Merah: aktual vs prediksi H+1](figures/aktual_vs_prediksi_bawang_merah_h1.png)
 
 ## Bawang Putih
 
-Titik uji H+1: 485.
+Titik uji H+1: 489.
 
 ![Bawang Putih: aktual vs prediksi H+1](figures/aktual_vs_prediksi_bawang_putih_h1.png)
 
 ## Beras
 
-Titik uji H+1: 484.
+Titik uji H+1: 489.
 
 ![Beras: aktual vs prediksi H+1](figures/aktual_vs_prediksi_beras_h1.png)
 
@@ -32,25 +32,25 @@ Titik uji H+1: 485.
 
 ## Cabai Rawit Hijau
 
-Titik uji H+1: 485.
+Titik uji H+1: 489.
 
 ![Cabai Rawit Hijau: aktual vs prediksi H+1](figures/aktual_vs_prediksi_cabai_rawit_hijau_h1.png)
 
 ## Cabai Rawit Merah
 
-Titik uji H+1: 485.
+Titik uji H+1: 489.
 
 ![Cabai Rawit Merah: aktual vs prediksi H+1](figures/aktual_vs_prediksi_cabai_rawit_merah_h1.png)
 
 ## Daging Ayam
 
-Titik uji H+1: 485.
+Titik uji H+1: 489.
 
 ![Daging Ayam: aktual vs prediksi H+1](figures/aktual_vs_prediksi_daging_ayam_h1.png)
 
 ## Daging Sapi
 
-Titik uji H+1: 485.
+Titik uji H+1: 489.
 
 ![Daging Sapi: aktual vs prediksi H+1](figures/aktual_vs_prediksi_daging_sapi_h1.png)
 
@@ -68,18 +68,18 @@ Titik uji H+1: 339.
 
 ## Minyak Bermerk
 
-Titik uji H+1: 485.
+Titik uji H+1: 489.
 
 ![Minyak Bermerk: aktual vs prediksi H+1](figures/aktual_vs_prediksi_minyak_bermerk_h1.png)
 
 ## Minyak Curah
 
-Titik uji H+1: 485.
+Titik uji H+1: 489.
 
 ![Minyak Curah: aktual vs prediksi H+1](figures/aktual_vs_prediksi_minyak_curah_h1.png)
 
 ## Telur Ayam
 
-Titik uji H+1: 485.
+Titik uji H+1: 489.
 
 ![Telur Ayam: aktual vs prediksi H+1](figures/aktual_vs_prediksi_telur_ayam_h1.png)

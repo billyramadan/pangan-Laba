@@ -4,8 +4,8 @@ import sys
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
-from pangan_forecast.models import run_experiments
+sys.path.insert(0, str(ROOT / "backend" / "src"))
+from pangan_forecast.models import run_experiments, refit_full_history_models
 
 parser = argparse.ArgumentParser(description="Train LSTM/GRU variants for Kota Depok PIHPS data.")
 parser.add_argument("--epochs", type=int, default=15)
@@ -23,6 +23,11 @@ metrics, forecasts = run_experiments(
     clean, staging, window=args.window, horizon=args.horizon,
     epochs=args.epochs, batch_size=args.batch_size, data_source="depok_pihps",
 )
+final_models = refit_full_history_models(
+    clean, staging, window=args.window, horizon=args.horizon,
+    epochs=args.epochs, batch_size=args.batch_size,
+)
 print(f"Training selesai. Model: {len(metrics)}; ramalan: {len(forecasts)}")
+print(f"Model final dilatih ulang dengan histori penuh: {len(final_models)} varian.")
 print(f"Hasil sementara: {staging / 'reports'}")
 print(metrics.to_string(index=False) if not metrics.empty else "Tidak ada model yang dapat dilatih.")

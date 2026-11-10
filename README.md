@@ -4,12 +4,35 @@
 
 Proyek ini membandingkan LSTM dan GRU untuk memprediksi harga harian komoditas pangan strategis. Setiap model diuji dengan fitur harga saja dan fitur eksternal. Model memakai 30 hari pengamatan terakhir untuk memprediksi 7 hari berikutnya. Prakiraan digunakan sebagai pertimbangan waktu pembelian bahan baku; sistem ini tidak menghitung jumlah stok atau kebutuhan resep.
 
+## Peta frontend dan backend
+
+```text
+C:\pangan
+├── frontend\                 Tampilan website
+│   ├── index.html             Susunan halaman
+│   ├── css\app.css            Warna dan layout
+│   ├── js\app.js              Interaksi browser dan pemanggilan API
+│   └── assets\                Gambar website
+├── backend\                  Server dan kode Python
+│   ├── server.py              API, autentikasi, upload, dan pelatihan
+│   └── src\pangan_forecast\  Data, model LSTM/GRU, evaluasi, kalkulator
+├── data\                     Data input dan hasil olahan
+├── models\                   Model terlatih
+├── reports\                  Hasil evaluasi
+├── scripts\                  Perintah training dan pengolahan data
+├── legacy\                   Antarmuka Streamlit lama (opsional, tidak dipakai dashboard HTML)
+│   └── streamlit_app.py
+└── server.py                 Launcher kompatibilitas
+```
+
+Saat mengubah **tampilan**, buka file di `frontend/`. Untuk API atau alur server, buka `backend/server.py`. Untuk proses data dan machine learning, buka `backend/src/pangan_forecast/`. `legacy/streamlit_app.py` adalah aplikasi Streamlit lama dan tidak digunakan oleh dashboard HTML.
+
 ## Isi proyek
 
-- `src/pangan_forecast/data.py`: validasi, penggabungan, dan pembersihan data.
-- `src/pangan_forecast/features.py`: fitur harga, cuaca, dan kalender.
-- `src/pangan_forecast/models.py`: eksperimen LSTM/GRU dengan/ tanpa fitur eksternal.
-- `src/pangan_forecast/recommend.py`: aturan rekomendasi pembelian.
+- `backend/src/pangan_forecast/data.py`: validasi, penggabungan, dan pembersihan data.
+- `backend/src/pangan_forecast/features.py`: fitur harga, cuaca, dan kalender.
+- `backend/src/pangan_forecast/models.py`: eksperimen LSTM/GRU dengan/ tanpa fitur eksternal.
+- `backend/src/pangan_forecast/recommend.py`: aturan rekomendasi pembelian.
 - `scripts/`: pembersihan, pelatihan, dan pembuatan data demo sintetis.
 - `scripts/prepare_calendar.py`: menormalisasi kalender sumber ke indikator hari libur nasional, cuti bersama, akhir pekan, dan label keterangan Idulfitri.
 - `data/raw/weather.csv`: data cuaca harian Depok yang sudah dinormalisasi untuk model.
@@ -18,7 +41,12 @@ Proyek ini membandingkan LSTM dan GRU untuk memprediksi harga harian komoditas p
 - `data/raw/kalender_indonesia_2020_2026_source.csv`: CSV kalender asli yang diberikan pengguna; versi normalisasi dipakai dari `data/raw/calendar.csv`.
 - `data/raw/weather_monthly_depok.csv`: sumber suhu maksimum bulanan terdahulu, disimpan sebagai referensi dan bukan fitur aktif.
 - `scripts/download_weather_depok_nasa.py`: skrip alternatif NASA POWER; bukan sumber cuaca aktif saat ini. `scripts/download_weather_nasa.py` adalah skrip lama untuk Jawa Barat.
-- `app.py`: dashboard Streamlit untuk melihat evaluasi dan rekomendasi.
+- `frontend/`: seluruh tampilan web, dipisah menjadi `index.html`, `css/app.css`, dan `js/app.js`.
+- `frontend/assets/`: gambar yang dipakai halaman web dan antarmuka Streamlit lama.
+- `backend/server.py`: server lokal Python dan API untuk dashboard, autentikasi, kalkulator, langganan, unggah data, dan pelatihan model.
+- `server.py`: launcher kompatibilitas. Perintah utama untuk menjalankan backend adalah `python -m backend.server`.
+- `backend/src/pangan_forecast/`: mesin Python untuk data, LSTM/GRU, evaluasi, rekomendasi, akun, dan kalkulator.
+- `legacy/streamlit_app.py`: antarmuka Streamlit lama (opsional); bukan frontend HTML utama.
 - `data/`: tempat meletakkan data mentah dan hasil olahan.
 - `models/`: model terlatih dalam format HDF5 dan metadata scaler. File `.keras` lama mungkin berasal dari eksperimen sebelumnya; dashboard memakai model yang tercatat pada laporan terbaru.
 - `reports/`: hasil evaluasi dari data proyek saat ini.
@@ -30,7 +58,7 @@ Proyek ini membandingkan LSTM dan GRU untuk memprediksi harga harian komoditas p
 
 ## Mulai
 
-Gunakan Python 3.10 atau 3.11. Buat virtual environment, lalu pasang paket:
+Gunakan Python 3.11 atau lebih baru. Buat virtual environment, lalu pasang paket:
 
 ```bash
 python -m venv .venv
@@ -47,13 +75,27 @@ python scripts/prepare_data.py
 python scripts/train.py --epochs 15
 ```
 
-Data harga PIHPS Kota Depok, cuaca historis ERA5 dari Open-Meteo, dan kalender Indonesia dari CSV yang diberikan pengguna tersedia pada `data/raw/`. Kalender mencakup libur nasional, cuti bersama, akhir pekan, dan penanda tanggal yang keterangannya memuat Idulfitri. CSV ini tidak memberi penanda periode Ramadan atau hari-hari menjelang Idulfitri. Jangan gabungkan data demo dan data penelitian. Jalankan dashboard setelah model tersimpan:
+Data harga PIHPS Kota Depok, cuaca historis ERA5 dari Open-Meteo, dan kalender Indonesia dari CSV yang diberikan pengguna tersedia pada `data/raw/`. Kalender mencakup libur nasional, cuti bersama, akhir pekan, dan penanda tanggal yang keterangannya memuat Idulfitri. CSV ini tidak memberi penanda periode Ramadan atau hari-hari menjelang Idulfitri. Jangan gabungkan data demo dan data penelitian. Jalankan dashboard HTML setelah model tersimpan:
 
 ```bash
-streamlit run app.py
+python -m backend.server
 ```
 
-Dashboard menyediakan bagian **Unggah data dan latih ulang model**. Unggah langsung satu atau beberapa workbook Excel PIHPS format “Tabel Harga Berdasarkan Komoditas”. Di setiap workbook, pilih baris provinsi/kota/pasar dan isi nama komoditas karena nama komoditas tidak tercantum pada tabel ekspor. Untuk file tahunan, gunakan baris wilayah yang sama. File cuaca historis dan kalender CSV bisa ditambahkan secara opsional. Workbook sumber disimpan terpisah di `data/uploads/`, lalu hasil pelatihan memperbarui folder `models/` dan `reports/`.
+Di PowerShell pada Windows, jalankan `.\.venv\Scripts\python.exe -m backend.server` dari folder project `C:\pangan`. `python server.py` tetap tersedia sebagai launcher lama.
+
+Buka `http://127.0.0.1:8000` di browser. Untuk menjalankan antarmuka Streamlit lama, gunakan `python -m streamlit run legacy/streamlit_app.py --server.port 8502`.
+
+### Login Google dan pembayaran
+
+Tombol **Mulai gratis dengan Google** membuat akun trial 7 hari setelah login berhasil. Callback default lokal adalah `http://127.0.0.1:8000/auth/callback`; tambahkan URI yang sama pada Authorized redirect URIs di Google Cloud Console. Login tidak menyimpan password Google.
+
+Tambahkan email pengelola yang dipakai untuk login Google ke `[admin].emails` pada `.streamlit/secrets.toml` (lihat `.streamlit/secrets.example.toml`). Hanya akun tersebut yang dapat mengunggah/mengganti data PIHPS, melatih model, membuka hasil evaluasi, serta membaca status pekerjaan pelatihan. Batas akses diterapkan di API server, bukan sekadar menyembunyikan tombol. Jangan masukkan client secret atau cookie secret ke GitHub.
+
+Tombol paket mengirim permintaan ke backend. Pembayaran dapat memakai transfer manual atau invoice Xendit setelah dikonfigurasi. Admin melihat status transaksi pada bagian **Pembayaran & langganan**; transfer manual harus dicocokkan ke mutasi bank sebelum dikonfirmasi, sedangkan Xendit mengaktifkan paket dari webhook bertoken yang cocok. Transfer manual belum aktif sampai rekening dan instruksinya diisi. Jangan masukkan kredensial ke GitHub. Untuk hosting, gunakan variabel lingkungan rahasia, `PANGAN_HOST=0.0.0.0`, dan `PANGAN_DB_PATH` yang menunjuk ke persistent volume. Lihat `docs/TRIAL_SUBSCRIPTION.md` untuk daftar konfigurasi dan batas purwarupa.
+
+Dashboard HTML menyediakan menu **Data & pelatihan** untuk admin. Pelanggan memilih komoditas dan model LSTM/GRU pada dashboard usaha. Prediksi aktif dibuat dari 30 hari fitur terakhir dan model tersimpan, untuk horizon tujuh hari. Jika observasi PIHPS terakhir lebih dari tujuh hari, aplikasi tetap menampilkan tanggal/harga acuan tetapi menahan rekomendasi beli/tunda dan proyeksi laba. Perbarui data PIHPS lalu latih ulang model untuk mengaktifkannya kembali. Prediksi dan kalkulator menu membaca data proyek; tidak memakai angka harga contoh.
+
+Admin dapat mengunggah satu atau beberapa workbook Excel PIHPS format “Tabel Harga Berdasarkan Komoditas”, lalu isi nama komoditas tiap workbook. Proyek ini menetapkan wilayah penelitian Kota Depok. Cuaca harian dan kalender CSV dapat ditambahkan secara opsional. Pastikan cuaca memiliki kolom `date,rain_mm,temp_c`; hasil pelatihan memperbarui folder `models/` dan `reports/`.
 
 Setelah melatih ulang model, perbarui laporan simulasi dengan `python scripts/simulate_recommendations.py`, lalu buat ulang tabel/grafik skripsi dengan `python scripts/create_thesis_materials.py`. Dashboard juga menghitung simulasi untuk komoditas/model/fitur yang sedang dipilih dan menyediakan unduhan CSV.
 
@@ -79,7 +121,7 @@ CSV cuaca aktif diunduh langsung melalui [Open-Meteo Historical Weather API](htt
 
 ## Metode dan batas interpretasi
 
-Split data dilakukan secara kronologis (80% latih, 20% uji), bukan acak. Untuk setiap komoditas, semua varian memakai rentang uji dan urutan target yang sama. Model memakai jendela 30 hari untuk memprediksi 7 hari; epoch maksimum 30 dengan early stopping berdasarkan 10% bagian akhir data latih. Laporan mencatat rentang tanggal target latih/uji, epoch aktual, dan jumlah urutan. Metrik MAE, RMSE, dan MAPE dihitung dengan menggabungkan seluruh langkah prediksi tujuh hari dari setiap origin uji; karena jendela prediksi saling tumpang tindih, kesalahan antarbaris tidak independen. Dashboard menampilkan median metrik lintas komoditas agar komoditas berharga tinggi tidak mendominasi ringkasan. Empat eksperimen dibandingkan: LSTM dan GRU masing-masing dengan fitur harga saja dan paket eksternal yang menambahkan cuaca, kalender libur/cuti/akhir pekan/Idulfitri, serta siklus hari/bulan. Paket ini mencampur beberapa kelompok fitur, sehingga pengaruh cuaca atau kalender tidak terisolasi. Penanda Ramadan atau rentang hari menjelang Idulfitri belum tersedia. MAPE dapat menyesatkan jika harga mendekati nol.
+Split evaluasi dilakukan secara kronologis (80% latih, 20% uji), bukan acak. Untuk setiap komoditas, semua varian memakai rentang uji dan urutan target yang sama. Model memakai jendela 30 hari untuk memprediksi 7 hari; epoch maksimum 30 dengan early stopping berdasarkan 10% bagian akhir data latih. Laporan mencatat rentang tanggal target latih/uji, epoch aktual, dan jumlah urutan. Metrik MAE, RMSE, dan MAPE dihitung dengan menggabungkan seluruh langkah prediksi tujuh hari dari setiap origin uji; karena jendela prediksi saling tumpang tindih, kesalahan antarbaris tidak independen. Setelah evaluasi, pipeline melatih ulang model operasional dengan seluruh urutan historis yang tersedia; model final ini tidak dipakai untuk menghitung metrik holdout. Rincian cakupan model final ada di `reports/final_models_manifest.csv`. Dashboard menampilkan median metrik lintas komoditas agar komoditas berharga tinggi tidak mendominasi ringkasan. Empat eksperimen dibandingkan: LSTM dan GRU masing-masing dengan fitur harga saja dan paket eksternal yang menambahkan cuaca, kalender libur/cuti/akhir pekan/Idulfitri, serta siklus hari/bulan. Paket ini mencampur beberapa kelompok fitur, sehingga pengaruh cuaca atau kalender tidak terisolasi. Penanda Ramadan atau rentang hari menjelang Idulfitri belum tersedia. MAPE dapat menyesatkan jika harga mendekati nol.
 
 Rekomendasi membandingkan rerata harga prakiraan tujuh hari dengan harga terakhir. Jika kenaikan prakiraan melewati ambang 5%, sistem menyarankan “beli sekarang”; jika perubahan di bawah −5%, “tunda dulu”; selain itu “beli sesuai kebutuhan”. Ini alat bantu sederhana, belum memperhitungkan stok, biaya penyimpanan, kualitas, pemasok, maupun ketidakpastian prediksi, sehingga bukan keputusan otomatis.
 

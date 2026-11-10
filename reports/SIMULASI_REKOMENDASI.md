@@ -1,4 +1,4 @@
-# Protokol dan hasil awal simulasi beli/tunda
+# Protokol dan hasil simulasi beli/tunda
 
 ## Status
 
@@ -25,18 +25,18 @@ persentase selisih = selisih biaya (Rp) ÷ biaya baseline (Rp) × 100%
 
 Nilai positif berarti strategi lebih murah pada simulasi, nilai negatif berarti lebih mahal.
 
-## Hasil awal
+## Hasil terbaru (data sampai 10 November 2026)
 
-Hasil memakai prediksi terbaru dari model dengan data ERA5 dan kalender, 13 komoditas, 4 kombinasi model/fitur, dan 865 siklus per kombinasi (3.460 siklus keseluruhan). Dengan parameter standar volume 1 kg dan penundaan maksimum 2 hari, 322 transaksi ditunda.
+Hasil ini memakai 13 komoditas yang memiliki model/evaluasi, empat kombinasi model/fitur, dan 866 siklus per kombinasi (3.464 siklus keseluruhan). Jumlah siklus yang mengalami penundaan berbeda menurut model/fitur:
 
-| Model | Fitur | Median selisih per komoditas | Rerata selisih per komoditas |
-|---|---|---:|---:|
-| GRU | Harga saja | 0,00% | 0,02% |
-| GRU | Harga + cuaca + kalender + siklus tanggal | 0,00% | 0,01% |
-| LSTM | Harga saja | 0,00% | 0,03% |
-| LSTM | Harga + cuaca + kalender + siklus tanggal | 0,00% | 0,02% |
+| Model | Fitur | Siklus | Siklus ditunda | Median selisih per komoditas | Rerata selisih per komoditas |
+|---|---|---:|---:|---:|---:|
+| GRU | harga + cuaca + kalender + siklus tanggal | 866 | 110 | 0.00% | -0.07% |
+| GRU | harga saja | 866 | 48 | 0.00% | -0.06% |
+| LSTM | harga + cuaca + kalender + siklus tanggal | 866 | 206 | 0.00% | -0.01% |
+| LSTM | harga saja | 866 | 94 | 0.00% | -0.12% |
 
-Median 0% menunjukkan bahwa sebagian besar komoditas tidak memperoleh perubahan biaya pada aturan ini. Ada komoditas dengan selisih negatif maupun positif. Jadi, hasil awal belum menunjukkan manfaat penghematan yang konsisten.
+Median 0% menunjukkan bahwa sebagian besar komoditas tidak memperoleh perubahan biaya pada aturan ini. Rerata yang sedikit negatif menunjukkan strategi sedikit lebih mahal pada rata-rata simulasi; hasilnya belum menunjukkan penghematan yang konsisten.
 
 ## Batas interpretasi
 

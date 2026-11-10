@@ -4,7 +4,7 @@ import sys
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "backend" / "src"))
 from pangan_forecast.data import normalize_calendar
 
 source = ROOT / "data/raw/kalender_indonesia_2020_2026_source.csv"

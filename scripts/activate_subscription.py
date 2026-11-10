@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "backend" / "src"))
 
 from pangan_forecast.accounts import activate_subscription  # noqa: E402
 from pangan_forecast.billing import get_subscription, set_subscription  # noqa: E402

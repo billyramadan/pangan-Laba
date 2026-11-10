@@ -1,7 +1,7 @@
 from pathlib import Path
 import sys
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "backend" / "src"))
 from pangan_forecast.data import load_and_merge
 
 clean = load_and_merge(ROOT / "data/raw/prices.csv", ROOT / "data/raw/weather.csv",
