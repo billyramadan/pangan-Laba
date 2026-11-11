@@ -30,9 +30,7 @@ window.addEventListener('unhandledrejection',e=>{try{toast('Error: '+(e.reason&&
 function toast(s){$('toast').textContent=s;$('toast').classList.remove('hidden');setTimeout(()=>$('toast').classList.add('hidden'),3600)}
 
 const PLANS=[
- {id:'starter',name:'Starter',price:150000,features:['3 komoditas','Dashboard dasar']},
- {id:'pro',name:'Pro',price:300000,features:['10 komoditas','Support prioritas']},
- {id:'enterprise',name:'Enterprise',price:750000,features:['Komoditas tak terbatas','Support VIP']}];
+ {id:'starter',name:'Starter',price:150000,features:['Komoditas tak terbatas','Dashboard dasar']}];
 
 let authState={auth_ready:false,logged_in:false,local_preview:false,user:null,account:null,billing:{}};
 let state={commodity:'',variant:'GRU — harga + cuaca + kalender + siklus tanggal',restock:7,lastProfit:null,lastSim:null,history:[],currentQuotes:{}};

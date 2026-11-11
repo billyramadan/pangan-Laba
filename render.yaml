@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: pangan-laba
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m backend.server
+    healthCheckPath: /
+    envVars:
+      - key: PANGAN_HOST
+        value: 0.0.0.0
+      - key: PANGAN_DB_PATH
+        value: data/app_users.sqlite3
+      # Set these in the Render dashboard (built secrets, jangan di-commit):
+      #   PANGAN_OAUTH_REDIRECT_URI = https://<app>.onrender.com/auth/callback
+      #   PANGAN_COOKIE_SECRET = <string >= 32 char>
+      #   PANGAN_GOOGLE_CLIENT_ID = <id>.apps.googleusercontent.com
+      #   PANGAN_GOOGLE_CLIENT_SECRET = <secret>
+      #   PANGAN_ADMIN_EMAILS = kamu@email.com
+      #   PANGAN_BILLING_PROVIDER = manual
+      #   PANGAN_BILLING_PAYMENT_INSTRUCTIONS = ...
+      #   PANGAN_BILLING_BANK_NAME / BANK_NUMBER / BANK_ACCOUNT_NAME
+      #   PANGAN_BILLING_SUPPORT_URL = ...

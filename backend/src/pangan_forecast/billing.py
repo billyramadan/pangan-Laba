@@ -30,23 +30,7 @@ PLANS: list[dict] = [
         "price_idr": 150_000,
         "interval": "month",
         "interval_count": 1,
-        "features": ["1 pengguna", "3 komoditas", "Dashboard dasar"],
-    },
-    {
-        "id": "pro",
-        "name": "Pro",
-        "price_idr": 300_000,
-        "interval": "month",
-        "interval_count": 1,
-        "features": ["3 pengguna", "10 komoditas", "Akses API", "Support prioritas"],
-    },
-    {
-        "id": "enterprise",
-        "name": "Enterprise",
-        "price_idr": 750_000,
-        "interval": "month",
-        "interval_count": 1,
-        "features": ["Pengguna tak terbatas", "Komoditas tak terbatas", "Support VIP"],
+        "features": ["1 pengguna", "Komoditas tak terbatas", "Dashboard dasar"],
     },
 ]
 
@@ -578,11 +562,18 @@ def handle_stripe_event(database: str | Path, event: dict) -> str:
         plan_id = _price_to_plan_id(database, data.get("items", {}).get("data", [{}])[0].get("price", ""))
         if not plan_id:
             return "ignored_no_plan_map"
+        def iso(value):
+            if not value:
+                return None
+            if isinstance(value, (int, float)):
+                return datetime.fromtimestamp(value, tz=timezone.utc).isoformat()
+            return value
+
         set_subscription(
             database, email, plan_id,
             status=data.get("status", "active"),
-            period_start=data.get("current_period_start"),
-            period_end=data.get("current_period_end"),
+            period_start=iso(data.get("current_period_start")),
+            period_end=iso(data.get("current_period_end")),
             provider="stripe",
             provider_subscription_id=data.get("id"),
             cancel_at_period_end=int(bool(data.get("cancel_at_period_end", False))),

@@ -44,7 +44,7 @@ OAUTH_STATES: dict[str, float] = {}
 OAUTH_CACHE: dict[str, dict] = {}
 # Cache id Price Stripe per plan (dibuat otomatis sekali).
 PRICE_CACHE: dict[str, str] = {}
-PLAN_CAP = {"starter": 3, "pro": 10, "enterprise": None}
+PLAN_CAP = {"starter": None}
 # Token CSRF double-submit: dibaca JavaScript dari cookie lalu dikirim via header.
 CSRF_TOKEN = secrets.token_urlsafe(32)
 

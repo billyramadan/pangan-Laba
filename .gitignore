@@ -29,7 +29,6 @@ backups/
 training_staging/
 install-log.txt
 *.log
-models/*.keras
 # Never upload machine-local or user-specific state.
 .streamlit/secrets.toml
 data/app_users.sqlite3*
@@ -39,6 +38,5 @@ backups/
 training_staging/
 install-log.txt
 *.log
-models/*.keras
 .agents/
 .claude/
