@@ -11,6 +11,15 @@ from pathlib import Path
 import pandas as pd
 
 
+def _ensure_profit_schema(connection: sqlite3.Connection) -> None:
+    """Migrate older DBs that predate the forecast_available column."""
+    columns = {row[1] for row in connection.execute("PRAGMA table_info(menu_profit_records)")}
+    if "forecast_available" not in columns:
+        connection.execute(
+            "ALTER TABLE menu_profit_records ADD COLUMN forecast_available INTEGER NOT NULL DEFAULT 1"
+        )
+
+
 def _connect(database: str | Path) -> sqlite3.Connection:
     path = Path(database)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -53,11 +62,7 @@ def save_profit_record(database: str | Path, email: str, record: dict) -> int:
                 created_at TEXT NOT NULL
             )"""
         )
-        columns = {row[1] for row in connection.execute("PRAGMA table_info(menu_profit_records)")}
-        if "forecast_available" not in columns:
-            connection.execute(
-                "ALTER TABLE menu_profit_records ADD COLUMN forecast_available INTEGER NOT NULL DEFAULT 1"
-            )
+        _ensure_profit_schema(connection)
         cursor = connection.execute(
             """INSERT INTO menu_profit_records (
                 email, menu_name, period_label, portions_sold, selling_price, revenue,
@@ -185,6 +190,7 @@ def get_profit_history(database: str | Path, email: str, limit: int = 100) -> li
         ).fetchone()
         if table is None:
             return []
+        _ensure_profit_schema(connection)
         rows = connection.execute(
             """SELECT id, menu_name, period_label, portions_sold, selling_price,
                       revenue, ingredient_cost_per_portion, total_ingredient_cost,

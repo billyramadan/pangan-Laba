@@ -1,6 +1,6 @@
 # Prediksi Harga Komoditas Pangan Strategis
 
-**Judul:** Prediksi Harga Komoditas Pangan Strategis Menggunakan LSTM dan GRU dengan Fitur Eksternal untuk Mendukung Pembelian Bahan Baku UMKM Kuliner.
+**Judul:** Prediksi Harga Komoditas Pangan Strategis Menggunakan LSTM dan GRU untuk Mendukung Keputusan Belanja dan Analisis Laba Menu UMKM Kuliner.
 
 Proyek ini membandingkan LSTM dan GRU untuk memprediksi harga harian komoditas pangan strategis. Setiap model diuji dengan fitur harga saja dan fitur eksternal. Model memakai 30 hari pengamatan terakhir untuk memprediksi 7 hari berikutnya. Prakiraan digunakan sebagai pertimbangan waktu pembelian bahan baku; sistem ini tidak menghitung jumlah stok atau kebutuhan resep.
 

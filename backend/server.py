@@ -583,7 +583,7 @@ class Handler(BaseHTTPRequestHandler):
             query = urllib.parse.parse_qs(parsed.query)
             try:
                 model = query.get("model", ["GRU"])[0]
-                feature = query.get("features", ["harga + cuaca + kalender + siklus tanggal"])[0]
+                feature = query.get("features", ["harga saja"])[0]
                 commodity = query.get("commodity", [""])[0]
                 days = max(1, min(7, int(query.get("restock_days", ["7"])[0])))
                 result = build_current_forecasts(ROOT, model, feature,
@@ -899,7 +899,7 @@ class Handler(BaseHTTPRequestHandler):
     def _profit(self):
         user = self._access()
         if user is None: return
-        _, email, preview = user
+        account, email, preview = user
         body = self._read_json()
         recipe_rows = body.get("recipe", [])
         if not isinstance(recipe_rows, list) or len(recipe_rows) > 100:
@@ -942,7 +942,11 @@ class Handler(BaseHTTPRequestHandler):
         model_name = str(body.get("model", "GRU"))
         feature_name = str(body.get("features", "harga + cuaca + kalender + siklus tanggal"))
         names = list(dict.fromkeys(recipe["commodity"].tolist()))
-        current = build_current_forecasts(ROOT, model_name, feature_name, commodities=names,
+        # Hanya kirim bahan yang dikenali PIHPS ke prediksi; bahan custom (di luar
+        # daftar) tetap diproses dengan harga yang diisikan pengguna.
+        known = {str(c).strip().casefold() for c in _commodities(account)}
+        forecast_names = [n for n in names if str(n).strip().casefold() in known]
+        current = build_current_forecasts(ROOT, model_name, feature_name, commodities=forecast_names,
                                           restock_days=max(1, min(7, int(body.get("restock_days", 7)))))
         report, missing = compute_current_profit_report(
             recipe, current.get("quotes", {}), menu_name=menu_name,

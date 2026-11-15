@@ -7,7 +7,13 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_absolute_error, mean_squared_error
-from .features import add_features, PRICE_FEATURES, EXTERNAL_FEATURES
+try:
+    from .features import add_features, PRICE_FEATURES, EXTERNAL_FEATURES
+except ImportError:  # allow direct execution: python models.py
+    import pathlib
+    import sys
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+    from features import add_features, PRICE_FEATURES, EXTERNAL_FEATURES
 
 
 def build_sequences(frame, feature_cols, window=30, horizon=7):
@@ -37,7 +43,7 @@ def _build_keras(kind, window, n_features, horizon):
     return model
 
 
-def _metrics(y_true, y_pred):
+def _metrics(y_true: np.ndarray, y_pred: np.ndarray) -> dict[str, object]:
     actual, pred = y_true.reshape(-1), y_pred.reshape(-1)
     denominator = np.maximum(np.abs(actual), 1e-8)
     return {"MAE": float(mean_absolute_error(actual, pred)),
@@ -79,8 +85,9 @@ def run_experiments(clean: pd.DataFrame, output_dir=".", window=30, horizon=7,
                 data[cols] = data[cols].apply(pd.to_numeric, errors="coerce")
                 data[cols] = data[cols].ffill().fillna(0)
                 x, y, starts, ends, references = build_sequences(data, cols, window, horizon)
+                cut = pd.to_datetime(featured["date"].iloc[int(len(featured) * 0.8)])
                 train_mask = pd.to_datetime(ends) < cut
-                test_mask = pd.to_datetime(starts) >= cut
+                test_mask = ~train_mask
                 if train_mask.sum() < 20 or test_mask.sum() < 1:
                     print(f"Lewati {commodity}/{kind}/external={use_external}: split tidak cukup.")
                     continue
@@ -89,6 +96,8 @@ def run_experiments(clean: pd.DataFrame, output_dir=".", window=30, horizon=7,
                 x_scaler, y_scaler = StandardScaler(), StandardScaler()
                 x_scaler.fit(x_train.reshape(-1, len(cols)))
                 y_scaler.fit(y_train.reshape(-1, 1))
+                assert x_scaler.mean_ is not None and x_scaler.scale_ is not None
+                assert y_scaler.mean_ is not None and y_scaler.scale_ is not None
                 def sx(a):
                     return x_scaler.transform(a.reshape(-1, len(cols))).reshape(a.shape)
                 train_x, test_x = sx(x_train), sx(x_test)
@@ -101,7 +110,7 @@ def run_experiments(clean: pd.DataFrame, output_dir=".", window=30, horizon=7,
                                         patience=5, restore_best_weights=True)])
                 pred_scaled = model.predict(test_x, verbose=0)
                 pred = y_scaler.inverse_transform(pred_scaled.reshape(-1, 1)).reshape(pred_scaled.shape)
-                score = _metrics(y_test, pred)
+                score: dict[str, object] = _metrics(y_test, pred)
                 name = f"{str(commodity).strip().lower().replace(' ', '_')}_{kind.lower()}_{'external' if use_external else 'price'}"
                 feature_label = "harga + cuaca + kalender + siklus tanggal" if use_external else "harga saja"
                 score.update({"commodity": commodity, "model": kind,
@@ -202,6 +211,8 @@ def refit_full_history_models(clean: pd.DataFrame, output_dir=".", window=30,
                 x_scaler, y_scaler = StandardScaler(), StandardScaler()
                 x_scaler.fit(x.reshape(-1, len(cols)))
                 y_scaler.fit(y.reshape(-1, 1))
+                assert x_scaler.mean_ is not None and x_scaler.scale_ is not None
+                assert y_scaler.mean_ is not None and y_scaler.scale_ is not None
                 train_x = x_scaler.transform(x.reshape(-1, len(cols))).reshape(x.shape)
                 train_y = y_scaler.transform(y.reshape(-1, 1)).reshape(y.shape)
                 tf.keras.utils.set_random_seed(42)
@@ -287,5 +298,39 @@ def forecast_next(model_path, metadata_path, history: pd.DataFrame):
     x = (x - np.array(meta["x_mean"])) / np.array(meta["x_scale"])
     model_path = Path(model_path)
     model = _load_forecast_model(str(model_path.resolve()), model_path.stat().st_mtime_ns)
-    scaled = model.predict(x[None, ...], verbose=0)[0]
+    pred_out = model.predict(x[None, ...], verbose=0)
+    assert pred_out is not None
+    scaled = pred_out[0]
     return scaled * meta["y_scale"] + meta["y_mean"]
+
+
+def _selfcheck() -> None:
+    """Runnable sanity check for sequence building and metrics (no TensorFlow)."""
+    np.random.seed(0)
+    n = 130
+    dates = pd.date_range("2024-01-01", periods=n, freq="D")
+    frame = pd.DataFrame({
+        "date": dates,
+        "price": 100 + np.cumsum(np.random.randn(n) * 2),
+        "temp_c": 27.0,
+    })
+    window, horizon = 30, 7
+    x, y, starts, ends, references = build_sequences(frame, ["price", "temp_c"], window, horizon)
+    expected = n - window - horizon + 1
+    assert x.shape == (expected, window, 2), f"x shape {x.shape}"
+    assert y.shape == (expected, horizon), f"y shape {y.shape}"
+    assert len(starts) == len(ends) == len(references) == expected
+    assert (pd.to_datetime(starts) < pd.to_datetime(ends)).all(), "start harus sebelum end"
+    assert (references == frame["price"].iloc[window - 1:n - horizon]).all(), "reference salah"
+
+    m = _metrics(np.arange(1.0, 6.0), np.arange(1.0, 6.0) + 0.5)
+    assert set(m) == {"MAE", "RMSE", "MAPE"}
+    mae, rmse = m["MAE"], m["RMSE"]
+    assert isinstance(mae, float) and isinstance(rmse, float)
+    assert abs(mae - 0.5) < 1e-9
+    assert abs(rmse - 0.5) < 1e-9
+    print("models.py self-check OK")
+
+
+if __name__ == "__main__":
+    _selfcheck()

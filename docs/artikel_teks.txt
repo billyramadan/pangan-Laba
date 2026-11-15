@@ -1,0 +1,613 @@
+Results in Engineering 30 (2026) 110131
+Contents lists available at ScienceDirect
+Results in Engineering
+journal homepage: www.sciencedirect.com/journal/results-in-engineering
+Contents lists available at ScienceDirect
+Results in Engineering
+journal homepage: www.sciencedirect.com/journal/results-in-engineering
+Research paper
+A temporal fusion transformer for multi-step forecasting of Indonesia’s strategic food commodity prices
+Savira Amalia  a, Arian Dhini  a,b,∗, Zulkarnain  a, Choiru Za’in  c, Isti Surjandari  a
+a Industrial Engineering Department, Faculty of Engineering, Universitas Indonesia, Kampus UI Depok, Depok, 16424, Indonesia
+b Artificial Intelligence and Data Engineering - Research Center (AIDE-RC), Faculty of Engineering, Universitas Indonesia, Kampus UI Depok, Depok, 16424, Indonesia
+c Department of Computer Science and Information Technology, School of Computing, Engineering and Mathematical Science, La Trobe University, Melbourne, Australia
+a r t i c l ei n f oa b s t r a c t
+Keywords:
+Temporal fusion transformer (TFT) Deep learning
+Food commodity prices Multi-step prediction Time series forecasting
+Accurate forecasting of food commodity prices is essential for mitigating economic instability and ensuring na-tional food security. While deep learning has advanced time series forecasting, this study employs the Temporal Fusion Transformer (TFT) architecture for multi-step (30-day) forecasting of daily prices across ten strategic food commodities in Indonesia. The TFT’s performance is compared against benchmark models Long Short-Term Memory (LSTM), Gated Recurrent Unit (GRU), ARIMA, and Naïve models. The results demonstrate TFT’s supe-rior performance, particularly for commodities with high price variability. For these, the Mean Absolute Error (MAE) of the best-performing benchmark was higher than TFT’s by 285.6% for bird’s eye chili, 65.7% for shal-lots, 52.8% for red chili, 36.2% for chicken meat, and 29.9% for beef. This work validates the TFT as a powerful tool for developing data-driven policy and more effective price management in Indonesia.
+Introduction
+Ensuring food security is a critical global challenge, fundamentally linked to economic access and the affordability of staple goods. In emerging economies like Indonesia, this link is especially fragile, with food price inflation posing a direct threat to both macroeconomic sta-bility and the well-being of millions. It is known that an increase in food prices is negatively correlated with purchasing power, and the impact is even worse for the poor, who spend 75% of their household expenditure on food [1]. According to Statistics Indonesia, the consumer price index for the food segment saw approximately 6.9% cumulative increase from 2021 to 2023, indicating there was an increase in food item prices [2]. If this trend continues, it could lead to higher poverty rates and an in-creased risk of food insecurity, posing challenges to achieving SDG 1 (No Poverty) and SDG 2 (Zero Hunger).
+To manage this, Indonesian policy focuses on ten items classified as strategic food commodities by The National Strategic Food Price Infor-mation Center: shallots, garlic, rice, red chili, bird’s eye chili, chicken meat, beef, sugar, cooking oil, and chicken eggs. The stability of these specific commodities is considered paramount for controlling inflation and ensuring national food security, which highlights the urgency of developing accurate methods for predicting their prices [3].
+The challenge in food price forecasting, however, is magnified by the inherent complexity and uncertainty surrounding food systems. The
+price fluctuations of food commodities are the result of a dynamic in-terplay between supply-side shocks such as unpredictable weather pat-terns, natural events, and distribution costs, and demand-side pressures like household income and consumer behaviour [4]. In consequence, these systems are prone to sudden disruptions that can alter their in-ternal dynamics. This growing uncertainty can deter investment in the food production sector, which in turn hampers productivity, lowers ef-ficiency, and threatens long-term sustainability. Additionally, in devel-oping countries where small-scale farmers are the foundation of the agricultural sector, this investment deficit weakens household resilience against economic shocks [5].
+Given these concerns, anticipating future problems under this uncer-tainty calls for a robust analysis of past shocks and dynamics to better manage potential trade-offs and respond to unpredictable developments [6]. In this context, the ability to forecast future food prices becomes a crucial tool. Accurate price predictions can assist the government, as pol-icymakers, in formulating targeted interventions, map out target policy areas, and measure the scale of required policies to maintain food price stability [7]. Additionally, price predictions can serve as early warnings for producers, farmers, and traders about price fluctuations, aiding in the development of sales and production strategies to mitigate risks of loss.
+Classical methods like ARIMA are inherently incapable of modeling complex, non-linear dynamics found in food commodity prices [8]. To
+∗ Corresponding author.
+E-mail address: arian@ie.ui.ac.id (A. Dhini).
+https://doi.org/10.1016/j.rineng.2026.110131
+Received 22 January 2025; Received in revised form 18 June 2025; Accepted 16 March 2026
+Available online 19 March 2026
+2590-1230/© 2026 The Author(s). Published by Elsevier B.V. This is an open access article under the CC BY-NC-ND license (http://creativecommons.org/licenses/by-nc-nd/4.0/).
+overcome the limitation of linearity, neural network (NN) based meth-ods emerged, demonstrating superior performance [9,10]. Gaussian pro-cess regression [11] employs a nonparametric framework that flexibly captures complex, nonlinear relationships. For sequential time series data like food commodities price, architectures that can learn tempo-ral dependencies are essential. This led to the widespread adoption of Recurrent Neural Networks (RNNs) and their advanced variants, Long Short-Term Memory (LSTM) and Gated Recurrent Unit (GRU) [12–14]. Previous studies have demonstrated that LSTM performs better than GRU in electric vehicle charging load forecasting and agricultural load forecasting [15,16].
+Despite their success, the majority of the current deep learning land-scape for food price forecasting focuses on single-step-ahead predictions. However, for practical applications in policy and trade, which require
+strategic planning, multi-step-ahead forecasting is essential as it pro-
+strategic planning, multi-step-ahead forecasting is essential as it pro-
+Forecasting strategy: direct multi-step forecasting
+The objective of this study is to forecast the next 𝐻 daily prices of a commodity given its historical data. This multi-step forecasting task can be approached using two primary strategies: iterative and direct. The it-erative method uses a single one-step-ahead model and recursively feeds its predictions back as inputs to generate subsequent forecasts [9]. While computationally simple, this approach is prone to the accumulation of prediction errors over the forecast horizon.
+To avoid this issue, this study adopts the direct multi-step (DMS)
+strategy [22]. The direct approach builds independent forecasting mod-els to obtain the prediction from each desired timestep. For a historical
+time series [𝑦1, … , 𝑦𝑛], the forecast for the next H time-steps is given by:
+394749069989𝑁+ℎ
+𝑁+ℎ
+ℎ
+ℎ
+𝑁
+𝑁
+𝑁−𝑑+1
+𝑁−𝑑+1
+𝑦̂  = 𝑓̂ (𝑦 , … , 𝑦   )(1)
+vides a far richer and more actionable view of future market behavior
+𝑓̂ℎ
+denotes the independent ℎ models to calculate forecast at each
+than a single data point [17]. The application of multi-step forecasting has been demonstrated across diverse domains, including traﬃc speed prediction [18], nickel and cobalt volatility [19], coal price [20], soy-bean and rapeseed-mustard price [21], and electricity price [22].
+To address these challenges of architectural robustness and multi-horizon forecasting, this study proposes the Temporal Fusion Trans-former (TFT). Unlike traditional RNNs, TFT utilizes a novel attention mechanism to learn temporal relationships across multiple time scales simultaneously [17]. Crucially, it is specifically designed for multi-horizon forecasting and incorporates features like gating mechanisms to filter out irrelevant noise and variable selection to identify significant predictors, making it theoretically ideal for the volatile and complex nature of commodity price data.
+Hence, this study proposes TFT to predict the daily prices of ten strategic food commodities in Indonesia for the next 30 days. The fluc-tuation price of food commodities may depict the complex temporal dependencies. The study aims to develop an accurate prediction model for multi step time series for ten strategic food commodities and com-pares the performance with other deep learning based methods: LSTM, GRU, a classic time series approach: ARIMA, and the basic method: naïve forecasting.
+The contributions of this study can be summarized as follows.
+The study conducts the first comprehensive application and evalu-ation of the Temporal Fusion Transformer (TFT) for multi-horizon forecasting across ten strategic food commodities in Indonesia. By expanding significantly on prior work that focused on a single com-modity [23], our study provides crucial comparative insights into TFT’s performance across diverse commodity types, thereby estab-lishing a robust benchmark for its utility in volatile food markets
+This study develops and validates a high-performance forecasting framework that can serve as a practical decision-support tool for pol-icymakers and supply chain stakeholders in Indonesia. This frame-work provides actionable, multi-horizon price intelligence to support policies aimed at ensuring food security and stabilizing markets.
+The remainder of this paper is organized as follows. Section 2 de-scribes the methods used in this study. The details of the data used in this study, including data preparation and processing, as well as experi-mental settings, are explained in Section 3. In Section 4, the results of the experiments are presented and discussed. Finally, Section 5 concludes the study and suggests the future research.
+Methodology
+This section outlines the experimental framework for multi-horizon forecasting of food commodity prices. First, the forecasting problem and
+time-step and d is the lag value used to calculate the forecast. The disad-vantage of this method is that it requires a heavy computation resources since multiple models are needed to generate prediction result [24].
+Proposed model: temporal fusion transformers (TFT)
+TFT incorporates self-attention mechanism from Transformer [25] that was originally built for natural language processing application. TFT’s architecture consists of six components which differs from other deep learning models: (a) gating mechanism using Gated Residual Net-work (GRN) that allows the model to perform non-linear processing se-lectively, (b) variable selection networks that can remove any irrelevant inputs, (c) static covariate encoders that extract static metadata’s infor-mation to enhance the temporal features, (d) multi-head attention to process specifically long-term temporal relationships within the inputs,
+(e) temporal fusion decoders that includes sequence-to-sequence layer, static enrichment layer, temporal self-attention layer, and position-wise feed-forward layer to learn temporal relationships, and (f) prediction in-tervals by generating percentiles forecast simultaneously. Fig. 1 shows the structure of TFT adapted from [17].
+Benchmark models
+To evaluate the performance of TFT, it is compared against several widely used benchmark models.
+Recurrent neural networks (long short-term memory and gated recurrent unit)
+LSTM is a variant of the RNN introduced by Hochreiter and Schmid-huber [26] as a solution to the vanishing gradient problem of the tra-ditional RNN model. The LSTM structure has memory cells that keep important information and remove unimportant information. The three types of gates inside a memory cell in LSTM are input, output, and forget gates. Fig. 2 shows the structure of the LSTM network.
+The outputs of the forget, input and output gates are 𝑓𝑡, 𝑖𝑡, and 𝑜𝑡, re-spectively. The calculations for the three gates are shown in Eqs. (2)-(4).
+They are the results of the sigmoid activation function to a unique bias vector and a weight matrix of each gate. The LSTM mechanism begins
+with 𝑥𝑡 as a new input to the memory cell at time 𝑡, then it is multiplied by the weight matrixes 𝑊 and combined with two other components, the multiplication of the output from the prior cell, ℎ𝑡−1, with the weight matrixes 𝑈 and 𝑏 as the bias vector.
+𝑓𝑡 = 𝜎𝑔(𝑊𝑓 𝑥𝑡 + 𝑈𝑓 ℎ(𝑡−1) + 𝑏𝑓 )(2)
+𝑖𝑡 = 𝜎𝑔(𝑊𝑖𝑥𝑡 + 𝑈𝑖ℎ(𝑡−1) + 𝑏𝑖)(3)
+𝑜 = 𝜎 (𝑊 𝑥 + 𝑈 ℎ+ 𝑏 )(4)
+strategy are formulated, followed by a detailed explanation of the pro-
+𝑡𝑔
+𝑜 𝑡
+𝑜 (𝑡−1)𝑜
+posed model architecture, the Temporal Fusion Transformer (TFT). Sub-sequently, the implementation of the benchmark models used for com-parison is explained.
+The hyperbolic tangent activation function (𝑡𝑎𝑛ℎ) is used to calculate the state of the input cell 𝐶̂𝑡, which determines the amount of informa-tion to be stored from the new input 𝑥𝑡 [12], as shown in Eq. (5). The
+Fig. 1. TFT network structure adapted from [17].
+Fig. 2. LSTM network structure [27].
+value of the cell state, 𝐶𝑡 (Eq. (6)) is the computation results of the for-get and input gates. Eq. (7) shows the final output (ℎ𝑡) as a result of Hadamard multiplication of the gate output, 𝑜𝑡, and the result of the hyperbolic tangent activation function of 𝐶𝑡.
+𝐶̂𝑡 = 𝑡𝑎𝑛ℎ(𝑊𝑐 𝑥𝑡 + 𝑈𝑐 ℎ(𝑡−1) + 𝑏𝑐 )(5)
+Fig. 3. GRU network structure [29].
+The reset gate (𝑟𝑡) and update gate (𝑧𝑡) handle two forms of input: new information at time t (𝑥𝑡), and information from the prior cell state (ℎ𝑡−1). When passed into the reset gate and update gate, the two inputs are multiplied by the weight matrixes 𝑊 and 𝑈, followed by the addi-tion of the bias vector’s value 𝑏 as shown in Eqs. (8) and (10). A sigmoid activation function, represented by the symbol 𝜎, is employed by both
+𝐶 = 𝑓 ⊙ 𝑐
++ 𝑖 ⊙ 𝐶̂
+(6)
+gates.
+𝑡𝑡(𝑡−1)𝑡𝑡
+ℎ𝑡 = 𝑜𝑡 ⊙ 𝑡𝑎𝑛ℎ(𝑐𝑡)(7)
+Gated Recurrent Unit (GRU) is a simplified variant of LSTM, first introduced by Cho et al. [28]. GRU’s mechanism only contains the reset gate and the update gate. The purpose of the reset gate and update gate is similar to that of the gates in the LSTM structure, where the reset gate determines how much information will be discarded, and the update gate determines how much information will be kept [13]. Fig. 3 shows the structure of the GRU network.
+𝑧𝑡 = 𝜎𝑔(𝑊𝑧𝑥𝑡 + 𝑈𝑧ℎ(𝑡−1) + 𝑏𝑧)(8)
+𝑟𝑡 = 𝜎𝑔(𝑊𝑟𝑥𝑡 + 𝑈𝑟ℎ(𝑡−1) + 𝑏𝑟)(9)
+Following the processing of the two inputs with accompanying weights, the output is sent through the 𝑡𝑎𝑛ℎ function to filter out extra-neous information, as stated in Eq. (10). The symbol ⊙ represents the
+operation of an element-by-element multiplication. Utilizing the value from the previous cell state (ℎ𝑡−1), the candidate vector (ℎ̂𝑡), and the up-
+date gate (𝑧𝑡), the hidden state (ℎ𝑡) cell’s output is acquired (Eq. (11)).
+Table 1
+Statistical description of the data.
+Item
+Mean
+Std
+Min
+Max
+CV
+Rice
+12,396.39
+1220.26
+11,150
+16,000
+0.10
+Chicken meat
+35,116.08
+2421.18
+28,350
+41,300
+0.07
+Beef
+124,053.42
+8202.18
+112,900
+138,600
+0.07
+Chicken egg
+26,636.52
+2757.91
+21,500
+32,700
+0.10
+Shallot
+34,860.54
+7510.36
+21,450
+64,800
+0.21
+Garlic
+32,666.45
+6743.71
+22,600
+64,100
+0.21
+Red chili
+43,806.54
+11,318.34
+26,700
+89,050
+0.26
+Bird’s eye chili
+48,555.04
+12,885.34
+29,050
+91,750
+0.27
+Cooking oil
+16,257.30
+3093.58
+13,050
+24,650
+0.19
+Sugar
+14,970.09
+1467.53
+13,050
+18,900
+0.10
+Source: National Strategic Food Price Information Center
+The result is then sent to the succeeding cell.
+ℎ̂𝑡 = 𝑡𝑎𝑛ℎ(𝑊ℎ𝑥𝑡 + 𝑈ℎ(𝑟𝑡 ⊙ ℎ(𝑡−1)) + 𝑏ℎ)(10)
+ℎ𝑡 = (1 − 𝑧𝑡) ⊙ ℎ(𝑡−1) + 𝑧𝑡 ⊙ ℎ̂𝑡(11)
+Autoregressive integrated moving average (ARIMA)
+ARIMA, also known as the Box &amp; Jenkins method, was first popu-larized by George Box and Gwilym Jenkins [30]. Owing to its strength and model availability, ARIMA is the most frequently used technique for analyzing time-series data and has been shown to produce satisfactory results. The ARIMA model has three parameters: p, d, and q. Parameter
+3.2. Experimental settings and compared methods
+TFT, LSTM, GRU networks were implemented using Tensorflow’s Keras and Darts libaries. Several key hyperparameters were determined, namely, neurons per layer (hidden size), dropout, and learning rate for all LSTM, GRU, and TFT models, as well as the number of attention heads for TFT. Hyperparameter tuning for the LSTM and GRU models was con-ducted using the Hyperband algorithm [39], while the TFT model em-ployed Optuna for optimization [40]. The number of trials was set to 100 and the process of tuning for TFT was accelerated using NVIDIA GeForce RTX 3050 GPU. The tuning range for all models is presented in Table 2.
+As a commonly used existing method, ARIMA was applied as a base-line model along with Naïve method. In this study direct ARIMA was used. The ARIMA model configuration was selected using the auto_arima function from pmdarima.
+3.3. Model evaluation
+Model evaluation is performed using root mean square error (RMSE), mean absolute error (MAE) and mean absolute percentage error (MAPE). RMSE measures the spread of the residuals. MAE is a commonly used by statisticians to assess the performance of forecasting models due to its simplicity [13]. It reflects the average difference between the ex-pected and actual value, while MAPE displays the error’s relative aver-age.
+p defines the order of the autoregressive (AR) model, parameter d deter-mines the number of differences needed to make the series stationary, and q identifies the order of the moving average (MA) model [31].
+√ 𝑛
+√√∑
+√√∑
+𝑅𝑀𝑆𝐸 =
+𝑖=1
+(𝑥̂𝑖 − 𝑥𝑖)2
+𝑛
+(12)
+Seasonal naïve forecast
+As a fundamental baseline, seasonal naïve forecast is used as one of the benchmark models. It generates the same value from the previous season as the forecast value [32]. In this analysis, the final 30 days of
+𝑛
+4299800-646681 ∑ | 𝑖𝑖|
+1 ∑ | 𝑖𝑖|
+𝑀𝐴𝐸 = 𝑥̂ − 𝑥(13)
+𝑛 𝑖=1
+𝑛
+𝑛
+𝑛
+recorded data were adopted to estimate values for the forthcoming 30-
+𝑀𝐴𝑃 𝐸 = 1 ∑ | 𝑥̂𝑖 − 𝑥𝑖 |
+(14)
+day period.
+𝑖=1 |
+𝑥𝑖 |
+Data preparation and processing
+This section begins by detailing the data preparation process, fol-lowed by a thorough explanation of the experimental settings for the TFT, LSTM, GRU, Naïve and ARIMA. Finally, the evaluation method employed to assess forecasting performance is presented.
+Data preparation
+This study builds on our preliminary work published in [33]. The data for ten commodities were sourced from Indonesia’s National Strate-gic Food Price Information Center website, spanning from 1 August 2017 to 31 August 2024. The national average price is calculated by averag-ing daily prices across 33 provinces in Indonesia. To ensure reliability, only averages from days where at least 30 provinces reported data were included. Any missing values were subsequently imputed using linear interpolation. Descriptive statistics for the dataset, including mean, stan-dard deviation, minimum, median, maximum, and coeﬃcient of varia-tion (CV), are presented in Table 1. The data is split into three parts: training, validation, and testing, with a ratio of 80:10:10 [34–36]. Data from August 2018 to April 2023 is used for training, while data from May to December 2023 is allocated for validation. Testing is conducted on data spanning January to August 2024. The model is trained on the training set, with the validation set incorporated in the training pro-cess to evaluate the model’s performance. Lastly, the testing set is used to assess the model’s predictive ability on unseen data. The data were transformed to a scale of 0 to 1 using min-max normalization to reduce noise and speed up calculations [37,38]. Fig. 4 plots the daily prices for all ten food commodities.
+Eqs. (13)-(15) show the formula of the evaluation metrics. 𝑛 repre-sents the number of data points, 𝑥𝑖 is the actual value, while 𝑥̂𝑖 is the prediction result of the model. The lower the value, the better the model
+performance.
+Results and discussion
+Comparison of evaluation of the prediction results of the TFT, LSTM, GRU, ARIMA, and naïve models
+The forecast results of the TFT, LSTM, GRU, ARIMA, and Naïve is shown in Fig. 5. The graph in Figure 5(g) and 5(h) shows how TFT is the only model able to predict the movement in red chili’s and bird’s eye chili’s price during a period of high volatility in January 2024. The graph clearly shows the actual price undergoing a steep, sustained de-cline. Amidst the tested models, the TFT forecast is unique in its ability to closely mirror this downward trajectory, while other models failed entirely to predict this trend reversal, instead forecasting a flat or even slightly increasing price. This period of price was a direct consequence of shifting market fundamentals in Indonesia. The end of the peak de-mand from the Christmas and New Year holiday season [41], combined with an influx of supply from regions entering the main harvest sea-son, created the strong downward pressure observed. The success of the TFT in this context suggests its architecture can learn and model the complex, event-driven seasonality inherent in agricultural commodity prices. It effectively anticipated the market correction, showcasing its potential as a powerful early warning system.
+TFT also provides forecasts that closely match the actual prices for chicken meat, beef, and shallots. Fig. 5 shows that although the actual prices declined steadily after the first week, likely due to a combination
+Fig. 4. Daily price data from August 2018 to August 2024 of 10 commodities: (a) Rice, (b) Chicken Meat, (c) Beef, (d) Chicken Egg, (e) Shallot, (f) Garlic, (g) Red Chili, (h) Bird’s Eye Chili, (i) Cooking Oil, and (j) Sugar.
+of post-holiday demand normalization, TFT maintained the lowest av-erage error. Visual inspection of the plot reveals that while models like GRU and LSTM were closer to the final price, they suffered from a large and persistent error during the first half of the forecast horizon. This is possible because TFT utilizes multi-head attention and sequence-to-sequence layer to learn both short and long term temporal dependencies [17]. The forecast for beef, in contrast, showcases TFT’s robustness in a noisy environment. The actual beef prices exhibit high daily volatility without a clear directional trend. Unlike other models that attempted to chase the volatility and failed, TFT demonstrated robustness by captur-ing the signal and filtering out the unpredictable daily spikes.
+The TFT model’s failures are as revealing as its successes, clearly showing the risks of its complexity. Fig. 5 shows that for commodities like rice, cooking oil, and garlic, the model invented complex dynamics and trends completely disconnected from the actual, more stable price data, indicating severe overfitting. Conversely, for sugar and chicken eggs, TFT produced an overly smooth forecast, capturing a general di-rection but entirely missing the essential weekly price volatility. In both failure modes, TFT’s sophisticated architecture misinterpreted the data’s underlying structure, leading to significant errors that simpler models often avoided.
+From the results of RMSE, MAE, and MAPE calculations in Table 3,
+Fig. 5. Predicted daily price result for the next 31 days for (a) rice, (b) chicken meat, (c) beef, (d) chicken egg, (e) shallot, (f) garlic, (g) red chili, (h) bird’s eye chili,
+(i) cooking oil, and (j) sugar. (For interpretation of the references to colour in this figure legend, the reader is referred to the web version of this article.)
+Table 2
+Hyperparameter tuning space for all models.
+Parameter
+LSTM
+GRU
+TFT
+Neurons per layer
+{16, 32, …, 128}
+{16, 32, …, 128}
+{16, 32, …, 128}
+Dropout
+{0, …, 0.3}
+{0, …, 0.3}
+{0, …, 0.3}
+Learning rate
+{1e-5, …, 1e-2} (logarithmic)
+{1e-5, …, 1e-2} (logarithmic)
+{1e-5, …, 1e-2} (logarithmic)
+Number of attention heads
+–
+–
+{1, 2, 3, 4}
+Fig. 6. Evaluation metrics result improvement compared to TFT for (a) rice, (b) chicken meat, (c) beef, (d) chicken egg, (e) shallot, (f) garlic, (g) red chili, (h) bird’s eye chili, (i) cooking oil, and (j) sugar. (For interpretation of the references to colour in this figure legend, the reader is referred to the web version of this article.)
+it can be seen that TFT provides the best results for price predictions of chicken meat, beef, shallot, red chili and bird’s eye chili. The TFT’s ar-chitecture incorporates many components [17], making it a complex model. The complexity may lead to overfitting on the training data, which explains its poor performance in forecasting other commodities such as rice, chicken eggs, garlic, cooking oil, and sugar.
+The commodities for which TFT demonstrated a significant forecast-ing advantage are characterized not only by a high Coeﬃcient of Vari-ation (CV) but also by a large residual component, as indicated by their high ’Noise Strength’ (0.370, 0.235, and 0.216, respectively) calculated using the STL decomposition as shown in Table 4. STL (Seasonal and Trend decomposition using Loess) is a technique used to separate a time
+Table 3
+Performance metrics (MAPE, RMSE, MAE) of forecasting models across various commodities. The best result in each column for each metric is highlighted in bold.
+Metric
+Model
+Rice
+Chicken Meat
+Beef
+Chicken Egg
+Shallot
+Garlic
+Red Chili
+Bird’s Eye Chili
+Cooking Oil
+Sugar
+TFT
+6.731
+0.743
+0.078
+3.337
+3.023
+3.802
+2.933
+5.291
+1.122
+0.362
+Naïve
+0.787
+3.772
+0.180
+1.042
+13.047
+5.677
+25.704
+43.525
+0.324
+0.441
+MAPE (%)
+ARIMA
+0.881
+1.286
+0.123
+1.407
+4.989
+0.272
+18.081
+35.471
+0.483
+0.176
+GRU
+2.178
+1.028
+0.112
+0.869
+7.400
+1.673
+7.166
+18.984
+0.310
+0.565
+LSTM
+0.463
+1.029
+0.102
+0.740
+9.601
+1.288
+4.195
+21.472
+0.672
+1.680
+TFT
+997.744
+406.158
+159.437
+978.380
+1614.565
+1596.634
+1871.850
+3882.017
+216.044
+81.718
+Naïve
+135.663
+1537.366
+318.586
+330.556
+6215.052
+2588.869
+15475.707
+24560.924
+82.937
+100.046
+RMSE (in thousands)
+ARIMA
+145.750
+636.950
+200.233
+435.618
+2536.551
+136.871
+10819.776
+20654.251
+105.279
+37.111
+GRU
+338.475
+416.413
+189.707
+306.174
+3179.026
+825.309
+5252.024
+15687.226
+71.718
+119.729
+LSTM
+79.872
+410.628
+184.876
+259.334
+4074.001
+641.053
+4037.497
+16110.298
+141.623
+331.747
+TFT
+996.089
+270.276
+105.393
+967.155
+1208.459
+1569.018
+1686.520
+3139.619
+210.382
+64.360
+Naïve
+116.667
+1401.667
+241.889
+301.667
+5415.833
+2343.333
+14615.000
+23201.667
+60.833
+78.333
+MAE (in thousands)
+ARIMA
+130.615
+468.904
+165.889
+407.250
+2002.108
+112.219
+10132.834
+18450.703
+90.631
+31.235
+GRU
+322.622
+380.428
+150.435
+252.698
+3052.290
+689.985
+4272.267
+12105.107
+58.127
+100.428
+LSTM
+68.487
+380.718
+136.950
+214.845
+3955.755
+530.707
+2576.806
+13369.224
+126.127
+298.743
+Table 4
+Seasonality, trend, and noise characteristics of various commodities.
+Commodity
+Best Seasonality Period
+Best Seasonality Strength
+Best Trend Strength
+Best Noise Strength
+Rice
+365
+0.577
+0.986
+0.014
+Chicken Meat
+365
+0.456
+0.443
+0.364
+Beef
+365
+0.248
+0.974
+0.026
+Chicken Egg
+365
+0.457
+0.861
+0.121
+Shallot
+365
+0.490
+0.400
+0.370
+Garlic
+365
+0.304
+0.583
+0.354
+Red Chili
+90
+0.055
+0.763
+0.235
+Bird’s Eye Chili
+90
+0.206
+0.771
+0.216
+Cooking Oil
+365
+0.039
+0.840
+0.158
+Sugar
+365
+0.059
+0.741
+0.258
+Table 5
+Computation time (in seconds).
+Item
+TFT
+GRU
+LSTM
+Rice
+135.554
+14.724
+15.158
+Chicken Meat
+211.116
+68.582
+61.200
+Beef
+495.013
+50.111
+42.428
+Chicken Egg
+455.366
+32.089
+31.180
+Shallot
+489.578
+52.544
+65.905
+Garlic
+684.762
+139.891
+110.862
+Red Chili
+399.552
+69.198
+42.371
+Bird’s Eye Chili
+112.571
+51.000
+36.754
+Cooking Oil
+217.090
+49.498
+61.766
+Sugar
+85.634
+4.920
+14.361
+series into its seasonal, trend, and residual components [32]. A high CV value implies greater variability within the data, making the forecasting process more challenging [42,43]. The results suggest that TFT possesses a comparative advantage in forecasting complex datasets characterized by high variability as well as identifying predictive signals within what might otherwise be considered random noise, where other models may struggle to capture intricate temporal patterns.
+Conversely, the commodities where TFT was outperformed by sim-pler models like LSTM and GRU, namely rice and chicken egg, exhibit the opposite characteristics. Based on Table 4, these time series are dom-inated by an exceptionally strong trend component (Trend Strength of 0.986 and 0.860, respectively) and possess a negligible noise compo-nent. In such scenarios, the complexity of TFT may be a significant dis-advantage. The model might be attempting to find intricate, non-linear patterns in a very low-variance residual, leading it to learn spurious correlations and fail to generalize the primary trend–a classic case of overfitting on trend-dominant, low-noise data.
+For other commodities like garlic and sugar, the classical ARIMA model provided the most accurate forecasts despite the presence of sig-
+nificant noise (Noise Strength of 0.354 and 0.258, respectively). This suggests that the stochastic nature of these particular series, while com-plex, is better captured by the linear autoregressive and moving average components foundational to ARIMA. It highlights that for some struc-tures, the parsimony and specific statistical assumptions of a model like ARIMA provide a more effective safeguard against overfitting than the unconstrained non-linear approach of deep learning models [44].
+Fig. 6 shows the percentage of improvement made by TFT com-pared to other models. In commodities that TFT predicted best, such as bird’s eye chili and chili, the number of MAE improvements from Naïve can reach above around 700-800%. When compared against benchmark models, TFT shows its best performance at predicting sugar’s price, giv-ing 233% and 216% improvement from Naïve and ARIMA MAE scores, respectively.
+The maximum error gain from TFT is shown to be around 70% against GRU in predicting the shallot’s price. Of all commodities, TFT result was the worst at predicting cooking oil’s price, being only bet-ter than one model, LSTM. TFT utilizes a mechanism that allows one to learn both short-term and long-term temporal dependencies.
+The demonstrated superiority of the TFT model in forecasting prices for highly volatile commodities like chili and shallots is of particular importance for macroeconomic management. These commodities are well-documented contributors to volatile food inflation in Indonesia. A reduction in the Mean Absolute Error (MAE) for red chili can represent a more reliable signal for policymakers. This allows for proactive mone-tary policy considerations and helps prevent sudden inflationary shocks that can erode national purchasing power.
+Comparison of computational time for LSTM and GRU models
+Table 5 presents the computation times for training the LSTM, GRU, and TFT models. The LSTM and GRU models were trained on an AMD Ryzen 5 7535HS processor with Radeon Graphics, while the TFT model
+was trained using an NVIDIA GeForce RTX 3050 GPU. Besides relying on a large dataset to achieve good forecast accuracy, TFT is also known to be computationally expensive [19]. Table 5 shows that GRU and LSTM are 7-8 times faster on average than TFT. The GRU can operate more eﬃciently because its structure combines the input gate and forget gate calculations in the LSTM into the update gate, causing the same function on the LSTM to be performed in a shorter time [14].
+Conclusion
+The study is concluded as follows. First, TFT provides the best re-sults for price predictions of chicken meat, beef, shallot, red chili and bird’s eye chili. Three of those commodities have a high CV value, which implies that TFT provided better forecast for a time series with high vari-ability. However, TFT is confirmed to be computationally expensive, as shown by its computational time compared to GRU, and LSTM.
+This work has several important limitations. First, this study relied solely on historical price data, which may overlook critical exogenous drivers such as weather fluctuations, holiday demand spikes (for exam-ple, around Eid or year-end celebrations), and global commodity price trends. Second, the superior accuracy of TFT comes at the cost of sub-stantially longer training and inference times compared to GRU and LSTM baselines, which could impede real-time deployment in resource-constrained settings.
+To address these gaps, three primary directions for future research are proposed. First, future works can extend to multivariate inputs by incorporating climate variables, supply-chain indicators, and event cal-endars in a TFT framework, to assess whether forecast accuracy and robustness improve when key exogenous factors are modeled explic-itly. Second, TFT can be compared against Multi-Input Multi-Output (MIMO) forecasting architectures to determine whether simpler models can approach TFT’s performance while reducing computational over-head. Third, generalizability needs to be validated by applying multi-variate TFT to data from different regions and to periods of extreme price volatility, such as during global crises, to evaluate model stability and transferability.
+By systematically tackling these limitations, TFT’s practical utility in the food commodities sector can be refined and establish a foundation for more transparent, eﬃcient, and generalizable multi-horizon fore-casting models.
+Availability of supporting data
+Supplementary data associated with this article can be found in the online version at http://dx.doi.org/10.17632/cd8n3kzggp.1.
+CRediT authorship contribution statement
+Savira Amalia: Writing – original draft, Software, Methodology, In-vestigation, Formal analysis, Conceptualization; Arian Dhini: Writing – review &amp; editing, Supervision, Project administration, Funding acqui-sition, Conceptualization; Zulkarnain: Writing – review &amp; editing, Su-pervision; Choiru Za’in: Writing – review &amp; editing; Isti Surjandari: Writing – review &amp; editing, Supervision.
+Data availability
+The datasets used during this study are available within the article’s supplementary information files.
+Declaration of competing interest
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+Funding
+This work was supported by Universitas Indonesia, which funded this study through the PUTI Q2 Research Grants Universitas Indone-sia [Grant Numbers NKB-1321/UN2.RST/HKP.05.00/2022].
+References
+R.F. Dianco, M. Novita, Real time prediction of four main food commodities in In-donesia and the mapping based on autoregressive integrated moving average model,
+J. Phys. Conf. Ser. 1725 (1) (2021) 012023. https://doi.org/10.1088/1742-6596/ 1725/1/012023
+S. Indonesia, Consumer price index by expenditure group, 2020-2024, 2024. https://www.bps.go.id/id/statistics-table/2/MTkwNSMy/indeks-harga-konsumen–2018-100–menurut-kelompok-dan-sub-kelompok-01-makanan–minuman-dan-
+tembakau.html.
+F.D. D.C. Mello, P. Kumar, E.G. Sperandio Nascimento, et al., Advancements in soy-bean price forecasting: impact of AI and critical research gaps in global markets,
+Economies 12 (11) (2024) 310. https://doi.org/10.3390/economies12110310
+A.N. Rezitis, A.G. Ntinou, D.N. Pachis, et al., Investigating the international prices of wheat and rice, Agric. Food Econ. 3 (1) (2015) 16. https://doi.org/10.1186/
+s40100-015-0035-4
+M. Rajab-Kalantarzadeh, M. Savari, Impacts of resilience on food security in rural households of Iran under drought conditions using an extended sustainable liveli-hood framework, Results Eng. 26 (2025) 105145. https://doi.org/10.1016/j.rineng.
+2025.105145
+C. Conti, A. Hall, K. Kok, P. Olsson, M.-L. Moore, C. Kremen, A. Laila, L.J. Gordon, A. Barnhill, S. Te Wierik, A. Norberg, B. Carducci, S. Bajaj, M. Gibson, T. Diniz Oliveira,
+A.C. Bunge, T.G. Williams, R. Mazac, M. Scheuermann, J. Fanzo, et al., A quest for questions: the JUSTRA as a matrix for navigating just food system transformations in an era of uncertainty, One Earth 8 (2) (2025) 101178. https://doi.org/10.1016/ j.oneear.2025.101178
+Market, B.N.M. System, About SP2KP | market and basic needs monitoring system, 2022. https://ews.kemendag.go.id/about
+Y. Weng, X. Wang, J. Hua, H. Wang, M. Kang, F.-Y. Wang, et al., Forecasting horticul-tural products price using ARIMA model and neural network based on a large-scale data set collected by web crawler, IEEE Trans. Comput. Social Syst. 6 (3) (2019) 547–553. https://doi.org/10.1109/TCSS.2019.2914499
+T. Xiong, Y. Bao, Z. Hu, et al., Beyond one-step-ahead forecasting: evaluation of alternative multi-step-ahead forecasting models for crude oil prices, Energy Econ. 40 (2013) 405–415. https://doi.org/10.1016/j.eneco.2013.07.028
+A.K. Mahto, M.A. Alam, R. Biswas, J. Ahmed, S.I. Alam, et al., Short-term forecasting of agriculture commodities in context of indian market for sustainable agriculture by using the artificial neural network, J. Food Qual. 2021 (2021) 1–13. https://doi. org/10.1155/2021/9939906
+B. Jin, X. Xu, Machine learning predictions of regional steel price indices for east China, Ironmaking Steelmaking Process. Prod. Appl. (2024) 03019233241254891. https://doi.org/10.1177/03019233241254891
+J. Sadefo Kamdem, R. Bandolo Essomba, J. Njong Berinyuy, et al., Deep learning models for forecasting and analyzing the implications of COVID-19 spread on some commodities markets volatilities, Chaos Solitons Fractals 140 (2020) 110215. https:
+//doi.org/10.1016/j.chaos.2020.110215
+G.A. Busari, D.H. Lim, Crude oil price prediction: a comparison between AdaBoost-LSTM and AdaBoost-GRU for improving forecasting performance, Comput. Chem.
+Eng. 155 (2021) 107513. https://doi.org/10.1016/j.compchemeng.2021.107513
+K. Zor, K. Bulus, A benchmark of GRU and LSTM networks for short-term electric load forecasting, in: 2021 International Conference on Innovation and Intelligence for Informatics, Computing, and Technologies (3ICT), IEEE, Zallaq, Bahrain, 2021,
+pp. 598–602. https://doi.org/10.1109/3ICT53449.2021.9581373
+J. Zhu, Z. Yang, M. Mourshed, Y. Guo, Y. Zhou, Y. Chang, Y. Wei, S. Feng, et al., Electric vehicle charging load forecasting: a comparative study of deep learning approaches, Energies 12 (14) (2019) 2692. https://doi.org/10.3390/en12142692
+U. Saini, R. Kumar, V. Jain, M.U. Krishnajith, et al., Univariant time series fore-casting of agriculture load by using LSTM and GRU RNNs, in: 2020 IEEE Students Conference on Engineering &amp; Systems (SCES), IEEE, Prayagraj, India, 2020, pp. 1–6. https://doi.org/10.1109/SCES50439.2020.9236695
+B. Lim, S.O. Arık, N. Loeff, T. Pfister, et al., Temporal fusion transformers for in-terpretable multi-horizon time series forecasting, Int. J. Forecast. 37 (4) (2021) 1748–1764. https://doi.org/10.1016/j.ijforecast.2021.03.012
+H. Zhang, Y. Zou, X. Yang, H. Yang, A temporal fusion transformer for short-term freeway traﬃc speed multistep prediction, Neurocomputing 500 (2022) 329–340. https://doi.org/10.1016/j.neucom.2022.05.083
+S. Swarup, G.S. Kushwaha, Nickel and cobalt price volatility forecasting using a self-attention-based transformer model, Appl. Sci. 13 (8) (2023) 5072. https://doi.org/ 10.3390/app13085072
+Z. Alameer, A. Fathalla, K. Li, H. Ye, Z. Jianhua, Multistep-ahead forecasting of coal prices using a hybrid deep learning model, Resour. Policy 65 (2020) 101588. https://doi.org/10.1016/j.resourpol.2020.101588
+G.K. Jha, K. Sinha, Agricultural price forecasting using neural network model: an innovative information delivery system, Agric. Econ. Res. Rev. 26 (2) (2013) 229 –
+239. Place: 2013. https://doi.org/10.22004/ag.econ.162150
+D. Wang, H. Luo, O. Grunder, Y. Lin, H. Guo, Multi-step ahead electricity price fore-casting using a hybrid model based on two-layer decomposition technique and BP
+neural network optimized by firefly algorithm, Appl. Energy 190 (2017) 390–407. https://doi.org/10.1016/j.apenergy.2016.12.134
+M.L. Zakaria, S.A. Wibowo, I. Kurniawan, Implementation of temporal fusion trans-former optimized by grey wolf optimizer in predicting rice price in bandung regency, in: 2024 8th International Conference on Information Technology, Information Sys-tems and Electrical Engineering (ICITISEE), IEEE, Yogyakarta, Indonesia, 2024, pp. 127–132. https://doi.org/10.1109/ICITISEE63424.2024.10730751
+S.B. Taieb, R.J. Hyndman, Recursive and Direct Multi-Step Forecasting: The Best of Both Worlds, Monash Econometrics and Business Statistics Working Papers 19/12, Monash University, Department of Econometrics and Business Statistics, 2012.
+A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A.N. Gomez, L. Kaiser, I. Polosukhin, et al., Attention is all you need, 2023. arXiv:1706.03762 [cs].
+S. Hochreiter, J. Schmidhuber, Long short-term memory, Neural Comput. 9 (8) (1997) 1735–1780. https://doi.org/10.1162/neco.1997.9.8.1735
+J. Qiu, B. Wang, C. Zhou, et al., Forecasting stock prices with long-short term memory neural network based on attention mechanism, PLoS ONE 15 (1) (2020) e0227222. https://doi.org/10.1371/journal.pone.0227222
+K. Cho, B. van Merrienboer, C. Gulcehre, D. Bahdanau, F. Bougares, H. Schwenk,
+Y. Bengio, et al., Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation, 2014. arXiv:1406.1078 [cs, stat].
+J. Dawani, Hands-on Mathematics for Deep Learning: Build a Solid Mathematical Foundation for Training Eﬃcient Deep Neural Networks, PACKT, Birmingham Mum-bai, Birmingham Mumbai, 2020.
+G.E.P. Box, G.M. Jenkins, Time Series Analysis: Forecasting and Control, Holden-Day series in time series analysis and digital processing, Holden-Day, 1970.
+B. Auffarth, Machine learning for Time-Series with Python: Forecast, Predict, and Detect Anomalies with State-of-the-Art Machine Learning Methods, Packt, Birmingham-Mumbai, Birmingham-Mumbai, 2021.
+R.J. Hyndman, G. Athanasopoulos, Forecasting: Principles and Practice, 3rd edi-tion, OTexts, Melbourne, Australia, 3rd edition edition, Melbourne, Australia, 2021. https://otexts.com/fpp3/.
+S. Amalia, A. Dhini, Zulkarnain, Indonesia’s food commodity price forecasting using recurrent neural networks, in: 2022 International Conference on Computing, Com-munication, Security and Intelligent Systems (IC3SIS), IEEE, Kochi, India, 2022, pp. 1–6. https://doi.org/10.1109/IC3SIS54991.2022.9885249
+D.H. Kim, T. MacKinnon, Artificial intelligence in fracture detection: transfer learn-ing from deep convolutional neural networks, Clin. Radiol. 73 (5) (2018) 439–445. https://doi.org/10.1016/j.crad.2017.11.015
+C. Ghenai, O.A.A. Al-Mufti, O.A.M. Al-Isawi, L.H.L. Amirah, A. Merabet, Short-term building electrical load forecasting using adaptive neuro-fuzzy inference sys-tem (ANFIS), J. Build. Eng. 52 (2022) 104323. https://doi.org/10.1016/j.jobe.2022.
+104323
+X. Xu, Y. Zhang, Thermal coal price forecasting via the neural network, Intell. Syst.
+Appl. 14 (2022) 200084. https://doi.org/10.1016/j.iswa.2022.200084
+R. Ly, F. Traore, K. Dia, et al., Forecasting commodity prices using long-short-term memory neural networks, 2021. Publisher: International Food Policy Research In-stitute. https://doi.org/10.2499/p15738coll2.134265
+H. Niu, K. Xu, C. Liu, et al., A decomposition-ensemble model with regrouping method and attention-based gated recurrent unit network for energy price predic-tion, Energy 231 (2021) 120941. https://doi.org/10.1016/j.energy.2021.120941
+L. Li, K. Jamieson, G. DeSalvo, A. Rostamizadeh, A. Talwalkar, et al., Hy-perband: a novel bandit-based approach to hyperparameter optimization, 2018. arXiv:1603.06560 [cs]
+T. Akiba, S. Sano, T. Yanase, T. Ohta, M. Koyama, et al., Optuna: a next-generation hyperparameter optimization framework, 2019. arXiv:1907.10902 [cs]
+D. Devianto, E. Wahyuni, M. Maiyastri, M. Yollanda, et al., The seasonal model of chili price movement with the effect of long memory and exogenous variables for improving time series model accuracy, Front. Appl. Math. Stat. 10 (2024) 1408381. https://doi.org/10.3389/fams.2024.1408381
+Y. Huang, H. Dai, V.S. Tseng, et al., Periodic attention-based stacked sequence to sequence framework for long-term travel time prediction, Knowl. Based Syst. 258 (2022) 109976. https://doi.org/10.1016/j.knosys.2022.109976
+H.-T.C. Lin, H. Dai, V.S. Tseng, et al., Short-term and long-term travel time prediction using transformer-based techniques, Appl. Sci. 14 (11) (2024) 4913. https://doi.org/ 10.3390/app14114913
+A. Giri, V.R. Giri, Forecasting cauliflower prices in Nepal: a comparative analysis using seasonal time series and nonlinear models, Cogent Food Agric. 10 (1) (2024) 2340155. https://doi.org/10.1080/23311932.2024.2340155

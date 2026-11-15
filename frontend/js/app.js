@@ -33,7 +33,7 @@ const PLANS=[
  {id:'starter',name:'Starter',price:150000,features:['Komoditas tak terbatas','Dashboard dasar']}];
 
 let authState={auth_ready:false,logged_in:false,local_preview:false,user:null,account:null,billing:{}};
-let state={commodity:'',variant:'GRU — harga + cuaca + kalender + siklus tanggal',restock:7,lastProfit:null,lastSim:null,history:[],currentQuotes:{}};
+let state={commodity:'',variant:'GRU — harga saja',restock:7,lastProfit:null,lastSim:null,history:[],currentQuotes:{}};
 
 function parseVariant(v){const i=v.indexOf(' — ');return {model:v.slice(0,i),features:v.slice(i+3)}}
 
@@ -329,9 +329,11 @@ function drawLiveChart(id,rows){
 }
 
 // ===== Recipe rows =====
+const _recipeDatalistid='recipeCommodityList';
 function addRecipeRow(item={}){const row=document.createElement('div');row.className='recipe-row';
   const commodities=authState.commodities||[];
-  row.innerHTML=`<select aria-label="Nama bahan">${commodities.map(c=>`<option ${item.commodity===c?'selected':''}>${esc(c)}</option>`).join('')}</select>`+
+  if(!$(_recipeDatalistid)){const dl=document.createElement('datalist');dl.id=_recipeDatalistid;dl.innerHTML=commodities.map(c=>`<option value="${esc(c)}">`).join('');$('recipeRows').parentNode.insertBefore(dl,$('recipeRows'))}
+  row.innerHTML=`<input list="${_recipeDatalistid}" aria-label="Nama bahan" placeholder="Pilih / ketik bahan" value="${esc(item.commodity||'')}">`+
     `<input aria-label="Takaran gram" type="number" min="0" step="10" placeholder="Takaran / porsi (g)" value="${item.grams||''}">`+
     `<input aria-label="Harga beli Rp/kg" type="number" min="0" step="500" placeholder="Harga beli (Rp/kg)" value="${item.price||''}">`+
     `<button class="remove" type="button" data-remove=".recipe-row">×</button>`;
@@ -348,8 +350,9 @@ async function calculateProfit(){
   if(portions<=0){status.textContent='Isi jumlah porsi terjual lebih dari 0.';return}
   if(!rows.length){status.textContent='Tambahkan minimal satu bahan dengan takaran lebih dari 0 gram.';return}
   const p=parseVariant(state.variant);
+  const payloadRows=recipeData().map(r=>({commodity:r.commodity,grams_per_portion:r.grams,actual_price_rp_per_kg:r.price||null}));
   const res=await postJSON('/api/profit',{menu_name:menu,selling_price:selling,portions_sold:portions,
-        recipe:recipeData().map(r=>({commodity:r.commodity,grams_per_portion:r.grams,actual_price_rp_per_kg:r.price||null})),
+        recipe:payloadRows,
         model:p.model,features:p.features,
         restock_days:state.restock,other_cost_per_portion:Number($('otherCost').value),fixed_cost:Number($('fixedCost').value),
         sales_period:$('salesPeriod').value,save_history:$('saveHistory').checked});
@@ -486,7 +489,7 @@ function renderSimResult(s){
 function downloadSim(){if(!state.lastSim)return;const s=state.lastSim;const cols=['cycle','wait_days','baseline_cost_rp','policy_cost_rp','savings_rp'];const q=v=>'"'+String(v??'').replaceAll('"','""')+'"';const text='﻿'+[cols.join(','),...s.rows.map(r=>cols.map(c=>q(r[c])).join(','))].join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:'text/csv;charset=utf-8'}));a.download='simulasi_pembelian.csv';a.click();URL.revokeObjectURL(a.href)}
 
 // ===== Tab / Navigasi =====
-function showTab(name){if(name==='research'&&!authState.is_admin){name='business';toast('Hasil penelitian hanya tersedia untuk admin.')} $('tab-business').classList.toggle('hidden',name!=='business');$('tab-research').classList.toggle('hidden',name!=='research');document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));if(name==='research')renderResearch()}
+function showTab(name){$('tab-business').classList.toggle('hidden',name!=='business');$('tab-research').classList.toggle('hidden',name!=='research');document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));if(name==='research')renderResearch()}
 function goTab(tab,id){showTab(tab);const el=$(id);if(el)el.scrollIntoView({behavior:'smooth'})}
 function hidePlans(){const el=$('plansCard');if(el)el.classList.add('hidden')}
 function navGo(tab,id){
@@ -526,7 +529,8 @@ function renderResearch(){
     details.forEach(r=>{const k=String(r.commodity)+'|'+String(r.model);pairs[k]=pairs[k]||{};pairs[k][String(r.features)]=Number(r.MAE)||0});
     let better=0,count=0;
     for(const k in pairs){const p=pairs[k];const base=p['harga saja'];if(base!==undefined){let improved=false;for(const f in p){if(f!=='harga saja'&&p[f]<base)improved=true}if(improved)better++;count++}}
-    $('evalInfo').textContent=count?`Pada data uji, fitur eksternal menurunkan MAE pada ${better} dari ${count} pasangan komoditas–model dibandingkan harga saja. Manfaatnya bergantung komoditas; bandingkan selisih MAE di tabel.`:'Hasil evaluasi tersedia untuk komoditas ini.';
+    const worsened=count-better;
+    $('evalInfo').textContent=count?`Pada data uji, fitur eksternal menurunkan MAE pada ${better} dari ${count} pasangan komoditas–model dan meningkatkannya pada ${worsened} pasangan dibandingkan harga saja. Manfaatnya bergantung komoditas; bandingkan selisih MAE di tabel.`:'Hasil evaluasi tersedia untuk komoditas ini.';
   }else{
     $('evalMetrics').innerHTML='';
     $('evalInfo').textContent=live.error||'Belum ada hasil evaluasi model. Admin perlu melatih model dari data proyek.';
