@@ -337,7 +337,7 @@ txt(s, cx2+0.22, cy3+0.62, cw3-0.44, ch3-0.72, [
     dict(text="Fitur utama (harga):", size=11, bold=True, color=INK, sa=2),
     dict(text="price · lag_1 · lag_7 · mean_7 · mean_30", size=10.5, color=MUTED, sa=8),
     dict(text="Fitur tambahan (eksternal):", size=11, bold=True, color=INK, sa=2),
-    dict(text="cuaca ERA5 + kalender + siklus hari/bulan", size=10.5, color=MUTED),
+    dict(text="cuaca ERA5 + kalender + siklus hari/bulan · cuaca BMKG bulanan (diuji)", size=10.5, color=MUTED),
 ])
 # kartu C: alasan fitur tambahan
 rect(s, cx3, cy3, cw3, ch3, fill=TEAL_SOFT, line=LINE, lw=1.1, radius=0.06)
@@ -386,15 +386,15 @@ txt(s, 7.23, 3.70, 5.2, 0.34, [dict(text="CARA KERJA DI PENELITIAN INI", size=11
 txt(s, 7.23, 4.08, 5.2, 2.2, [
     dict(text="Input jendela 30 hari → prediksi 7 hari.", size=11, bold=True, color=INK, sa=3),
     dict(text="Arsitektur: Input(30, fitur) → LSTM/GRU(48) → Dropout(0,15) → Dense(32, ReLU) → Dense(7).", size=10.5, color=MUTED, sa=3),
-    dict(text="Adam · MSE · StandardScaler (hanya latih) · seed 42.", size=10.5, color=MUTED, sa=3),
-    dict(text="Split kronologis 80:20 · 13 komoditas × 2 model × 2 fitur = 52 eksperimen.", size=10.5, color=MUTED),
+    dict(text="Adam · MSE · StandardScaler (hanya latih) · 3 seed (42/123/2026).", size=10.5, color=MUTED, sa=3),
+    dict(text="Split kronologis 80:20 · 13 komoditas · 6 paket fitur × 3 seed = 468 eksperimen; 78 model deploy final.", size=10.5, color=MUTED),
 ])
 rect(s, PAD, 6.55, CW, 0.5, fill=ORANGE, radius=0.1)
 txt(s, PAD+0.35, 6.55, CW-0.7, 0.5,
     [dict(text="Layak dibandingkan: sama-sama RNN ber-gerbang → adil; berbeda di kompleksitas & efisiensi. Pilihan berdasar karakteristik data, bukan hasil akhir.", size=11.5, bold=True, color=WHITE, line=1.1)],
     anchor=MSO_ANCHOR.MIDDLE)
 footer(s, 6, "Sumber: backend/src/pangan_forecast/models.py, features.py")
-notes(s, "Mengapa LSTM dan GRU: harga pangan adalah data berurutan menurut waktu, dan kedua model dirancang untuk pemrosesan sekuensial. Mereka menyimpan memori masa lalu sehingga bisa belajar pola historis harga, dan mengatasi masalah vanishing gradient. LSTM punya sel memori dengan tiga gerbang — input untuk menulis, forget untuk membuang, output untuk mengeluarkan; lebih ekspresif tapi lebih berat. GRU varian ringkas dengan dua gerbang reset dan update; parameter lebih sedikit, lebih cepat, akurasi sering sebanding. Dalam penelitian ini model menerima riwayat 30 hari untuk memprediksi 7 hari ke depan; arsitektur: lapisan LSTM/GRU 48 unit, dropout, lapisan padat, keluaran 7 harga. Split 80:20 kronologis; total 52 eksperimen. Keduanya layak dibandingkan karena sama-sama berbasis gerbang; pemilihan berdasar karakteristik data, bukan hasil akhir.")
+notes(s, "Mengapa LSTM dan GRU: harga pangan adalah data berurutan menurut waktu, dan kedua model dirancang untuk pemrosesan sekuensial. Mereka menyimpan memori masa lalu sehingga bisa belajar pola historis harga, dan mengatasi masalah vanishing gradient. LSTM punya sel memori dengan tiga gerbang — input untuk menulis, forget untuk membuang, output untuk mengeluarkan; lebih ekspresif tapi lebih berat. GRU varian ringkas dengan dua gerbang reset dan update; parameter lebih sedikit, lebih cepat, akurasi sering sebanding. Dalam penelitian ini model menerima riwayat 30 hari untuk memprediksi 7 hari ke depan; arsitektur: lapisan LSTM/GRU 48 unit, dropout, lapisan padat, keluaran 7 harga. Split 80:20 kronologis; 13 komoditas × 6 paket fitur × 3 seed = 468 eksperimen, plus 78 model deploy final. Keduanya layak dibandingkan karena sama-sama berbasis gerbang; pemilihan berdasar karakteristik data, bukan hasil akhir.")
 
 # ============================================================
 # SLIDE 7 — FOOD PRICE FORECASTING (3/3): ALUR PREDIKSI
@@ -439,11 +439,12 @@ GRAPH = r"c:/pangan/reports/figures/aktual_vs_prediksi_cabai_merah_h1.png"
 rect(s, 7.15, 1.72, 5.56, 1.35, fill=ORANGE_SOFT, line=LINE, lw=1.1, radius=0.06)
 txt(s, 7.43, 1.84, 5.0, 0.3, [dict(text="HASIL EVALUASI (TERBARU) — JUJUR", size=10.5, bold=True, color=ORANGE_D)])
 bullets(s, 7.43, 2.20, 5.05, 0.9, [
-    "GRU harga-saja: MAPE ≈ 3,48% · MAE Rp976 · RMSE Rp2.318",
-    "LSTM harga-saja: MAPE ≈ 4,76%",
-], size=10, gap=4)
+    "Baseline: Naive 1,13% · SMA-7 2,09% (MAE Rp409/Rp730).",
+    "ANN terbaik: GRU harga+kalender 3,53% · GRU harga-saja 3,72%.",
+    "LSTM terbaik ≈4,58% · cuaca BMKG bulanan menaikkan error (≈5,8–8,5%).",
+], size=9.5, gap=4)
 txt(s, 7.43, 3.02, 5.05, 0.6, [
-    dict(text="Uji holdout: 2025-06-16 – 2026-11-10 · 52 model · paket eksternal belum memperbaiki error keseluruhan", size=9, italic=True, color=MUTED, line=1.05)],
+    dict(text="Uji holdout: 2025-06-16 – 2026-11-10 · 468 eksperimen + 78 deploy · baseline Naive/SMA dilibatkan", size=9, italic=True, color=MUTED, line=1.05)],
 )
 # Panel 2: Grafik aktual vs prediksi (cabai merah H+1)
 gw=4.10; gh=gw*0.428
@@ -460,13 +461,13 @@ txt(s, gx, gy+gh+0.04, gw, 0.25,
 rect(s, 7.15, gy+gh+0.34, 5.56, 6.36-(gy+gh+0.34), fill=CANVAS, line=LINE, lw=1.1, radius=0.06)
 txt(s, 7.43, gy+gh+0.46, 5.0, 0.3, [dict(text="YANG BELUM BISA DISIMPULKAN", size=10.5, bold=True, color=GREEN)])
 bullets(s, 7.43, gy+gh+0.78, 5.05, 1.2, [
-    "Pengaruh tiap fitur eksternal belum terisolasi (digabung sekaligus).",
-    "Satu holdout & satu seed — belum uji multi-seed/rolling-origin.",
-    "Belum ada baseline pembanding (Naive/ARIMA).",
+    "Di dalam satu paket eksternal, pengaruh tiap fitur belum dipisahkan.",
+    "Evaluasi memakai 3 seed untuk stabilitas; tetap satu split holdout kronologis.",
+    "Baseline Naive & SMA-7 sudah dilibatkan; ARIMA belum.",
     "Origin uji harian tumpang tindih — error antarbaris berkorelasi.",
 ], size=9.5, gap=4)
 footer(s, 7, "Sumber: reports/model_comparison_summary.csv, reports/HASIL_MODEL.md")
-notes(s, "Alur proses: pengumpulan tiga sumber data (harga PIHPS Kota Depok, cuaca ERA5, kalender Indonesia) → preprocessing dan normalisasi (validasi, penyatuan ke kalender harian, interpolasi, StandardScaler) → pembentukan fitur dan penyusunan dataset time series (setiap contoh masukan = 30 hari riwayat, target = 7 hari ke depan) → pembagian secara kronologis 80 persen latih dan 20 persen uji → pelatihan LSTM dan GRU lalu evaluasi memakai MAE, RMSE, dan MAPE pada bagian uji → model di-fit ulang dengan seluruh histori untuk operasi dashboard → prediksi harga 7 hari ke depan dari 30 hari fitur terakhir, yang menjadi dasar fitur perencanaan belanja dan analisis laba menu. Hasil dievaluasi secara jujur: GRU dengan fitur harga saja memberikan median MAPE sekitar 3,48 persen dan LSTM harga-saja sekitar 4,76 persen; penambahan paket eksternal belum memperbaiki error keseluruhan. Yang belum bisa disimpulkan: pengaruh tiap fitur eksternal belum terisolasi karena digabung sekaligus, evaluasi masih satu split holdout dan satu seed, serta belum ada baseline Naive/ARIMA.")
+notes(s, "Alur proses: pengumpulan tiga sumber data (harga PIHPS Kota Depok, cuaca ERA5, kalender Indonesia) → preprocessing dan normalisasi (validasi, penyatuan ke kalender harian, interpolasi, StandardScaler) → pembentukan fitur dan penyusunan dataset time series (setiap contoh masukan = 30 hari riwayat, target = 7 hari ke depan) → pembagian secara kronologis 80 persen latih dan 20 persen uji → pelatihan LSTM dan GRU lalu evaluasi memakai MAE, RMSE, dan MAPE pada bagian uji → model di-fit ulang dengan seluruh histori untuk operasi dashboard → prediksi harga 7 hari ke depan dari 30 hari fitur terakhir, yang menjadi dasar fitur perencanaan belanja dan analisis laba menu. Hasil dievaluasi secara jujur: baseline Naive dan SMA-7 menghasilkan error terendah; di antara jaringan saraf, GRU harga+kalender terbaik (MAPE sekitar 3,53 persen), GRU harga-saja sekitar 3,72 persen, LSTM terbaik sekitar 4,58 persen. Cuaca BMKG bulanan menaikkan error (MAPE sekitar 5,8–8,5 persen) karena resolusinya tidak cocok dengan model harian. Yang belum bisa disimpulkan: di dalam satu paket eksternal pengaruh tiap fitur belum dipisahkan, evaluasi memakai 3 seed namun tetap satu split holdout, dan ARIMA belum dilibatkan.")
 
 # ============================================================
 # SLIDE 8 — MARKET (diisi dari riset)
@@ -604,8 +605,8 @@ s = slide()
 header(s, "Keunggulan", "Pembeda PanganLaba", "Bukan sekadar angka prediksi — sistem keputusan harian untuk UMKM kuliner.")
 adv = [
     ("Prediksi + keputusan", "Mengubah data harga menjadi saran beli/tunda, bukan hanya angka.", ORANGE),
-    ("LSTM vs GRU teruji", "Kedua model dievaluasi pada data lokal Depok — GRU harga-saja terbaik: median MAPE ≈3,5%.", TEAL),
-    ("Fitur eksternal", "Cuaca ERA5 & kalender Indonesia diuji pengaruhnya — dilaporkan jujur.", GREEN),
+    ("LSTM vs GRU teruji", "Kedua model dievaluasi pada data lokal Depok — GRU harga+kalender terbaik di ANN: median MAPE ≈3,5%.", TEAL),
+    ("Fitur eksternal", "Cuaca ERA5, kalender Indonesia, & cuaca BMKG bulanan diuji pengaruhnya — dilaporkan jujur.", GREEN),
     ("Harga → HPP terintegrasi", "Harga bahan dari prediksi langsung masuk ke kalkulator HPP & margin.", GREEN_D),
     ("Analisis per menu", "Keuntungan setiap menu terukur, bukan sekadar laba global.", TEAL_D),
     ("Fokus UMKM kuliner", "Sederhana, bahasa Indonesia, akses browser HP tanpa instalasi.", ORANGE_D),
@@ -696,6 +697,6 @@ txt(s, PAD, 6.95, CW, 0.4,
 footer(s, 13)
 notes(s, "Kesimpulan: masalah fluktuasi harga bahan baku yang menggerus margin UMKM kuliner dijawab PanganLaba lewat prediksi harga (LSTM/GRU + fitur eksternal), perencanaan belanja, dan analisis HPP/margin per menu. Target pasar awal Kota Depok, dengan potensi skala nasional. Belum ada kompetitor dengan kombinasi fitur ini. Model bisnis freemium + langganan. Roadmap lima tahap: penyempurnaan website, pengumpulan & pengolahan data harga, pengujian model LSTM/GRU, uji manfaat kepada UMKM, dan evaluasi pengembangan produk. Tutup dengan ajakan diskusi dan tanya jawab.")
 
-prs.save(r"c:\pangan\reports\PanganLaba_Presentasi_13Slide_v6.pptx")
+prs.save(r"c:\pangan\reports\PanganLaba_Presentasi_13Slide_v7.pptx")
 print("OK saved. slides =", len(prs.slides._sldIdLst))
 
