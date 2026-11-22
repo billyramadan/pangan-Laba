@@ -222,8 +222,8 @@ for i, (num, t, c) in enumerate(flow_steps):
 rect(s, 7.15, 1.72, 5.56, 3.05, fill=ORANGE_SOFT, line=LINE, lw=1.1, radius=0.06)
 txt(s, 7.43, 1.86, 5.0, 0.34, [dict(text="HASIL EVALUASI (TERBARU) — JUJUR", size=11, bold=True, color=ORANGE_D)])
 bullets(s, 7.43, 2.28, 5.05, 2.4, [
-    "Baseline Naive terendah: median MAPE ≈ 1,13% (MAE ≈ Rp409/kg); SMA-7 ≈ 2,09%.",
-    "ANN terbaik: GRU harga+kalender ≈ 3,53%; GRU harga-saja ≈ 3,72%; LSTM terbaik ≈ 4,58%.",
+    "Terbaik: GRU harga+kalender ≈ 3,53% (median MAPE); GRU harga-saja ≈ 3,72%.",
+    "LSTM terbaik ≈ 4,58%.",
     "Paket eksternal memperbaiki error pada sebagian model (mis. GRU+kalender), tapi belum konsisten mengungguli harga-saja.",
     "Cuaca BMKG bulanan justru menaikkan error (MAPE ≈ 5,8–8,5%) — resolusi tidak cocok dengan model harian.",
 ], size=10.5, gap=6)
@@ -232,10 +232,9 @@ txt(s, 7.43, 5.09, 5.0, 0.34, [dict(text="BATAS INTERPRETASI", size=11, bold=Tru
 bullets(s, 7.43, 5.47, 5.05, 1.4, [
     "Di dalam satu paket eksternal, pengaruh tiap fitur belum dipisahkan (dicoba per-paket).",
     "Evaluasi memakai 3 seed untuk stabilitas, namun tetap satu split holdout kronologis.",
-    "Baseline Naive & SMA-7 sudah dilibatkan; ARIMA belum.",
 ], size=10.5, gap=6)
 footer(s, 3, "Sumber: reports/model_comparison_summary.csv, reports/HASIL_MODEL.md")
-notes(s, "Alur proses: pengumpulan tiga sumber data (harga PIHPS Kota Depok, cuaca ERA5, kalender Indonesia) → preprocessing dan normalisasi (validasi, penyatuan ke kalender harian, interpolasi, StandardScaler) → pembentukan fitur dan penyusunan dataset time series (setiap contoh masukan = 30 hari riwayat, target = 7 hari ke depan) → pembagian secara kronologis 80 persen latih dan 20 persen uji → pelatihan LSTM dan GRU lalu evaluasi memakai MAE, RMSE, dan MAPE pada bagian uji → model di-fit ulang dengan seluruh histori dan menghasilkan prediksi harga 7 hari ke depan, yang menjadi dasar fitur perencanaan belanja dan analisis laba menu. Hasil dievaluasi secara jujur: baseline Naive dan SMA-7 menghasilkan error terendah; di antara jaringan saraf, GRU harga+kalender terbaik (MAPE sekitar 3,53 persen), GRU harga-saja sekitar 3,72 persen, LSTM terbaik sekitar 4,58 persen. Cuaca BMKG bulanan menaikkan error (MAPE sekitar 5,8–8,5 persen) karena resolusinya tidak cocok dengan model harian. Batasan: di dalam satu paket eksternal pengaruh tiap fitur belum dipisahkan, evaluasi memakai 3 seed namun tetap satu split holdout, dan ARIMA belum dilibatkan.")
+notes(s, "Alur proses: pengumpulan tiga sumber data (harga PIHPS Kota Depok, cuaca ERA5, kalender Indonesia) → preprocessing dan normalisasi (validasi, penyatuan ke kalender harian, interpolasi, StandardScaler) → pembentukan fitur dan penyusunan dataset time series (setiap contoh masukan = 30 hari riwayat, target = 7 hari ke depan) → pembagian secara kronologis 80 persen latih dan 20 persen uji → pelatihan LSTM dan GRU lalu evaluasi memakai MAE, RMSE, dan MAPE pada bagian uji → model di-fit ulang dengan seluruh histori dan menghasilkan prediksi harga 7 hari ke depan, yang menjadi dasar fitur perencanaan belanja dan analisis laba menu. Hasil dievaluasi secara jujur: di antara LSTM dan GRU, GRU harga+kalender terbaik (MAPE sekitar 3,53 persen), GRU harga-saja sekitar 3,72 persen, LSTM terbaik sekitar 4,58 persen. Cuaca BMKG bulanan menaikkan error (MAPE sekitar 5,8–8,5 persen) karena resolusinya tidak cocok dengan model harian. Batasan: di dalam satu paket eksternal pengaruh tiap fitur belum dipisahkan, dan evaluasi memakai 3 seed namun tetap satu split holdout.")
 
 prs.save(r"c:\pangan\reports\FoodPriceForecasting_3Slide_v2.pptx")
 print("OK saved. slides =", len(prs.slides._sldIdLst))

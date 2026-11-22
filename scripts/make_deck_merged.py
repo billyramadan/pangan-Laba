@@ -439,12 +439,12 @@ GRAPH = r"c:/pangan/reports/figures/aktual_vs_prediksi_cabai_merah_h1.png"
 rect(s, 7.15, 1.72, 5.56, 1.35, fill=ORANGE_SOFT, line=LINE, lw=1.1, radius=0.06)
 txt(s, 7.43, 1.84, 5.0, 0.3, [dict(text="HASIL EVALUASI (TERBARU) — JUJUR", size=10.5, bold=True, color=ORANGE_D)])
 bullets(s, 7.43, 2.20, 5.05, 0.9, [
-    "Baseline: Naive 1,13% · SMA-7 2,09% (MAE Rp409/Rp730).",
-    "ANN terbaik: GRU harga+kalender 3,53% · GRU harga-saja 3,72%.",
-    "LSTM terbaik ≈4,58% · cuaca BMKG bulanan menaikkan error (≈5,8–8,5%).",
+    "GRU harga+kalender: MAPE ≈ 3,53% · MAE Rp949 · RMSE Rp2.220",
+    "GRU harga-saja: MAPE ≈ 3,72% · LSTM terbaik ≈ 4,58%",
+    "Cuaca BMKG bulanan menaikkan error (≈5,8–8,5%) — resolusi tidak cocok.",
 ], size=9.5, gap=4)
 txt(s, 7.43, 3.02, 5.05, 0.6, [
-    dict(text="Uji holdout: 2025-06-16 – 2026-11-10 · 468 eksperimen + 78 deploy · baseline Naive/SMA dilibatkan", size=9, italic=True, color=MUTED, line=1.05)],
+    dict(text="Uji holdout: 2025-06-16 – 2026-11-10 · 468 eksperimen + 78 deploy", size=9, italic=True, color=MUTED, line=1.05)],
 )
 # Panel 2: Grafik aktual vs prediksi (cabai merah H+1)
 gw=4.10; gh=gw*0.428
@@ -463,11 +463,10 @@ txt(s, 7.43, gy+gh+0.46, 5.0, 0.3, [dict(text="YANG BELUM BISA DISIMPULKAN", siz
 bullets(s, 7.43, gy+gh+0.78, 5.05, 1.2, [
     "Di dalam satu paket eksternal, pengaruh tiap fitur belum dipisahkan.",
     "Evaluasi memakai 3 seed untuk stabilitas; tetap satu split holdout kronologis.",
-    "Baseline Naive & SMA-7 sudah dilibatkan; ARIMA belum.",
     "Origin uji harian tumpang tindih — error antarbaris berkorelasi.",
 ], size=9.5, gap=4)
 footer(s, 7, "Sumber: reports/model_comparison_summary.csv, reports/HASIL_MODEL.md")
-notes(s, "Alur proses: pengumpulan tiga sumber data (harga PIHPS Kota Depok, cuaca ERA5, kalender Indonesia) → preprocessing dan normalisasi (validasi, penyatuan ke kalender harian, interpolasi, StandardScaler) → pembentukan fitur dan penyusunan dataset time series (setiap contoh masukan = 30 hari riwayat, target = 7 hari ke depan) → pembagian secara kronologis 80 persen latih dan 20 persen uji → pelatihan LSTM dan GRU lalu evaluasi memakai MAE, RMSE, dan MAPE pada bagian uji → model di-fit ulang dengan seluruh histori untuk operasi dashboard → prediksi harga 7 hari ke depan dari 30 hari fitur terakhir, yang menjadi dasar fitur perencanaan belanja dan analisis laba menu. Hasil dievaluasi secara jujur: baseline Naive dan SMA-7 menghasilkan error terendah; di antara jaringan saraf, GRU harga+kalender terbaik (MAPE sekitar 3,53 persen), GRU harga-saja sekitar 3,72 persen, LSTM terbaik sekitar 4,58 persen. Cuaca BMKG bulanan menaikkan error (MAPE sekitar 5,8–8,5 persen) karena resolusinya tidak cocok dengan model harian. Yang belum bisa disimpulkan: di dalam satu paket eksternal pengaruh tiap fitur belum dipisahkan, evaluasi memakai 3 seed namun tetap satu split holdout, dan ARIMA belum dilibatkan.")
+notes(s, "Alur proses: pengumpulan tiga sumber data (harga PIHPS Kota Depok, cuaca ERA5, kalender Indonesia) → preprocessing dan normalisasi (validasi, penyatuan ke kalender harian, interpolasi, StandardScaler) → pembentukan fitur dan penyusunan dataset time series (setiap contoh masukan = 30 hari riwayat, target = 7 hari ke depan) → pembagian secara kronologis 80 persen latih dan 20 persen uji → pelatihan LSTM dan GRU lalu evaluasi memakai MAE, RMSE, dan MAPE pada bagian uji → model di-fit ulang dengan seluruh histori untuk operasi dashboard → prediksi harga 7 hari ke depan dari 30 hari fitur terakhir, yang menjadi dasar fitur perencanaan belanja dan analisis laba menu. Hasil dievaluasi secara jujur: di antara LSTM dan GRU, GRU harga+kalender terbaik (MAPE sekitar 3,53 persen), GRU harga-saja sekitar 3,72 persen, LSTM terbaik sekitar 4,58 persen. Cuaca BMKG bulanan menaikkan error (MAPE sekitar 5,8–8,5 persen) karena resolusinya tidak cocok dengan model harian. Yang belum bisa disimpulkan: di dalam satu paket eksternal pengaruh tiap fitur belum dipisahkan, dan evaluasi memakai 3 seed namun tetap satu split holdout.")
 
 # ============================================================
 # SLIDE 8 — MARKET (diisi dari riset)

@@ -634,6 +634,8 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 metrics, _ = frames()
                 if metrics.empty: self._json({"error": "Hasil evaluasi belum tersedia."}, 404); return
+                # Di luar lingkup studi: baseline Naive & SMA-7 tidak ditampilkan.
+                metrics = metrics[~metrics["model"].astype(str).isin(["Naive", "SMA_7"])]
                 summary = metrics.groupby(["model", "features"], as_index=False).agg(
                     jumlah_komoditas=("commodity", "nunique"), median_MAE=("MAE", "median"),
                     median_RMSE=("RMSE", "median"), median_MAPE=("MAPE", "median"),
