@@ -612,7 +612,8 @@ class Handler(BaseHTTPRequestHandler):
             except Exception as exc: self._json({"error": str(exc)}, 400)
             return
         if path == "/api/forecasts/current":
-            if self._access() is None: return
+            user = self._user()
+            if user is None: return
             query = urllib.parse.parse_qs(parsed.query)
             try:
                 model = query.get("model", ["GRU"])[0]
