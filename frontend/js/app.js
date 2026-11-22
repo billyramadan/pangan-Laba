@@ -285,7 +285,8 @@ function renderSummary(){
     $('summaryMetrics').innerHTML=
       `<div class="metric"><div class="l">Harga PIHPS terakhir · Rp/kg</div><div class="v">${money(s.current_price)}</div><div class="d">${esc(s.price_date)}</div></div>`+
       (available?`<div class="metric"><div class="l">Rata-rata prediksi ${state.restock} hari · Rp/kg</div><div class="v">${money(s.forecast_mean)}</div><div class="d">${priceBadge(s.expected_change_pct)}</div></div>`:`<div class="metric"><div class="l">Prediksi</div><div class="v" style="font-size:1rem">Belum tersedia</div><div class="d">${s.stale?'Data melewati batas kesegaran. Perbarui PIHPS.':esc(s.error||'Model belum siap.')}</div></div>`)+
-      `<div class="metric"><div class="l">Saran pembelian</div><div class="v" style="font-size:1.1rem">${available?esc(recommendationLabel(s.recommendation)):'Tahan rekomendasi'}</div><div class="d">${available?'Berdasarkan model '+esc(s.model):'Saran perlu harga dan prediksi terbaru'}</div></div>`;
+      `<div class="metric"><div class="l">Saran pembelian</div><div class="v" style="font-size:1.1rem">${available?esc(recommendationLabel(s.recommendation)):'Tahan rekomendasi'}</div><div class="d">${available?'Berdasarkan model '+esc(s.model):'Saran perlu harga dan prediksi terbaru'}</div></div>`+
+      (s.metrics?`<div class="metric"><div class="l">Akurasi model (median · 13 komoditas)</div><div class="v" style="font-size:.95rem">MAE ${money(Math.round(s.metrics.MAE))}</div><div class="d">RMSE ${money(Math.round(s.metrics.RMSE))} · MAPE ${Number(s.metrics.MAPE).toFixed(2).replace('.',',')}%</div></div>`:'');
     $('simCaption').textContent=available?`Model ${s.model} · ${s.features} · proyeksi sampai ${s.forecast.at(-1)?.target_date||'—'}.`:'Saran belanja ditahan sampai data harga dan model cukup baru.';
     $('homeChartCaption').textContent=`${c} · harga terakhir ${s.price_date}`;
     drawCurrentChart('homeChart',s);

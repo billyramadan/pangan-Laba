@@ -133,6 +133,19 @@ def build_current_forecasts(
     from pangan_forecast.models import forecast_next
     from pangan_forecast.recommend import make_recommendation
 
+    # Akurasi model (median lintas komoditas uji) utk tampilan dashboard.
+    metric_row = {}
+    try:
+        metrics_df = pd.read_csv(paths["metrics"])
+        sub = metrics_df[(metrics_df["model"].astype(str) == model_name)
+                         & (metrics_df["features"].astype(str) == feature_name)]
+        if not sub.empty:
+            agg = sub[["MAE", "RMSE", "MAPE"]].median()
+            metric_row = {"MAE": float(agg["MAE"]), "RMSE": float(agg["RMSE"]),
+                          "MAPE": float(agg["MAPE"])}
+    except Exception:
+        metric_row = {}
+
     for commodity in selected:
         observed = prices[prices["commodity"].astype(str).str.casefold() == commodity.casefold()]
         if observed.empty:
@@ -154,6 +167,7 @@ def build_current_forecasts(
             "stale": age_days > stale_after_days,
             "model": model_name,
             "features": feature_name,
+            "metrics": metric_row,
         }
         if not model_path.is_file() or not metadata_path.is_file():
             quote_map[commodity] = {**base, "status": "unavailable",
