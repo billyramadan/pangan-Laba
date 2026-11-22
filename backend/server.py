@@ -260,6 +260,7 @@ def _bootstrap(handler):
         "commodities": _commodities(account),
         "models": sorted(metrics["model"].dropna().astype(str).unique()) if not metrics.empty else [],
         "features": sorted(metrics["features"].dropna().astype(str).unique()) if not metrics.empty else [],
+        "deploy_variants": _deploy_variants(),
         "forecast_choices": (forecast[["commodity", "model", "features"]]
                              .dropna().astype({"commodity": str, "model": str, "features": str})
                              .drop_duplicates().to_dict("records") if is_admin and not forecast.empty else []),
@@ -269,6 +270,38 @@ def _bootstrap(handler):
                     "support_label": str(BILLING.get("support_label", "Hubungi pengelola")),
                     "checkout_urls": dict(BILLING.get("checkout_urls", {})) if hasattr(BILLING.get("checkout_urls", {}), "items") else {}},
     }
+
+
+def _deploy_variants():
+    """(model, features) yang benar-benar punya artefak deploy (refit final).
+
+    Sumber kebenaran = final_models_manifest.csv. Kalau belum ada, fallback
+    ke kombinasi penuh model×features (perilaku lama).
+    """
+    manifest_path = ROOT / "reports/final_models_manifest.csv"
+    try:
+        if not manifest_path.is_file():
+            raise FileNotFoundError(manifest_path)
+        manifest = pd.read_csv(manifest_path)
+        pairs = sorted(
+            f"{m} — {f}"
+            for m, f in {
+                (str(r.model).strip(), str(r.features).strip())
+                for r in manifest.itertuples()
+            } if m and f
+        )
+        if pairs:
+            return pairs
+    except Exception:
+        pass
+    metrics, _ = frames()
+    if metrics.empty:
+        return []
+    return sorted(
+        f"{m} — {f}"
+        for m in metrics["model"].dropna().astype(str).unique()
+        for f in metrics["features"].dropna().astype(str).unique()
+    )
 
 
 def _metadata():

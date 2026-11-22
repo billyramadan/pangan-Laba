@@ -202,7 +202,9 @@ function buildChoices(){
   const features=authState.features?.length?authState.features:['harga saja','harga + cuaca + kalender + siklus tanggal'];
   const fc=(authState.forecast_choices)||[];
   const comms=dataCommodities.length?dataCommodities:[...new Set(fc.map(x=>x.commodity))].filter(Boolean).sort();
-  const vpairs=[...new Set(models.flatMap(m=>features.map(f=>`${m} — ${f}`)))];
+  const vpairs=authState.deploy_variants?.length
+    ? authState.deploy_variants
+    : [...new Set(models.flatMap(m=>features.map(f=>`${m} — ${f}`)))];
   fill('commodity',comms);fill('commodityMobile',comms);
   fill('variant',vpairs);fill('variantMobile',vpairs);
   state.commodity=comms[0]||'';
