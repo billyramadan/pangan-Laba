@@ -40,3 +40,4 @@ install-log.txt
 *.log
 .agents/
 .claude/
+~$*
