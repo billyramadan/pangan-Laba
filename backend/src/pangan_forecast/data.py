@@ -62,7 +62,8 @@ def normalize_calendar(frame: pd.DataFrame) -> pd.DataFrame:
 
 def load_and_merge(prices_path: str | Path = "data/raw/prices.csv",
                    weather_path: str | Path = "data/raw/weather.csv",
-                   calendar_path: str | Path = "data/raw/calendar.csv") -> pd.DataFrame:
+                   calendar_path: str | Path = "data/raw/calendar.csv",
+                   monthly_weather_path: str | Path = None) -> pd.DataFrame:
     prices = read_optional(prices_path, ["date", "commodity", "price"])
     if prices.empty:
         raise FileNotFoundError(f"Data harga belum ada: {prices_path}. Lihat README.md")
@@ -83,6 +84,27 @@ def load_and_merge(prices_path: str | Path = "data/raw/prices.csv",
         for col in weather.columns.difference(["date"]):
             weather[col] = pd.to_numeric(weather[col], errors="coerce")
         weather = weather.dropna(subset=["date"]).groupby("date", as_index=False).mean(numeric_only=True)
+
+    # Optional monthly climate-station data (e.g. BMKG). Expanded to a daily
+    # series: each month's value applies to every day from that month onward
+    # until the next month's value (FFILL). Columns are prefixed `bmkg_`.
+    monthly = pd.DataFrame()
+    if monthly_weather_path:
+        mraw = read_optional(Path(monthly_weather_path), ["month"])
+        if not mraw.empty:
+            mraw["month"] = pd.to_datetime(mraw["month"], errors="coerce")
+            mraw = mraw.dropna(subset=["month"])
+            if not mraw.empty:
+                num_cols = [c for c in mraw.columns
+                            if c not in ("month", "wind_dir", "wind_dir_car")]
+                for col in num_cols:
+                    mraw[col] = pd.to_numeric(mraw[col], errors="coerce")
+                m = mraw.set_index("month")[num_cols]
+                full = pd.date_range(prices["date"].min(), prices["date"].max(), freq="D")
+                expanded = m.reindex(full, method="ffill")
+                expanded.index.name = "date"
+                expanded.columns = [f"bmkg_{c}" for c in expanded.columns]
+                monthly = expanded
 
     # Read the whole calendar first because user supplied files may use either
     # `date` or the Indonesian `tanggal` header. normalize_calendar validates
@@ -133,6 +155,8 @@ def load_and_merge(prices_path: str | Path = "data/raw/prices.csv",
         else:
             group["rain_mm"] = float("nan")
             group["temp_c"] = float("nan")
+        if not monthly.empty:
+            group = group.join(monthly, how="left")
         if not calendar_by_date.empty:
             group = group.join(calendar_by_date, how="left")
         for col in grouping:

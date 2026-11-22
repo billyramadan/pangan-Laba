@@ -419,7 +419,7 @@ tbody tr:hover{background:#f2e3d2}
         </div>
 
         <div style="color:var(--muted);font-size:.85rem;line-height:1.6">
-          <p style="margin:0 0 4px"><b>Fitur:</b> harga saja <i>vs</i> harga + eksternal (cuaca harian, kalender libur/cuti/akhir pekan/Idulfitri, siklus hari/bulan).</p>
+          <p style="margin:0 0 4px"><b>Fitur:</b> harga saja <i>vs</i> harga + eksternal (cuaca ERA5, cuaca stasiun BMKG bulanan, kalender libur/cuti/akhir pekan/Idulfitri, siklus hari/bulan).</p>
           <p style="margin:0 0 4px"><b>Arsitektur:</b> 48 unit LSTM/GRU → Dropout 0,15 → Dense 32 ReLU → output 7; optimizer Adam, loss MSE.</p>
           <p style="margin:0 0 4px"><b>Pelatihan:</b> maksimum 15–30 epoch, <i>early stopping</i> patience 5, scaler pada data latih, seed 42.</p>
           <p style="margin:0"><b>Metrik:</b> MAE (Rp/kg), RMSE, MAPE.</p>
@@ -456,7 +456,7 @@ tbody tr:hover{background:#f2e3d2}
       <div class="card"><div class="chartbox"><canvas id="researchChart"></canvas></div><div style="color:var(--muted);font-size:.85rem;margin-top:6px" id="researchChartCaption"></div></div>
 
       <div class="section-label">Perbandingan model</div>
-      <div class="card"><div class="chartbox" style="height:230px"><canvas id="maeChart"></canvas></div><div style="color:var(--muted);font-size:.85rem;margin-top:6px">Batang gelap = model harga doang; batang jingga = harga + cuaca + kalender. Makin rendah, makin kecil salah hitungnya (MAE).</div></div>
+      <div class="card"><div class="chartbox" style="height:230px"><canvas id="maeChart"></canvas></div><div style="color:var(--muted);font-size:.85rem;margin-top:6px">Batang gelap = model harga doang; batang jingga = harga + fitur eksternal (cuaca, kalender, siklus, BMKG). Makin rendah, makin kecil salah hitungnya (MAE).</div></div>
 
       <div class="card"><h3>Metrik per komoditas</h3><div id="metricsTable"></div></div>
       <div class="card"><h3>Ringkasan lintas komoditas</h3><div id="summaryTable"></div><div style="color:var(--muted);font-size:.85rem;margin-top:8px">Saran beli/tunda pakai ambang ±5%. Cek lagi stok, kebutuhan, mutu, cuaca, pasokan, sama biaya simpan sebelum putusin.</div></div>
@@ -465,7 +465,7 @@ tbody tr:hover{background:#f2e3d2}
 
       <details class="expander"><summary>Tentang sumber data dan metode<span>▾</span></summary><div class="expander-in">
         <p style="color:var(--muted)">Data harga berasal dari workbook PIHPS. Wilayah yang dipakai saat ini adalah <b>Kota Depok</b>; nama komoditas diambil dari nama file dan tanggal mengikuti isi workbook.</p>
-        <p style="color:var(--muted)">Eksperimen membandingkan LSTM dan GRU, masing-masing dengan fitur harga saja dan paket fitur eksternal: cuaca harian, kalender libur/cuti/akhir pekan serta keterangan tanggal Idulfitri, dan siklus hari/bulan. Data dibagi kronologis (80% pelatihan, 20% pengujian), lalu dinilai menggunakan MAE, RMSE, dan MAPE.</p>
+        <p style="color:var(--muted)">Eksperimen membandingkan LSTM dan GRU, masing-masing dengan fitur harga saja dan paket fitur eksternal: cuaca harian ERA5, cuaca bulanan stasiun BMKG, kalender libur/cuti/akhir pekan serta keterangan tanggal Idulfitri, dan siklus hari/bulan. Data dibagi kronologis (80% pelatihan, 20% pengujian), lalu dinilai menggunakan MAE, RMSE, dan MAPE.</p>
       </div></details>
 
       <details class="expander"><summary>Data yang dibutuhkan untuk penelitian<span>▾</span></summary><div class="expander-in">

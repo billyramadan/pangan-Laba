@@ -4,32 +4,13 @@
 
 ## 1.1 Latar Belakang
 
-### 1.1.1 Fluktuasi harga pangan dan dampaknya pada UMKM kuliner
+Komoditas pangan merupakan kebutuhan pokok yang keberadaannya paling menentukan kesejahteraan masyarakat Indonesia. Stabilitas harga pangan menjadi perhatian pemerintah karena perubahan harga berdampak langsung pada daya beli, laju inflasi, dan keberlangsungan usaha sektor riil. Bank Indonesia mengelompokkan harga bahan pangan ke dalam komponen inflasi harga bergejolak (*volatile food*), yang kerap menjadi penyumbang inflasi terbesar ketika pasokan terganggu (Bank Indonesia, 2024). Fluktuasi harga terjadi karena berbagai faktor, antara lain perubahan cuaca, musim tanam dan panen, hari besar keagamaan, kebijakan distribusi, serta dinamika penawaran dan permintaan di pasar. Gejolak ini paling terasa pada komoditas yang mudah rusak seperti cabai, bawang, dan sayuran segar, yang harganya dapat berubah drastis dalam hitungan hari. Ketidakstabilan harga ini menimbulkan masalah nyata bagi pelaku usaha mikro, kecil, dan menengah (UMKM) di sektor kuliner: harga bahan baku merupakan komponen utama biaya produksi makanan dan minuman, sehingga ketika harga naik secara tiba-tiba modal yang direncanakan menjadi tidak mencukupi sementara menaikkan harga jual secara mendadak sulit dilakukan karena berisiko menurunkan jumlah pembeli. Akibatnya, margin laba menipis, bahkan usaha dapat mengalami kerugian. Kota Depok di kawasan Jabodetabek memiliki jumlah UMKM kuliner yang terus bertumbuh tetapi rentan terhadap gejolak harga bahan baku, sehingga kemampuan memperkirakan pergerakan harga menjadi penting untuk merencanakan belanja bahan baku dan menetapkan harga jual yang aman.
 
-Komoditas pangan merupakan kebutuhan pokok yang harganya sangat rentan berubah. Fluktuasi harga terjadi akibat berbagai faktor, antara lain perubahan cuaca, musim tanam dan panen, hari besar keagamaan, kebijakan distribusi, serta dinamika penawaran dan permintaan di pasar. Gejolak harga ini paling terasa pada komoditas yang mudah rusak (*perishable*) seperti cabai, bawang, dan sayuran segar.
+Pendekatan yang berkembang untuk mengantisipasi pergerakan harga adalah prediksi berbasis data deret waktu (*time series forecasting*). Di antara berbagai metode, *deep learning*, khususnya Long Short-Term Memory (LSTM) dan Gated Recurrent Unit (GRU), terbukti efektif dalam menangkap pola non-linear dan ketergantungan jangka panjang pada data deret waktu. LSTM diperkenalkan oleh Hochreiter dan Schmidhuber (1997) untuk mengatasi masalah hilangnya gradien pada jaringan saraf berulang (*recurrent neural network*, RNN), sementara GRU dikembangkan oleh Cho dkk. (2014) sebagai varian yang lebih sederhana dengan kinerja hampir sama tetapi komputasi lebih efisien. Kedua arsitektur ini banyak digunakan untuk meramalkan deret waktu keuangan dan harga.
 
-Bagi pelaku usaha mikro, kecil, dan menengah (UMKM) di sektor kuliner, ketidakstabilan harga bahan baku menjadi masalah yang nyata. Harga bahan baku adalah komponen utama biaya produksi makanan dan minuman. Ketika harga bahan naik secara tiba-tiba, modal usaha yang telah direncanakan menjadi tidak cukup, sementara menaikkan harga jual secara mendadak sulit dilakukan karena berisiko menurunkan jumlah pembeli. Akibatnya, margin laba menipis, bahkan usaha bisa mengalami kerugian. Kondisi ini menunjukkan perlunya alat bantu yang membantu UMKM mengantisipasi pergerakan harga bahan baku.
+Kajian penerapan *deep learning* untuk prediksi harga pangan makin banyak dilakukan sejak tahun 2021. Hendrawati dkk. (2026) membandingkan LSTM dan GRU untuk memprediksi harga beras di Indonesia; Amalia dkk. (2026) mengembangkan *Temporal Fusion Transformer* (TFT) untuk meramalkan harga 10 komoditas pangan strategis Indonesia dan membandingkannya dengan LSTM, GRU, ARIMA, serta metode naïve; Wang dkk. (2023) menemukan bahwa pemasukan data iklim dan lingkungan menaikkan akurasi prediksi harga gandum; dan Manogna dkk. (2025) menyimpulkan bahwa model *deep learning* mengungguli ARIMA serta metode *machine learning* lain dalam memprediksi harga 23 komoditas pertanian di India. Kendati demikian, kajian tersebut umumnya dilakukan pada tingkat nasional atau global atau berfokus pada satu jenis komoditas; belum banyak yang mengarah pada kebutuhan praktis pelaku usaha di tingkat daerah, apalagi yang secara khusus membandingkan LSTM dan GRU untuk memprediksi harga komoditas pangan strategis di Indonesia sambil menilai peran fitur eksternal (cuaca dan kalender) secara bersamaan. Untuk konteks Kota Depok dan kebutuhan UMKM kuliner, penelitian semacam itu nyaris tidak ada. Dari uraian tersebut timbul dua celah utama: pertama, hasil prediksi harga belum banyak dikemas menjadi alat yang praktis, mudah dipakai, dan relevan bagi UMKM kuliner; kedua, belum teruji apakah layanan prediksi harga dapat diterima sebagai produk berbayar, padahal keberlanjutan pengembangan aplikasi bergantung pada model pendapatan.
 
-### 1.1.2 Prediksi harga dengan model deep learning
-
-Salah satu pendekatan yang berkembang untuk mengantisipasi pergerakan harga adalah prediksi berbasis data deret waktu (*time series forecasting*). Di antara berbagai metode, *deep learning* — khususnya LSTM (*Long Short-Term Memory*) dan GRU (*Gated Recurrent Unit*) — terbukti efektif dalam menangkap pola non-linear dan ketergantungan jangka panjang pada data deret waktu. Kedua arsitektur ini merupakan varian jaringan saraf berulang (*recurrent neural network*, RNN) yang dirancang untuk mengatasi masalah gradien hilang yang kerap dialami RNN standar.
-
-Penelitian di bidang prediksi harga pangan sebagian besar masih berhenti pada tahap evaluasi akurasi model, seperti membandingkan nilai MAE, RMSE, atau MAPE dari berbagai arsitektur. Meskipun bernilai ilmiah, hasil tersebut belum menyentuh langsung kebutuhan praktis pelaku usaha. Masih jarang penelitian yang menjembatani hasil prediksi menjadi produk yang dapat digunakan sehari-hari oleh UMKM.
-
-### 1.1.3 Celah penelitian dan gagasan solusi
-
-Berdasarkan ulasan di atas, terdapat dua celah utama:
-
-1. **Celah aplikatif** — hasil prediksi harga belum banyak dikemas menjadi alat yang praktis, mudah dipakai, dan relevan untuk UMKM kuliner.
-2. **Celah kelayakan bisnis** — belum teruji apakah layanan prediksi harga dapat diterima sebagai produk berbayar oleh pengguna, padahal keberlanjutan pengembangan aplikasi bergantung pada model pendapatan.
-
-Penelitian ini menjawab kedua celah tersebut melalui pembangunan **PanganLaba**, sebuah aplikasi web yang menggabungkan:
-
-- **Model prediksi harga** berbasis LSTM dan GRU untuk memperkirakan harga komoditas pangan pada horizon 7 hari ke depan;
-- **Kalkulator modal dan laba menu** yang membantu pengguna menghitung biaya per porsi dan harga jual yang aman;
-- **Sistem langganan trial-berbayar** (7 hari gratis, kemudian paket berbayar) sebagai uji kelayakan komersial produk.
-
-Dengan demikian, penelitian ini tidak hanya berkontribusi pada evaluasi model prediksi, tetapi juga pada perancangan produk aplikatif yang berpotensi bermanfaat langsung bagi UMKM.
+Untuk menjawab kedua celah tersebut, penelitian ini membangun **PanganLaba**, sebuah aplikasi web yang menggabungkan model prediksi harga berbasis LSTM dan GRU untuk memperkirakan harga komoditas pangan pada horizon 7 hari ke depan; kalkulator modal dan laba menu yang membantu pengguna menghitung biaya per porsi dan harga jual yang aman; serta sistem langganan *trial*-berbayar (7 hari gratis, kemudian paket berbayar) sebagai uji kelayakan komersial produk. Dengan demikian, penelitian ini tidak hanya berkontribusi pada evaluasi model prediksi, tetapi juga pada perancangan produk aplikatif yang bermanfaat langsung bagi UMKM.
 
 ---
 
@@ -113,3 +94,23 @@ Sesuai rumusan masalah, tujuan penelitian adalah:
 - **Bab III — Metodologi:** alur penelitian, sumber dan pengolahan data, perancangan model, perancangan aplikasi dan model langganan, serta skenario pengujian.
 - **Bab IV — Hasil dan Pembahasan:** hasil evaluasi model LSTM/GRU, perbandingan konfigurasi fitur, pembahasan aplikasi, dan hasil uji kelayakan.
 - **Bab V — Penutup:** kesimpulan jawaban atas rumusan masalah dan saran untuk penelitian lanjutan.
+
+---
+
+## Daftar Pustaka
+
+Amalia, S., Dhini, A., Zulkarnain, Za'in, C., & Surjandari, I. (2026). A temporal fusion transformer for multi-step forecasting of Indonesia's strategic food commodity prices. *Results in Engineering*, 30, 110131. https://doi.org/10.1016/j.rineng.2026.110131
+
+Bank Indonesia. (2024). *Laporan Perekonomian Indonesia*. Jakarta: Bank Indonesia.
+
+Cho, K., van Merriënboer, B., Gulcehre, C., Bahdanau, D., Bougares, F., Schwenk, H., & Bengio, Y. (2014). Learning phrase representations using RNN encoder-decoder for statistical machine translation. *Proceedings of EMNLP 2014*.
+
+Hendrawati, T., Marthendra, K., Simanjuntak, B. R. J., & Pravitasari, A. A. (2026). LSTM and GRU in rice prediction for food security in Indonesia. *BAREKENG: Journal of Mathematics and Its Applications*, 20(1), 55–68. https://doi.org/10.30598/barekengvol20iss1pp0055-0068
+
+Hochreiter, S., & Schmidhuber, J. (1997). Long short-term memory. *Neural Computation*, 9(8), 1735–1780.
+
+Kementerian Perdagangan. (2024). *Pusat Informasi Harga Pangan Strategis (PIHPS)*. Jakarta: Kementerian Perdagangan Republik Indonesia.
+
+Manogna, R. L., Dharmaji, V., & Sarang, S. (2025). Enhancing agricultural commodity price forecasting with deep learning. *Scientific Reports*, 15, 20903. https://doi.org/10.1038/s41598-025-05103-z
+
+Wang, Z., French, N., James, T., Schillaci, C., Chan, F., Feng, M., & Lipani, A. (2023). Climate and environmental data contribute to the prediction of grain commodity prices using deep learning. *Journal of Sustainable Agriculture and Environment*, 2(1). https://doi.org/10.1002/sae2.12041

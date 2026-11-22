@@ -53,7 +53,7 @@ def _metrics(y_true: np.ndarray, y_pred: np.ndarray) -> dict[str, object]:
 
 def run_experiments(clean: pd.DataFrame, output_dir=".", window=30, horizon=7,
                     epochs=30, batch_size=32, data_source=None):
-    """Fit four model variants and return metric and forecast tables."""
+    """Fit model variants per feature set and seed, return metric and forecast tables."""
     try:
         import tensorflow as tf
     except ImportError as exc:
@@ -66,86 +66,143 @@ def run_experiments(clean: pd.DataFrame, output_dir=".", window=30, horizon=7,
         is_demo = ("location" in clean.columns and clean["location"].astype(str)
                    .str.contains("DEMO", case=False, na=False).any())
         data_source = "synthetic_demo" if is_demo else "local_data"
+
+    WEATHER_FEATURES = ["temp_c", "temp_max_c", "temp_min_c", "rain_mm",
+                        "wind_max_kmh", "solar_mj_m2"]
+    CALENDAR_FEATURES = ["is_libur_nasional", "is_cuti_bersama", "is_weekend",
+                         "is_ramadan", "is_near_eid", "is_idul_fitri"]
+    CYCLE_FEATURES = ["dow_sin", "dow_cos", "month_sin", "month_cos"]
+    FEATURE_LABEL = {
+        "harga_saja": "harga saja",
+        "harga+cuaca": "harga + cuaca",
+        "harga+cuaca+bmkg": "harga + cuaca + bmkg",
+        "harga+kalender": "harga + kalender",
+        "harga+siklus": "harga + siklus tanggal",
+        "harga+semua_eksternal": "harga + cuaca + kalender + siklus tanggal",
+    }
+
     for commodity, group in clean.groupby("commodity"):
         featured = add_features(group)
         if len(featured) < window + horizon + 20:
             print(f"Lewati {commodity}: data terlalu pendek ({len(featured)} baris setelah fitur).")
             continue
-        cut = featured["date"].iloc[int(len(featured) * 0.8)]
+        dates = featured["date"].to_numpy()
+        cut = pd.to_datetime(featured["date"].iloc[int(len(featured) * 0.8)])
+
+        weather_cols = [c for c in WEATHER_FEATURES if c in featured.columns]
+        bmkg_cols = [c for c in featured.columns if c.startswith("bmkg_")]
+        cal_cols = [c for c in CALENDAR_FEATURES if c in featured.columns]
+        cycle_cols = [c for c in CYCLE_FEATURES if c in featured.columns]
+        all_ext_cols = [c for c in EXTERNAL_FEATURES if c in featured.columns]
+
+        variant_sets = [
+            ("harga_saja", []),
+            ("harga+cuaca", weather_cols),
+            ("harga+cuaca+bmkg", weather_cols + bmkg_cols),
+            ("harga+kalender", cal_cols),
+            ("harga+siklus", cycle_cols),
+            ("harga+semua_eksternal", all_ext_cols),
+        ]
+        seeds = (42, 123, 2026)
+
         for kind in ("LSTM", "GRU"):
-            for use_external in (False, True):
-                external_cols = [col for col in EXTERNAL_FEATURES if col in featured.columns]
-                cols = PRICE_FEATURES + (external_cols if use_external else [])
-                data = featured.copy()
-                for col in cols:
-                    if col not in data.columns:
-                        data[col] = np.nan
-                # Fill only from known past weather; do not backfill from the
-                # future when a measurement is missing at the start of a series.
-                data[cols] = data[cols].apply(pd.to_numeric, errors="coerce")
-                data[cols] = data[cols].ffill().fillna(0)
-                x, y, starts, ends, references = build_sequences(data, cols, window, horizon)
-                cut = pd.to_datetime(featured["date"].iloc[int(len(featured) * 0.8)])
-                train_mask = pd.to_datetime(ends) < cut
-                test_mask = ~train_mask
-                if train_mask.sum() < 20 or test_mask.sum() < 1:
-                    print(f"Lewati {commodity}/{kind}/external={use_external}: split tidak cukup.")
-                    continue
-                x_train, y_train = x[train_mask], y[train_mask]
-                x_test, y_test = x[test_mask], y[test_mask]
-                x_scaler, y_scaler = StandardScaler(), StandardScaler()
-                x_scaler.fit(x_train.reshape(-1, len(cols)))
-                y_scaler.fit(y_train.reshape(-1, 1))
-                assert x_scaler.mean_ is not None and x_scaler.scale_ is not None
-                assert y_scaler.mean_ is not None and y_scaler.scale_ is not None
-                def sx(a):
-                    return x_scaler.transform(a.reshape(-1, len(cols))).reshape(a.shape)
-                train_x, test_x = sx(x_train), sx(x_test)
-                train_y = y_scaler.transform(y_train.reshape(-1, 1)).reshape(y_train.shape)
-                tf.keras.utils.set_random_seed(42)
-                model = _build_keras(kind, window, len(cols), horizon)
-                history = model.fit(train_x, train_y, epochs=epochs, batch_size=batch_size,
-                                    validation_split=0.1, shuffle=False, verbose=0,
-                                    callbacks=[tf.keras.callbacks.EarlyStopping(
-                                        patience=5, restore_best_weights=True)])
-                pred_scaled = model.predict(test_x, verbose=0)
-                pred = y_scaler.inverse_transform(pred_scaled.reshape(-1, 1)).reshape(pred_scaled.shape)
-                score: dict[str, object] = _metrics(y_test, pred)
-                name = f"{str(commodity).strip().lower().replace(' ', '_')}_{kind.lower()}_{'external' if use_external else 'price'}"
-                feature_label = "harga + cuaca + kalender + siklus tanggal" if use_external else "harga saja"
-                score.update({"commodity": commodity, "model": kind,
-                              "features": feature_label,
-                              "data_source": data_source,
-                              "train_target_end": str(pd.to_datetime(ends[train_mask]).max())[:10],
-                              "test_target_start": str(pd.to_datetime(starts[test_mask]).min())[:10],
-                              "test_target_end": str(pd.to_datetime(ends[test_mask]).max())[:10],
-                              "window_days": window, "forecast_horizon_days": horizon,
-                              "configured_epochs": epochs,
-                              "epochs_trained": len(history.history.get("loss", [])),
-                              "n_train_sequences": len(x_train), "n_test_sequences": len(x_test)})
-                metrics.append(score)
-                # HDF5 avoids incomplete .keras ZIP archives observed on this
-                # native Windows + TensorFlow setup. Keep model and weights
-                # together so forecast_next can load the artifact directly.
-                model_path = out_dir / "models" / f"{name}.h5"
-                model.save(model_path, include_optimizer=False)
-                print(f"Tersimpan: {model_path.name}", flush=True)
-                (out_dir / "models" / f"{name}.json").write_text(json.dumps({
-                    "commodity": commodity, "kind": kind, "feature_cols": cols,
-                    "window": window, "horizon": horizon,
-                    "x_mean": x_scaler.mean_.tolist(), "x_scale": x_scaler.scale_.tolist(),
-                    "y_mean": float(y_scaler.mean_[0]), "y_scale": float(y_scaler.scale_[0]),
-                }, ensure_ascii=False, indent=2), encoding="utf-8")
-                for j, (start, end, reference) in enumerate(zip(starts[test_mask], ends[test_mask], references[test_mask])):
-                    for step, value in enumerate(pred[j], start=1):
-                        forecasts.append({"commodity": commodity, "model": kind,
-                                          "features": feature_label,
-                                          "data_source": data_source,
-                                          "origin_date": str(pd.Timestamp(start) - pd.Timedelta(days=1))[:10],
-                                          "target_date": str(pd.Timestamp(start) + pd.Timedelta(days=step-1))[:10],
-                                          "step": step, "reference_price": float(reference),
-                                          "actual": float(y_test[j, step-1]),
-                                          "predicted": float(value)})
+            for seed in seeds:
+                tf.keras.utils.set_random_seed(seed)
+                for label, ext_cols in variant_sets:
+                    cols = PRICE_FEATURES + ext_cols
+                    data = featured.copy()
+                    for col in cols:
+                        if col not in data.columns:
+                            data[col] = np.nan
+                    data[cols] = data[cols].apply(pd.to_numeric, errors="coerce")
+                    data[cols] = data[cols].ffill().fillna(0)
+                    x, y, starts, ends, references = build_sequences(data, cols, window, horizon)
+                    train_mask = pd.to_datetime(ends) < cut
+                    test_mask = ~train_mask
+                    if train_mask.sum() < 20 or test_mask.sum() < 1:
+                        print(f"Lewati {commodity}/{kind}/seed={seed}/{label}: split tidak cukup.")
+                        continue
+                    x_train, y_train = x[train_mask], y[train_mask]
+                    x_test, y_test = x[test_mask], y[test_mask]
+                    x_scaler, y_scaler = StandardScaler(), StandardScaler()
+                    x_scaler.fit(x_train.reshape(-1, len(cols)))
+                    y_scaler.fit(y_train.reshape(-1, 1))
+                    assert x_scaler.mean_ is not None and x_scaler.scale_ is not None
+                    assert y_scaler.mean_ is not None and y_scaler.scale_ is not None
+
+                    def sx(a):
+                        return x_scaler.transform(a.reshape(-1, len(cols))).reshape(a.shape)
+
+                    train_x, test_x = sx(x_train), sx(x_test)
+                    train_y = y_scaler.transform(y_train.reshape(-1, 1)).reshape(y_train.shape)
+                    model = _build_keras(kind, window, len(cols), horizon)
+                    history = model.fit(train_x, train_y, epochs=epochs, batch_size=batch_size,
+                                        validation_split=0.1, shuffle=False, verbose=0,
+                                        callbacks=[tf.keras.callbacks.EarlyStopping(
+                                            patience=5, restore_best_weights=True)])
+                    pred_scaled = model.predict(test_x, verbose=0)
+                    pred = y_scaler.inverse_transform(pred_scaled.reshape(-1, 1)).reshape(pred_scaled.shape)
+                    score: dict[str, object] = _metrics(y_test, pred)
+                    name = f"{str(commodity).strip().lower().replace(' ', '_')}_{kind.lower()}_{label}_seed{seed}"
+                    score.update({"commodity": commodity, "model": kind,
+                                  "features": FEATURE_LABEL[label],
+                                  "seed": seed,
+                                  "data_source": data_source,
+                                  "train_target_end": str(pd.to_datetime(ends[train_mask]).max())[:10],
+                                  "test_target_start": str(pd.to_datetime(starts[test_mask]).min())[:10],
+                                  "test_target_end": str(pd.to_datetime(ends[test_mask]).max())[:10],
+                                  "window_days": window, "forecast_horizon_days": horizon,
+                                  "configured_epochs": epochs,
+                                  "epochs_trained": len(history.history.get("loss", [])),
+                                  "n_train_sequences": len(x_train), "n_test_sequences": len(x_test)})
+                    metrics.append(score)
+
+                    model_path = out_dir / "models" / f"{name}.h5"
+                    model.save(model_path, include_optimizer=False)
+                    print(f"Tersimpan: {model_path.name}", flush=True)
+                    (out_dir / "models" / f"{name}.json").write_text(json.dumps({
+                        "commodity": commodity, "kind": kind, "feature_cols": cols,
+                        "window": window, "horizon": horizon,
+                        "x_mean": x_scaler.mean_.tolist(), "x_scale": x_scaler.scale_.tolist(),
+                        "y_mean": float(y_scaler.mean_[0]), "y_scale": float(y_scaler.scale_[0]),
+                        "seed": seed,
+                    }, ensure_ascii=False, indent=2), encoding="utf-8")
+                    for j, (start, end, reference) in enumerate(zip(starts[test_mask], ends[test_mask], references[test_mask])):
+                        for step, value in enumerate(pred[j], start=1):
+                            forecasts.append({"commodity": commodity, "model": kind,
+                                              "features": FEATURE_LABEL[label],
+                                              "data_source": data_source,
+                                              "seed": seed,
+                                              "origin_date": str(pd.Timestamp(start) - pd.Timedelta(days=1))[:10],
+                                              "target_date": str(pd.Timestamp(start) + pd.Timedelta(days=step-1))[:10],
+                                              "step": step, "reference_price": float(reference),
+                                              "actual": float(y_test[j, step-1]),
+                                              "predicted": float(value)})
+
+                    # baseline naif dan SMA-7 pada split uji yang sama
+                    starts_np = np.asarray(starts)
+                    end_idx = np.searchsorted(dates, starts_np[test_mask]) - 1
+                    end_idx = np.clip(end_idx, 0, len(featured) - 1)
+                    ref_test = references[test_mask]
+                    mean7_at_end = featured["mean_7"].iloc[end_idx].to_numpy(dtype=float)
+
+                    for baseline_name, baseline_origin in [("Naive", ref_test), ("SMA_7", mean7_at_end)]:
+                        pred_base = np.tile(baseline_origin.reshape(-1, 1), (1, horizon))
+                        score_base = _metrics(y_test, pred_base)
+                        score_base.update({
+                            "commodity": commodity, "model": baseline_name,
+                            "features": FEATURE_LABEL[label],
+                            "seed": seed,
+                            "data_source": data_source,
+                            "train_target_end": str(pd.to_datetime(ends[train_mask]).max())[:10],
+                            "test_target_start": str(pd.to_datetime(starts[test_mask]).min())[:10],
+                            "test_target_end": str(pd.to_datetime(ends[test_mask]).max())[:10],
+                            "window_days": window, "forecast_horizon_days": horizon,
+                            "configured_epochs": epochs,
+                            "epochs_trained": 0,
+                            "n_train_sequences": len(x_train), "n_test_sequences": len(x_test)})
+                        metrics.append(score_base)
+
     metrics_df, forecast_df = pd.DataFrame(metrics), pd.DataFrame(forecasts)
     metrics_df.to_csv(out_dir / "reports" / "model_comparison.csv", index=False)
     if not metrics_df.empty:
@@ -162,7 +219,15 @@ def run_experiments(clean: pd.DataFrame, output_dir=".", window=30, horizon=7,
                                            "median_MAE", "median_RMSE", "median_MAPE",
                                            "mean_MAE", "mean_RMSE", "mean_MAPE"])
     summary_df.to_csv(out_dir / "reports" / "model_comparison_summary.csv", index=False)
-    forecast_df.to_csv(out_dir / "reports" / "forecasts.csv", index=False)
+    # Simpan seed representatif saja + round agar laporan tetap < batas ukuran
+    # file GitHub (100 MB). Prediksi eksperimen lain tidak dipakai produksi.
+    deployable = forecast_df.copy()
+    if "seed" in deployable.columns:
+        deployable = deployable[deployable["seed"].astype(str).eq("42")]
+    for col in ("reference_price", "actual", "predicted"):
+        if col in deployable.columns:
+            deployable[col] = pd.to_numeric(deployable[col], errors="coerce").round(2)
+    deployable.to_csv(out_dir / "reports" / "forecasts.csv", index=False)
     return metrics_df, forecast_df
 
 
@@ -193,10 +258,19 @@ def refit_full_history_models(clean: pd.DataFrame, output_dir=".", window=30,
             print(f"Lewati refit {commodity}: data terlalu pendek ({len(featured)} baris setelah fitur).")
             continue
 
+        weather_cols = [c for c in ["temp_c", "temp_max_c", "temp_min_c", "rain_mm",
+                                    "wind_max_kmh", "solar_mj_m2"] if c in featured.columns]
+        bmkg_cols = [c for c in featured.columns if c.startswith("bmkg_")]
+        external_cols = [col for col in EXTERNAL_FEATURES if col in featured.columns]
+        refit_variants = [
+            ("price", [], "harga saja"),
+            ("external", external_cols, "harga + cuaca + kalender + siklus tanggal"),
+            ("external_bmkg", weather_cols + bmkg_cols, "harga + cuaca + bmkg"),
+        ]
+
         for kind in ("LSTM", "GRU"):
-            for use_external in (False, True):
-                external_cols = [col for col in EXTERNAL_FEATURES if col in featured.columns]
-                cols = PRICE_FEATURES + (external_cols if use_external else [])
+            for slug_ext, ext_cols, feature_label in refit_variants:
+                cols = PRICE_FEATURES + ext_cols
                 data = featured.copy()
                 for col in cols:
                     if col not in data.columns:
@@ -220,7 +294,7 @@ def refit_full_history_models(clean: pd.DataFrame, output_dir=".", window=30,
                 model.fit(train_x, train_y, epochs=epochs, batch_size=batch_size,
                           shuffle=False, verbose=0)
 
-                slug = f"{str(commodity).strip().lower().replace(' ', '_')}_{kind.lower()}_{'external' if use_external else 'price'}"
+                slug = f"{str(commodity).strip().lower().replace(' ', '_')}_{kind.lower()}_{slug_ext}"
                 model.save(model_dir / f"{slug}.h5", include_optimizer=False)
                 (model_dir / f"{slug}.json").write_text(json.dumps({
                     "commodity": commodity, "kind": kind, "feature_cols": cols,
@@ -233,7 +307,7 @@ def refit_full_history_models(clean: pd.DataFrame, output_dir=".", window=30,
                     "training_sequences": int(len(x)), "epochs": int(epochs),
                 }, ensure_ascii=False, indent=2), encoding="utf-8")
                 manifest.append({"commodity": commodity, "model": kind,
-                                 "features": "harga + cuaca + kalender + siklus tanggal" if use_external else "harga saja",
+                                 "features": feature_label,
                                  "training_start": str(pd.to_datetime(starts).min())[:10],
                                  "training_end": str(pd.to_datetime(ends).max())[:10],
                                  "training_sequences": int(len(x)), "epochs": int(epochs),

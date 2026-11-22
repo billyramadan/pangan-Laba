@@ -23,7 +23,7 @@ Format: 5 menit presentasi + tanya jawab. Baca poin, jangan membaca lengkap.
 - Saran belanja beli/tunda.
 
 **Model income (sesuai arahan):**
-- Trial 7 hari gratis → langganan paket berbayar (Starter/Pro/Enterprise).
+- Trial 7 hari gratis → langganan paket berbayar (Starter/Pro/Enterprise). 
 - Pembayaran manual (diverifikasi) atau Xendit otomatis.
 - Akses terkunci jika belum bayar setelah trial.
 

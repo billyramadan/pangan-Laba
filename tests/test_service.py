@@ -45,9 +45,9 @@ def test_project_paths(tmp_path):
 
 def test_has_model_results_detects_present(tmp_path):
     paths = project_paths(tmp_path)
-    paths["prices"].touch()
-    paths["metrics"].touch()
-    paths["forecast"].touch()
+    for key in ("prices", "metrics", "forecast"):
+        paths[key].parent.mkdir(parents=True, exist_ok=True)
+        paths[key].touch()
     assert has_model_results(paths) is True
 
 
@@ -101,7 +101,7 @@ def test_evaluate_model_results():
     result = evaluate_model_results(_metrics())
     assert result["commodity_count"] == 2
     assert result["external_wins"] == 0
-    assert result["paired_count"] == 2
+    assert result["paired_count"] == 4
 
 
 def test_cross_commodity_summary_columns():

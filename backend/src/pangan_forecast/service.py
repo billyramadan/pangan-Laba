@@ -86,6 +86,7 @@ def build_current_forecasts(
     feature_suffix = {
         "harga saja": "price",
         "harga + cuaca + kalender + siklus tanggal": "external",
+        "harga + cuaca + bmkg": "external_bmkg",
     }.get(feature_name)
     if feature_suffix is None:
         raise ValueError("Paket fitur model tidak dikenali.")
