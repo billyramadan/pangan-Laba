@@ -105,6 +105,7 @@ def load_and_merge(prices_path: str | Path = "data/raw/prices.csv",
                 expanded.index.name = "date"
                 expanded.columns = [f"bmkg_{c}" for c in expanded.columns]
                 monthly = expanded
+            bmkg_cols = [c for c in expanded.columns]
 
     # Read the whole calendar first because user supplied files may use either
     # `date` or the Indonesian `tanggal` header. normalize_calendar validates
@@ -157,6 +158,7 @@ def load_and_merge(prices_path: str | Path = "data/raw/prices.csv",
             group["temp_c"] = float("nan")
         if not monthly.empty:
             group = group.join(monthly, how="left")
+            group["bmkg_available"] = group[bmkg_cols[0]].notna().astype(float)
         if not calendar_by_date.empty:
             group = group.join(calendar_by_date, how="left")
         for col in grouping:
